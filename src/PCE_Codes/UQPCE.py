@@ -295,7 +295,6 @@ class DataSet:
         self.input = True
         self.verbose = False
         self.var_list = []
-        showwarning = _warn
 
     def read_var_input(self, input_file, args, order, verbose):
         """
@@ -405,7 +404,7 @@ class MatrixSystem:
     
     The matrix system built from the responses and input values. The 
     MatrixSystem is built and solved to acquire the matrix coefficients in 
-    the systme of equations.
+    the system of equations.
     """
 
     def __init__(self, responses, var_list):
@@ -420,7 +419,6 @@ class MatrixSystem:
         self.inter_vals = (self.inter * self.act_model_size).astype(int)
         self.var_list = var_list
         self.var_count = len(var_list)
-        showwarning = _warn
 
     def form_norm_sq(self, order):
         """
@@ -545,7 +543,6 @@ class SurrogateModel:
         self.responses = responses
         self.act_model_size = len(responses)
         self.matrix_coeffs = matrix_coeffs
-        showwarning = _warn
 
     def get_sobols(self, norm_sq, min_model_size):
         """
@@ -725,7 +722,6 @@ class Graphs:
         self.input = True
         self.standardize = standardize
         self.verbose = False
-        showwarning = _warn
 
     def factor_plots(self, graph_directory, var_list, plot_data, plot_name,
                      verify=None):
@@ -801,7 +797,6 @@ class ProbabilityBoxes:
         self.var_count = len(var_list)
         self.plot = False
         self.track_convergence_off = False
-        showwarning = _warn
 
     def generate_variable_str(self):
         """
@@ -1180,7 +1175,6 @@ class Variable:
         self.order = order
         self.var_str = f'x{self.number}'
         self.x = symbols(self.var_str)
-        showwarning = _warn
 
     __slots__ = ('distribution', 'samples', 'std_vals', 'type', 'name',
                  'resample', 'verify_vals', 'std_verify_vals', 'vals',
