@@ -125,8 +125,6 @@ def create_total_sobols(var_count, matrix, sobols):
         for j in range(1, len(matrix)):
             if matrix[j, i] != 0:
                 total_sobols[i] += sobols[j - 1]
-    sobal_sum = np.sum(total_sobols)
-    total_sobols = total_sobols / sobal_sum
 
     return(total_sobols)
 
