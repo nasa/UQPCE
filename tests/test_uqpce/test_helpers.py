@@ -543,7 +543,8 @@ class TestHelpers(unittest.TestCase):
 
         self.var_count = len(self.var_list)
         self.total_sobols = np.array([
-            0.33763913, 0.02885138, 0.14971526, 0.10950606, 0.37428818
+            0.33712224 + 0.00078038, 0.02809352 + 0.00078038, 0.14983211,
+            0.10959148, 0.33712224 + 0.03745803
         ])
 
         self.sobols = np.array([
