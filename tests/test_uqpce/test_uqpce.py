@@ -1,26 +1,20 @@
 import unittest
 
 import numpy as np
-from sympy import Matrix, symbols, Eq, N, expand, sympify, simplify
+from sympy import Matrix, symbols, Eq, N, expand, sympify
 
-from PCE_Codes.UQPCE import (
+from PCE_Codes.uqpce import MatrixSystem, SurrogateModel
+from PCE_Codes.variables.continuous import (
     UniformVariable, NormalVariable, BetaVariable, ExponentialVariable,
-    GammaVariable, MatrixSystem, SurrogateModel
+    GammaVariable
 )
 
 order = 2
-idx = 3
 
 # region: normal variable
-number = 0
 mean = 1
 stdev = 0.5
-norm_dict = {
-    'distribution':'normal', 'mean':mean, 'stdev':stdev,
-    'type':'aleatory', 'name':f'x{number}'
-}
-norm_var = NormalVariable(number, order)
-norm_var.initialize(norm_dict)
+norm_var = NormalVariable(mean, stdev, order=order, number=0)
 norm_var.vals = np.array([
     0.1508911 , 1.13232735, 1.04524425, 0.36369869, 0.64002868,
     0.74664909, 1.34666796, 0.72736668, 0.42280317, 1.15711335,
@@ -33,21 +27,14 @@ norm_var.vals = np.array([
     0.5049925 , 0.65833404, 0.31867009, 0.84161706, 1.35815508,
     0.49771936, 0.79380287, 1.47710471, 0.94029816, 1.24945768
 ])
-norm_var.standardize('vals', 'std_vals')
-norm_var.verify_vals = np.array([1.029939809893880])
-norm_var.standardize('verify_vals', 'std_verify_vals')
+norm_var.std_vals = norm_var.standardize('vals', 'std_vals')
+norm_var.std_verify_vals = norm_var.standardize_points(np.array([1.029939809893880]))
 # endregion: normal variable
 
 # region: uniform variable
 interval_low = 1.75
 interval_high = 2.25
-number = 1
-unif_dict = {
-    'distribution':'uniform', 'interval_low':interval_low,
-    'interval_high':interval_high, 'type':'aleatory', 'name':f'x{number}'
-}
-unif_var = UniformVariable(number, order)
-unif_var.initialize(unif_dict)
+unif_var = UniformVariable(interval_low, interval_high, order=order, number=1)
 unif_var.vals = np.array([
     2.24175203, 1.86126492, 1.76806408, 1.99217273, 2.11340606,
     2.21447413, 1.78640677, 1.88201559, 1.85798326, 2.23527088,
@@ -60,20 +47,13 @@ unif_var.vals = np.array([
     2.00789363, 1.79097481, 2.24809957, 2.13432934, 1.89638325,
     1.76479892, 2.17388118, 2.10339739, 2.0568413 , 1.92051619
 ])
-unif_var.standardize('vals', 'std_vals')
-unif_var.verify_vals = np.array([2.103023044009805])
-unif_var.standardize('verify_vals', 'std_verify_vals')
+unif_var.std_vals = unif_var.standardize('vals', 'std_vals')
+unif_var.std_verify_vals = unif_var.standardize_points(np.array([2.103023044009805]))
 # endregion: uniform variable
 
 # region: exponential variable
-number = 2
 lambd = 3
-exp_dict = {
-    'distribution':'exponential', 'lambda':lambd,
-    'type':'aleatory', 'name':f'x{number}'
-}
-exp_var = ExponentialVariable(number, order)
-exp_var.initialize(exp_dict)
+exp_var = ExponentialVariable(lambd, order=order, number=2)
 exp_var.vals = np.array([
     8.69118285e-01, 4.21465457e-01, 7.15743745e-02, 1.51038972e-01,
     3.44761746e-02, 1.76662640e-01, 1.52918571e-01, 2.82762034e-03,
@@ -89,21 +69,14 @@ exp_var.vals = np.array([
     2.15586609e-01, 2.84195903e-01, 3.14840242e-01, 2.05524179e-02,
     1.56740233e-01, 5.21499683e-01
 ])
-exp_var.standardize('vals', 'std_vals')
-exp_var.verify_vals = np.array([0.237943609477604])
-exp_var.standardize('verify_vals', 'std_verify_vals')
+exp_var.std_vals = exp_var.standardize('vals', 'std_vals')
+exp_var.std_verify_vals = exp_var.standardize_points(np.array([0.237943609477604]))
 # endregion: exponential variable
 
 # region: beta variable
-number = 3
 alpha = 0.5
 beta = 2
-beta_dict = {
-    'distribution':'beta', 'alpha':alpha, 'beta':beta,
-    'type':'aleatory', 'name':f'x{number}'
-}
-beta_var = BetaVariable(number, order)
-beta_var.initialize(beta_dict)
+beta_var = BetaVariable(alpha, beta, order=order, number=3)
 beta_var.vals = np.array([
     8.29187303e-01, 8.15638554e-02, 1.26223950e-01, 5.97955199e-01,
     4.85083543e-01, 3.38422586e-01, 5.01089814e-02, 2.48329650e-01,
@@ -119,21 +92,14 @@ beta_var.vals = np.array([
     2.44168677e-01, 4.44050662e-02, 1.61453380e-01, 2.00161749e-01,
     5.09092200e-03, 3.75763378e-04
 ])
-beta_var.standardize('vals', 'std_vals')
-beta_var.verify_vals = np.array([0.072181544120407])
-beta_var.standardize('verify_vals', 'std_verify_vals')
+beta_var.std_vals = beta_var.standardize('vals', 'std_vals')
+beta_var.std_verify_vals = beta_var.standardize_points(np.array([0.072181544120407]))
 # endregion: beta variable
 
 # region: gamma variable
-number = 4
 alpha = 1.0
 theta = 0.5
-gamma_dict = {
-    'distribution':'gamma', 'alpha':alpha, 'theta':theta,
-    'type':'aleatory', 'name':f'x{number}'
-}
-gamma_var = GammaVariable(number, order)
-gamma_var.initialize(gamma_dict)
+gamma_var = GammaVariable(alpha, theta, order=order, number=4)
 gamma_var.vals = np.array([
     0.73182462, 0.34443097, 0.05152389, 0.33232168, 0.22579406,
     2.30108506, 0.74698967, 0.32317909, 0.07897738, 1.31743861,
@@ -146,9 +112,8 @@ gamma_var.vals = np.array([
     0.51159338, 0.12728902, 0.12229771, 1.81307878, 0.93562495,
     0.10540639, 1.42158734, 0.17741185, 0.86773494, 0.4880535
 ])
-gamma_var.standardize('vals', 'std_vals')
-gamma_var.verify_vals = np.array([0.225540215280446])
-gamma_var.standardize('verify_vals', 'std_verify_vals')
+gamma_var.std_vals = gamma_var.standardize('vals', 'std_vals')
+gamma_var.std_verify_vals = gamma_var.standardize_points(np.array([0.225540215280446]))
 # endregion: gamma variable
 
 # region: responses
@@ -167,12 +132,25 @@ responses = np.array([
 # endregion: responses
 var_list = [norm_var, unif_var, exp_var, beta_var, gamma_var]
 matrix = MatrixSystem(responses, var_list)
-min_model_size, model_matrix, norm_sq = matrix.form_norm_sq(order)
+min_model_size, model_matrix = matrix.create_model_matrix(order)
+norm_sq = matrix.form_norm_sq(order)
 var_basis_vect_symb = matrix.build()
 var_basis_sys_eval = matrix.evaluate()
-matrix_coeffs, var_basis = matrix.solve()
+matrix_coeffs = matrix.solve()
+
+idx = 3
+err_ver, mean_err, mean, var = (
+    matrix._build_alt_model(
+        responses, var_basis_sys_eval, norm_sq, idx
+    )
+)
+press_stats = matrix.get_press_stats()
 
 sig_combo = np.array([0, 1, 2, 3, 4, 5, 7, 20])
+
+var_basis_vect_symb_upd, norm_sq_upd, model_matrix_upd, min_model_size_upd = (
+    matrix.update(sig_combo)
+)
 
 
 class TestMatrixSystem(unittest.TestCase):
@@ -193,14 +171,23 @@ class TestMatrixSystem(unittest.TestCase):
         self.var_basis_vect_symb = var_basis_vect_symb
         self.var_basis_sys_eval = var_basis_sys_eval
         self.matrix_coeffs = matrix_coeffs
+
+        self.err_ver = err_ver
+        self.mean_err = mean_err
         self.mean = mean
+        self.var = var
+        self.press_stats = press_stats
+
+        self.var_basis_vect_symb_upd = var_basis_vect_symb_upd[0]
+        self.norm_sq_upd = norm_sq_upd
+        self.model_matrix_upd = model_matrix_upd
+        self.min_model_size_upd = min_model_size_upd
 
         self.sig_combo = sig_combo
 
     def test_create_model_matrix(self):
         """
-        Testing MatrixSystem create_model_matrix for a system with 5 common
-        variable types.
+        Testing create_model_matrix for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """
@@ -224,11 +211,11 @@ class TestMatrixSystem(unittest.TestCase):
 
     def test_form_norm_sq(self):
         """
-        Testing MatrixSystem form_norm_sq for a system with 5 common
-        variable types.
+        Testing form_norm_sq for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """
+
         # region: norm squared
         true_norm_sq = np.array([
             [1],
@@ -263,8 +250,7 @@ class TestMatrixSystem(unittest.TestCase):
 
     def test_build(self):
         """
-        Testing MatrixSystem form_norm_sq for a system with 5 common
-        variable types.
+        Testing form_norm_sq for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """
@@ -289,20 +275,12 @@ class TestMatrixSystem(unittest.TestCase):
 
         basis_size = len(true_var_basis_vect_symb)
 
-        equal = [
-            str(Eq(
-                N(sympify(expand(true_var_basis_vect_symb[i])), self.tol),
-                N(sympify(expand(self.var_basis_vect_symb[i])), self.tol)
-            ))
-            for i in range(basis_size)
-        ]
+        equal = [str(Eq(N(sympify(expand(true_var_basis_vect_symb[i])), self.tol), N(sympify(expand(self.var_basis_vect_symb[i])), self.tol))) for i in range(basis_size)]
 
         eval_loc = locals().copy()
         eval_glob = globals().copy()
 
-        evaled = np.array([
-            eval(equal[i], eval_loc, eval_glob) for i in range(len(equal))
-        ])
+        evaled = np.array([eval(equal[i], eval_loc, eval_glob) for i in range(len(equal))])
 
         self.assertTrue(
             evaled.all(),
@@ -311,8 +289,7 @@ class TestMatrixSystem(unittest.TestCase):
 
     def test_evaluate(self):
         """
-        Testing MatrixSystem evaluate for a system with 5 common variable
-        types.
+        Testing evaluate for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """
@@ -357,16 +334,13 @@ class TestMatrixSystem(unittest.TestCase):
         # endregion: variable basis
 
         self.assertTrue(
-            np.isclose(
-                true_var_basis_sys_eval, self.var_basis_sys_eval[0:5],
-                rtol=0, atol=1e-6
-            ).all(),
+            np.isclose(true_var_basis_sys_eval, self.var_basis_sys_eval[0:5], rtol=0, atol=1e-6).all(),
             msg='MatrixSystem build is not correct'
         )
 
     def test_solve(self):
         """
-        Testing MatrixSystem solve for a system with 5 common variable types.
+        Testing solve for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """
@@ -378,10 +352,160 @@ class TestMatrixSystem(unittest.TestCase):
         # endregion: coefficients
 
         self.assertTrue(
-            np.isclose(
-                true_matrix_coeffs, self.matrix_coeffs, rtol=0, atol=1e-5
-            ).all(),
+            np.isclose(true_matrix_coeffs, self.matrix_coeffs, rtol=0, atol=1e-5).all(),
             msg='MatrixSystem solve is not correct'
+        )
+
+    def test__build_alt_model(self):
+        """
+        Testing _build_alt_model for a system wtih our 5 common variable types.
+
+        This example is from a well-tested test case.
+        """
+        true_err_ver = 3e-09
+        true_mean_err = 9e-09
+        true_mean = 9.8
+        true_var = 6.674
+
+        self.assertAlmostEqual(
+            true_err_ver, self.err_ver, delta=1e-4,
+            msg='MatrixSystem _build_alt_model is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_mean_err, self.mean_err,
+            msg='MatrixSystem _build_alt_model is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_mean, self.mean, delta=1e-3,
+            msg='MatrixSystem _build_alt_model is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_var, self.var, delta=1e-3,
+            msg='MatrixSystem _build_alt_model is not correct'
+        )
+
+    def test_get_press_stats(self):
+        """
+        Testing get_press_stats for a system wtih our 5 common variable types.
+
+        This example is from a well-tested test case.
+        """
+        true_press = 0
+        true_mean_of_model_mean_err = 0
+        true_variance_of_model_mean_err = 0
+        true_mean_of_model_mean = 9.8
+        true_variance_of_model_mean = 0
+        true_mean_of_model_variance = 6.674137036805925
+        true_variance_of_model_variance = 0
+
+        press = self.press_stats['PRESS']
+        mean_of_model_mean_err = self.press_stats['mean_of_model_mean_err']
+        variance_of_model_mean_err = self.press_stats['variance_of_model_mean_err']
+        mean_of_model_mean = self.press_stats['mean_of_model_mean']
+        variance_of_model_mean = self.press_stats['variance_of_model_mean']
+        mean_of_model_variance = self.press_stats['mean_of_model_variance']
+        variance_of_model_variance = self.press_stats['variance_of_model_variance']
+
+        self.assertAlmostEqual(
+            true_press, press,
+            msg='MatrixSystem get_press_stats is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_mean_of_model_mean_err, mean_of_model_mean_err,
+            msg='MatrixSystem get_press_stats is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_variance_of_model_mean_err, variance_of_model_mean_err,
+            msg='MatrixSystem get_press_stats is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_mean_of_model_mean, mean_of_model_mean, delta=1e-8,
+            msg='MatrixSystem get_press_stats is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_variance_of_model_mean, variance_of_model_mean,
+            msg='MatrixSystem get_press_stats is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_mean_of_model_variance, mean_of_model_variance, delta=1e-9,
+            msg='MatrixSystem get_press_stats is not correct'
+        )
+
+        self.assertAlmostEqual(
+            true_variance_of_model_variance, variance_of_model_variance,
+            msg='MatrixSystem get_press_stats is not correct'
+        )
+
+    def test_update(self):
+        """
+        Testing update for a system wtih our 5 common variable types.
+
+        This example is from a well-tested test case.
+        """
+        x0 = symbols('x0')
+        x1 = symbols('x1')
+        x2 = symbols('x2')
+        x3 = symbols('x3')
+        x4 = symbols('x4')
+
+        true_var_basis_vect_symb = Matrix([[
+            1, x0, x1, x2 - (1 / 3), x3 - 0.2, x4 - 1, x0 * x1, x4 ** 2 - 4 * x4 + 2
+        ]])
+        basis_size = len(true_var_basis_vect_symb)
+        equal = [str(Eq(N(sympify(expand(true_var_basis_vect_symb[i])), self.tol), N(sympify(expand(self.var_basis_vect_symb_upd[i])), self.tol))) for i in range(basis_size)]
+        eval_loc = locals().copy()
+        eval_glob = globals().copy()
+        evaled = np.array([eval(equal[i], eval_loc, eval_glob) for i in range(len(equal))])
+
+        true_norm_sq = np.array([
+            [1         ],
+            [1         ],
+            [1 / 3     ],
+            [1 / 9     ],
+            [16 / 350  ],
+            [1         ],
+            [1 / 3     ],
+            [4         ]
+       ])
+
+        true_model_matrix = np.array([
+            [0., 0., 0., 0., 0.],
+            [1., 0., 0., 0., 0.],
+            [0., 1., 0., 0., 0.],
+            [0., 0., 1., 0., 0.],
+            [0., 0., 0., 1., 0.],
+            [0., 0., 0., 0., 1.],
+            [1., 1., 0., 0., 0.],
+            [0., 0., 0., 0., 2.]
+        ])
+        true_min_model_size = len(true_norm_sq)
+
+        self.assertTrue(
+            evaled.all(),
+            msg='MatrixSystem update is not correct'
+        )
+
+        self.assertTrue(
+            np.isclose(true_norm_sq, norm_sq_upd, rtol=0, atol=1e-6).all(),
+            msg='MatrixSystem update is not correct'
+        )
+
+        self.assertTrue(
+            np.isclose(true_model_matrix, model_matrix_upd, rtol=0, atol=1e-6).all(),
+            msg='MatrixSystem update is not correct'
+        )
+
+        self.assertEqual(
+            true_min_model_size, min_model_size_upd,
+            msg='MatrixSystem update is not correct'
         )
 
 
@@ -438,21 +562,23 @@ class TestSurrogateModel(unittest.TestCase):
         self.responses = responses
         self.model = SurrogateModel(self.responses, self.matrix_coeffs)
         self.sigma_sq, self.resp_mean = self.model.calc_var(self.norm_sq)
-        self.sobols = self.model.get_sobols(self.norm_sq, self.min_model_size)
+        self.sobols = self.model.get_sobols(self.norm_sq)
         self.error, self.pred = self.model.calc_error(self.var_basis_sys_eval)
         self.mean_sq_error, self.hat_matrix, self.shapiro_results = (
-            self.model.check_normality(self.var_basis_sys_eval, self.min_model_size, sig)
+            self.model.check_normality(self.var_basis_sys_eval, sig)
         )
 
+        beg_idx = 0
         verify_size = 1
+        var_list_symb = [symbols('x0'), symbols('x1'), symbols('x2'), symbols('x3'), symbols('x4')]
         self.verify_pred, self.var_basis_sys_eval_verify = self.model.verify(
-            self.var_basis_vect_symb, self.var_list, verify_size
+            self.var_basis_vect_symb, self.var_list, verify_size, var_list_symb,
+            attr='std_verify_vals', beg_idx=beg_idx
         )
 
     def test_get_sobols(self):
         """
-        Testing SurrogateModel get_sobols for a system with 5 common variable
-        types.
+        Testing get_sobols for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """
@@ -469,12 +595,11 @@ class TestSurrogateModel(unittest.TestCase):
 
     def test_calc_var(self):
         """
-        Testing SurrogateModel calc_var for a system with 5 common variable
-        types.
+        Testing calc_var for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """
-        true_sigma_sq = 6.6741
+        true_sigma_sq = 6.674137033333334
         true_resp_mean = 9.8
 
         self.assertAlmostEqual(
@@ -489,8 +614,7 @@ class TestSurrogateModel(unittest.TestCase):
 
     def test_calc_error(self):
         """
-        Testing SurrogateModel calc_error for a system with 5 common variable
-        types.
+        Testing calc_error for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """
@@ -508,7 +632,6 @@ class TestSurrogateModel(unittest.TestCase):
             7.71822459, 7.5307172, 8.66196111, 13.1734537, 11.16095766,
             6.05241666, 11.9000305, 9.86202875, 9.0993081, 9.78234558
         ])
-
         # endregion: setting up
 
         error_mean = np.mean(np.abs(self.error))
@@ -523,28 +646,8 @@ class TestSurrogateModel(unittest.TestCase):
             msg='SurrogateModel calc_error is not correct'
         )
 
-    def test_calc_mean_error(self):
-        """
-        Testing SurrogateModel calc_mean_error for a system with 5 common
-        variable types.
-
-        This example is from a well-tested test case.
-        """
-        true_mean_err = 1e-08
-        mean_err = self.model.calc_mean_error(self.error)
-
-        self.assertAlmostEqual(
-            true_mean_err, mean_err, delta=1e-8,
-            msg='SurrogateModel calc_error is not correct'
-        )
-
     def test_check_normality(self):
-        """
-        Testing SurrogateModel check_normality for a system with 5 common
-        variable types.
-
-        This example is from a well-tested test case.
-        """
+        tol = 1e-8
         true_mean_sq_error = 3e-08
         true_hat_matrix_diag = np.array([
             0.85301608, 0.14710155, 0.32613936, 0.55408452, 0.44386865,
@@ -565,18 +668,18 @@ class TestSurrogateModel(unittest.TestCase):
             hat_matrix_diag[i] = self.hat_matrix[i, i]
 
         self.assertAlmostEqual(
-            true_mean_sq_error, self.mean_sq_error, delta=1e-8,
+            true_mean_sq_error, self.mean_sq_error, delta=tol,
             msg='SurrogateModel check_normality is not correct'
         )
 
         self.assertTrue(
-            np.isclose(true_hat_matrix_diag, hat_matrix_diag, rtol=0, atol=1e-6).all(),
+            np.isclose(true_hat_matrix_diag, hat_matrix_diag, rtol=0, atol=tol).all(),
             msg='SurrogateModel check_normality is not correct'
         )
 
     def test_verify(self):
         """
-        Testing SurrogateModel verify for a system with 5 common variable types.
+        Testing verify for a system wtih our 5 common variable types.
 
         This example is from a well-tested test case.
         """

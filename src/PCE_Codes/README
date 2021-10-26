@@ -1,0 +1,10 @@
+This is the README file for Uncertainty Quantification using Polynomial Chaos Expansion (UQPCE).
+
+To set up UQPCE for use:
+
+1) Ensure all of the requirements from the documentation are met.
+   - Alternatively, create a conda environment using the environment.yml file
+	 provided in the UQPCE/env folder. 
+2) Add the folder UQPCE/src to the PATH and PYTHONPATH.
+3) In a directory containing an input.yaml, run_matrix.dat, and results.dat, run 
+   "python -m PCE_Codes".

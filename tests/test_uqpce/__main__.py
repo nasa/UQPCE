@@ -1,28 +1,11 @@
-#!/usr/bin/env python
 import unittest
-import warnings
+import numpy as np
 
-from test_uqpce.test_uqpce import TestMatrixSystem, TestSurrogateModel
-from test_uqpce.test_helpers import TestHelpers
-from test_uqpce.test_pbox import TestProbabilityBoxes
-from test_uqpce.test_variables import (
-    TestVariable, TestUniformVariable, TestNormalVariable, TestBetaVariable,
-    TestExponentialVariable, TestGammaVariable
-)
+import test_uqpce
 
 if __name__ == '__main__':
 
-    test_list = [
-        TestMatrixSystem, TestSurrogateModel, TestHelpers, TestProbabilityBoxes,
-        TestVariable, TestUniformVariable, TestNormalVariable, TestBetaVariable,
-        TestExponentialVariable, TestGammaVariable
-    ]
+    np.random.seed(33)
 
-    suite = unittest.TestSuite()
-    loader = unittest.TestLoader()
-
-    for test in test_list:
-        tests = loader.loadTestsFromTestCase(test)
-        suite.addTests(tests)
-
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestSuite(test_uqpce)
+    unittest.main()

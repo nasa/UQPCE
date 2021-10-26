@@ -1,0 +1,34 @@
+--------------------------------------------------------------------------------
+
+Steps to run uqpce_wrapper:
+
+1) have a input.yaml file in your directory
+	- make sure all UQPCE Settings are specified in this file
+
+2) set EXECPATH variable
+	- path to the executable
+		
+3) add PCE_Codes to your PATH and PYTHONPATH
+
+4) add uqpce_wrapper to your PATH and PYTHONPATH
+
+5) run "python -m uqpce_wrapper"
+
+--------------------------------------------------------------------------------
+
+Example (bash):
+
+	export EXECPATH="/home/myname/bin/executable"
+	export PATH="/home/myname/dir_to_PCE_Codes:$PATH"
+	export PYTHONPATH="/home/myname/dir_to_PCE_Codes:$PYTHONPATH"
+	export PATH="/home/myname/dir_to_uqpce_wrapper:$PATH"
+	export PYTHONPATH="/home/myname/dir_to_uqpce_wrapper:$PYTHONPATH"
+
+	python -m uqpce_wrapper
+
+--------------------------------------------------------------------------------
+
+To run the UQPCE example that generates the results from UQPCE, follow the 
+instructions and set EXECPATH to "uqpce_wrapper/execute_uqpce.py".
+
+--------------------------------------------------------------------------------

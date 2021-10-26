@@ -1,0 +1,21 @@
+Variable 0:
+  distribution: normal
+  mean: 2
+  stdev: 0.4
+  type: aleatory
+Variable 1:
+  distribution: uniform
+  interval_low: 0
+  interval_high: 2
+  type: aleatory
+Variable 2: # Sinusoidal distribution
+  distribution: continuous
+  pdf: 0.5*sin(x)
+  interval_low: 0
+  interval_high: pi
+  type: aleatory
+
+Settings:
+  order: 2
+  verbose: True
+  plot: True
