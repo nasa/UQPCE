@@ -159,17 +159,3 @@ class UQPCEReport(Report):
             path = os.path.join(directory, report_file)
 
             self._write(self.report_name, self.body, path)
-
-            try:
-                proc = subprocess.Popen(
-                    f'pdflatex {path} -output-directory={directory}'.split(),
-                    stdout=PIPE, stderr=PIPE
-                )
-                proc.wait()
-
-            except FileNotFoundError:
-                warn(
-                    f'Unable to generate PDF document. A LaTeX file {report_file} '
-                    f'needs to be compiled using command "pdflatex {report_file}"'
-                )
-
