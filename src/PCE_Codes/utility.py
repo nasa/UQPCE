@@ -510,7 +510,7 @@ def uqpce_setup(prog_set, iter_set=IterSettings()):
                     "'--user-func' flag with an equation is also used\n"
                 )
 
-                exit()
+            exit()
 
     if prog_set.user_func is not None:  # user func given/samples generated
         if is_manager and prog_set.verbose:
