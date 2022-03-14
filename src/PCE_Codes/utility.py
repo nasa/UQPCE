@@ -787,9 +787,25 @@ def uqpce_basis(prog_set, iter_set):
         var_basis_sys_eval, significance, graph_dir
     )
 
+    sobol_str = ''.join((
+            sobol_str,
+            'Total Sobols\n'
+    ))
+
     for i in range(var_count):
         sobol_str = ''.join((
-            sobol_str, f'Total Sobol {var_list[i].name} = {tot_sobol[i]:.5}\n'
+            sobol_str, f'   Total Sobol {var_list[i].name} = {tot_sobol[i]:.5}\n'
+        ))
+
+    sobol_str = ''.join((
+            sobol_str,
+            '\nRescaled Total Sobols\n'
+    ))
+
+    sobol_sum = np.sum(tot_sobol)
+    for i in range(var_count):
+        sobol_str = ''.join((
+            sobol_str, f'   Total Sobol {var_list[i].name} = {tot_sobol[i]/sobol_sum:.5}\n'
         ))
 
     if is_manager and verbose:
