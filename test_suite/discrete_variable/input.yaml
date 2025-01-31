@@ -1,0 +1,49 @@
+Variable 0:
+  distribution: normal
+  mean: 2
+  stdev: 0.4
+  type: aleatory
+Variable 1:
+  distribution: uniform
+  interval_low: 0
+  interval_high: 2
+  type: aleatory
+Variable 2:
+  distribution: exponential
+  lambda: 7
+  type: aleatory
+Variable 3:
+  distribution: beta
+  alpha: 0.6
+  beta: 5.0
+  type: aleatory
+Variable 4:
+  distribution: poisson
+  lambda: 9
+  interval_low: -3
+  type: aleatory
+Variable 5:
+  distribution: discrete_uniform
+  interval_low: 0
+  interval_high: 6
+  type: aleatory
+Variable 6:
+  distribution: negative_binomial
+  interval_low: -2
+  r: 0.4
+  p: 0.4
+  type: aleatory
+Variable 7:
+  distribution: hypergeometric
+  interval_low: 7
+  M: 20
+  n: 7
+  N: 12
+  type: aleatory
+
+Settings:
+    order: 3
+    plot: true
+    verbose: true
+    verify: true
+    backend: Agg

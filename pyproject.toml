@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling", "numpy>=1.9.2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "uqpce"
+dynamic = ["version"]
+description = "Uncertainty Quantification with Polynomial Chaos Expansion"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    { name = "UQPCE Team"},
+]
+keywords = [
+    "uncertainty quantification",
+    "design under uncertainty"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3"
+]
+dependencies = [
+    "numpy",
+    "PyYAML",
+    "matplotlib",
+    "scipy",
+    "sympy",
+    "openmdao",
+    "mpi4py"
+]
+
+[tool.hatch.version]
+path = "uqpce/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "uqpce",
+]

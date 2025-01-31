@@ -1,0 +1,67 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+
+
+parts:
+- caption: User Guide
+  chapters:
+  - file: user-guide/getting-started
+  - file: user-guide/variables
+  - file: user-guide/inputs
+  - file: user-guide/settings
+  - file: user-guide/outputs
+  - file: user-guide/analysis
+
+- caption: Reference
+  maxdepth: 1
+  chapters:
+  - file: theory/theory
+    sections:
+      - file: theory/symbols-and-defs
+      - file: theory/variables
+      - file: theory/pce
+      - file: theory/sampling
+      - file: theory/techniques
+  - file: theory/openmdao
+    sections:
+      - file: theory/uqpcegroup-overview
+      - file: theory/confidence-interval
+      - file: theory/derivatives
+  - file: verification/verification
+    sections:
+      - file: verification/pce
+      - file: verification/confidence-interval
+      - file: verification/uq-with-openmdao
+      - file: verification/limitations
+  - file: reference/reference
+    sections:
+    - file: reference/continuous-variables
+      sections:
+      - file: reference/continuous/uniform
+      - file: reference/continuous/normal
+      - file: reference/continuous/beta
+      - file: reference/continuous/gamma
+      - file: reference/continuous/exponential
+      - file: reference/continuous/user-input
+      - file: reference/continuous/epistemic
+    - file: reference/discrete-variables
+      sections:
+      - file: reference/discrete/uniform
+      - file: reference/discrete/poisson
+      - file: reference/discrete/hypergeometric
+      - file: reference/discrete/negative-binomial
+      - file: reference/discrete/user-input
+      - file: reference/discrete/epistemic
+    - file: reference/pce
+    - file: reference/uqpce-group
+
+- caption: Release Notes
+  chapters:
+  - file: release-notes
+
+- caption: Bibliography
+  chapters:
+  - file: bibliography

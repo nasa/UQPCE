@@ -1,0 +1,34 @@
+Variable 0:
+  distribution: normal
+  mean: 1
+  stdev: 0.5
+  type: aleatory
+Variable 1:
+  distribution: uniform
+  interval_low: 1.75
+  interval_high: 2.25
+  type: aleatory
+Variable 2:
+  distribution: exponential
+  lambda: 3
+  type: aleatory
+Variable 3:
+  distribution: beta
+  alpha: 0.5
+  beta: 2.0
+  type: aleatory
+Variable 4:
+  distribution: gamma
+  alpha: 1.0
+  theta: 0.5
+  type: aleatory
+  
+Settings:
+    order: 2
+    version: true
+    verbose: true
+    plot: true
+    plot_stand: true
+    model_conf_int: true
+    stats: true
+    verify: true
