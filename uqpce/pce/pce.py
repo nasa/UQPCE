@@ -39,43 +39,69 @@ class PCE():
     """
     Parameters
     ----------
-    **kwargs - key word arguments used by UQPCE
-        input_file - file containing variables
-        matrix_file - file containing matrix elements
-        results_file  - file containing results 
-        verification_results_file - file containing verification results
-        verification_matrix_file - file containing verification matrix elements
-        output_directory - directory that the outputs will be put in
-        case - case name of input data
-        significance - significance level of the confidence interval
-        order - order of polynomial chaos expansion
-        over_samp_ratio - over sampling ratio; factor for how many points to be 
-                          used in calculations
-        verify_over_samp_ratio - over sampling ratio for verification; factor 
-                                 for how many points to be used in calculations
-        aleat_sub_samp_size - the number of samples to check the new high and 
-                              low intervals at for each individual curve
-        epist_sub_samp_size - the number of curves to check the new high and low 
-                              intervals at for a set of curves
-        conv_threshold_percent - the percent of the response mean to be used as 
-                                 a threshold for tracking convergence
-        epist_samp_size - the number of times to sample for each variable with 
-                          epistemic uncertainty
-        aleat_samp_size - the number of times to sample for each variable with 
-                          aleatory uncertainty
-        version - displays the version of the software
-        verbose - increase output verbosity
-        verify - allows verification of results
-        plot - generates factor vs response plots, pbox plot, and error plots
-        plot_stand - plots standardized variables
-        track_convergence_off - allows users to converge on confidence interval 
-                                until the change between the two iters is less 
-                                than the threshold
-        model_conf_int - includes uncertainties associated with the model itself
-        stats - perform additional statistics for a more-comprehensive profile 
-                of the model
-        seed - if UQPCE should use a seed for random values
-    
+    kwargs :
+        key word arguments used by UQPCE
+
+        input_file :
+            file containing variables
+        matrix_file :
+            file containing matrix elements
+        results_file  :
+            file containing results 
+        verification_results_file : 
+            file containing verification results
+        verification_matrix_file : 
+            file containing verification matrix elements
+        output_directory : 
+            directory that the outputs will be put in
+        case : 
+            case name of input data
+        significance : 
+            significance level of the confidence interval
+        order : 
+            order of polynomial chaos expansion
+        over_samp_ratio : 
+            over sampling ratio; factor for how many points to be used in 
+            calculations
+        verify_over_samp_ratio : 
+            over sampling ratio for verification; factor for how many points to be 
+            used in calculations
+        aleat_sub_samp_size : 
+            the number of samples to check the new high and low intervals at for 
+            each individual curve
+        epist_sub_samp_size : 
+            the number of curves to check the new high and low intervals at for a 
+            set of curves
+        conv_threshold_percent : 
+            the percent of the response mean to be used as a threshold for tracking 
+            convergence
+        epist_samp_size : 
+            the number of times to sample for each variable with epistemic 
+            uncertainty
+        aleat_samp_size : 
+            the number of times to sample for each variable with aleatory 
+            uncertainty
+        version : 
+            displays the version of the software
+        verbose : 
+            increase output verbosity
+        verify : 
+            allows verification of results
+        plot : 
+            generates factor vs response plots, pbox plot, and error plots
+        plot_stand : 
+            plots standardized variables
+        track_convergence_off : 
+            allows users to converge on confidence interval until the change between 
+            the two iters is less than the threshold
+        model_conf_int : 
+            includes uncertainties associated with the model itself
+        stats : 
+            perform additional statistics for a more-comprehensive profile 
+            of the model
+        seed : 
+            if UQPCE should use a seed for random values
+        
     The Polynomial Chaos Exapansion (PCE) model class. This class is intended to 
     be an interface for programmers.
     """
