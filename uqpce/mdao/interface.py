@@ -26,7 +26,7 @@ def initialize(input_file: str='input.yaml', matrix_file: str='run_matrix.dat', 
     for key, value in var_dict.items():
         pce.add_variable(**value)
 
-    X = np.loadtxt(matrix_file)
+    X = np.loadtxt(matrix_file, ndmin=2)
 
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore")

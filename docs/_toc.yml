@@ -34,7 +34,6 @@ parts:
     sections:
       - file: verification/pce
       - file: verification/confidence-interval
-      - file: verification/uq-with-openmdao
       - file: verification/limitations
   - file: reference/reference
     sections:

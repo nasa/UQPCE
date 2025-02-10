@@ -59,9 +59,9 @@ class PCE():
                               intervals at for a set of curves
         conv_threshold_percent - the percent of the response mean to be used as 
                                  a threshold for tracking convergence
-        epist_samp_size - the number of times to sample for each varaible with 
+        epist_samp_size - the number of times to sample for each variable with 
                           epistemic uncertainty
-        aleat_samp_size - the number of times to sample for each varaible with 
+        aleat_samp_size - the number of times to sample for each variable with 
                           aleatory uncertainty
         version - displays the version of the software
         verbose - increase output verbosity
@@ -484,7 +484,7 @@ class PCE():
 
         Loads and returns a matrix file.
         """
-        return np.loadtxt(filename)
+        return np.loadtxt(filename, ndmin=2)
 
 
     def set_samples(self, X: np.ndarray) -> None:
