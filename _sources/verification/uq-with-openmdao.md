@@ -4,14 +4,6 @@ This section will cover the verification examples for a robust design optimizati
 
 
 
-## Paraboloid Example
-
-### Background
-
-### Outputs
-
-
-
 ## Airfoil Example
 
 Below we will discuss a basic airfoil optimization problem.
@@ -19,7 +11,7 @@ Below we will discuss a basic airfoil optimization problem.
 
 ### Background
 
-The design variables are the angle of attack, $\alpha$; the aspect ratio, $AR$; *, $C_{L \ \alpha, 0}$; and *, $C_{L \ \alpha}$. The uncertain variables are the efficiency factor, $e$; the zero lift drag coefficient, $C_{D \ 0}$; *, $C_{D \ \alpha, 4}$; and *, $C_{L \ \alpha, 4}$.
+The design variables are the angle of attack, $\alpha$; the aspect ratio, $AR$; Wing Section $C_L$ at $\alpha = 0$, $C_{L \ \alpha, 0}$; and wing section lift curve slope, $C_{L \ \alpha}$. The uncertain variables are the efficiency factor, $e$; the zero lift drag coefficient, $C_{D \ 0}$; and constants $C_{D \ \alpha, 4}$ and $C_{L \ \alpha, 4}$.
 
 
 
@@ -52,7 +44,7 @@ $$
     obj = max \Biggl(\Bigl(\frac{C_L}{C_D} \Bigl)_{CIH}\Biggl)
 $$ (obj_eq)
 
-We are maximizing $\big(\frac{C_L}{C_D}\big)_{CIL}$, which is the low 95% confidence interval. Choosing this objective sheilds our design from the "worst-case" scenario of a low lift-to-drag ratio.
+We are maximizing $\big(\frac{C_L}{C_D}\big)_{CIL}$, which is the low 95% confidence interval. Choosing this objective shields our design from the "worst-case" scenario of a low lift-to-drag ratio.
 
 ### Results
 

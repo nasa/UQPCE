@@ -66,8 +66,6 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Limitations" href="limitations.html" />
-    <link rel="prev" title="Confidence Interval" href="confidence-interval.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -168,7 +166,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../user-guide/analysis.html">Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../theory/theory.html">Theory and Background</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../theory/symbols-and-defs.html">Symbols and Definitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../theory/variables.html">Variables</a></li>
@@ -183,10 +181,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../theory/derivatives.html">Analytic Derivatives</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="verification.html">Verification</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="verification.html">Verification</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="pce.html">UQPCE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="confidence-interval.html">Confidence Interval</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uncertainty Quantificaion with OpenMDAO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="limitations.html">Limitations</a></li>
 </ul>
 </li>
@@ -415,13 +412,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paraboloid-example">Paraboloid Example</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outputs">Outputs</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#airfoil-example">Airfoil Example</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-point">Initial Point</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#upper-bound-optimized-point">Upper-Bound Optimized Point</a></li>
@@ -444,21 +436,12 @@ document.write(`
   <div class="tex2jax_ignore mathjax_ignore section" id="uncertainty-quantificaion-with-openmdao">
 <h1>Uncertainty Quantificaion with OpenMDAO<a class="headerlink" href="#uncertainty-quantificaion-with-openmdao" title="Permalink to this heading">#</a></h1>
 <p>This section will cover the verification examples for a robust design optimization problem using the <a class="reference external" href="https://openmdao.org/">OpenMDAO</a> framework.</p>
-<div class="section" id="paraboloid-example">
-<h2>Paraboloid Example<a class="headerlink" href="#paraboloid-example" title="Permalink to this heading">#</a></h2>
-<div class="section" id="background">
-<h3>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h3>
-</div>
-<div class="section" id="outputs">
-<h3>Outputs<a class="headerlink" href="#outputs" title="Permalink to this heading">#</a></h3>
-</div>
-</div>
 <div class="section" id="airfoil-example">
 <h2>Airfoil Example<a class="headerlink" href="#airfoil-example" title="Permalink to this heading">#</a></h2>
 <p>Below we will discuss a basic airfoil optimization problem.</p>
-<div class="section" id="id1">
-<h3>Background<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
-<p>The design variables are the angle of attack, <span class="math notranslate nohighlight">\(\alpha\)</span>; the aspect ratio, <span class="math notranslate nohighlight">\(AR\)</span>; *, <span class="math notranslate nohighlight">\(C_{L \ \alpha, 0}\)</span>; and *, <span class="math notranslate nohighlight">\(C_{L \ \alpha}\)</span>. The uncertain variables are the efficiency factor, <span class="math notranslate nohighlight">\(e\)</span>; the zero lift drag coefficient, <span class="math notranslate nohighlight">\(C_{D \ 0}\)</span>; *, <span class="math notranslate nohighlight">\(C_{D \ \alpha, 4}\)</span>; and *, <span class="math notranslate nohighlight">\(C_{L \ \alpha, 4}\)</span>.</p>
+<div class="section" id="background">
+<h3>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h3>
+<p>The design variables are the angle of attack, <span class="math notranslate nohighlight">\(\alpha\)</span>; the aspect ratio, <span class="math notranslate nohighlight">\(AR\)</span>; Wing Section <span class="math notranslate nohighlight">\(C_L\)</span> at <span class="math notranslate nohighlight">\(\alpha = 0\)</span>, <span class="math notranslate nohighlight">\(C_{L \ \alpha, 0}\)</span>; and wing section lift curve slope, <span class="math notranslate nohighlight">\(C_{L \ \alpha}\)</span>. The uncertain variables are the efficiency factor, <span class="math notranslate nohighlight">\(e\)</span>; the zero lift drag coefficient, <span class="math notranslate nohighlight">\(C_{D \ 0}\)</span>; and constants <span class="math notranslate nohighlight">\(C_{D \ \alpha, 4}\)</span> and <span class="math notranslate nohighlight">\(C_{L \ \alpha, 4}\)</span>.</p>
 <div align="center">
 <table class="colwidths-auto table">
 <thead>
@@ -514,18 +497,18 @@ document.write(`
 </div>
 <p>The below equations for <span class="math notranslate nohighlight">\(C_L\)</span> and <span class="math notranslate nohighlight">\(C_D\)</span> are implemented in components, with the <span class="math notranslate nohighlight">\(\frac{C_L}{C_D}\)</span> calculation in a group.</p>
 <div class="math notranslate nohighlight" id="equation-cl-eq">
-<span class="eqno">(23)<a class="headerlink" href="#equation-cl-eq" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">()<a class="headerlink" href="#equation-cl-eq" title="Permalink to this equation">#</a></span>\[
     C_L = C_{L_{\alpha, 0}}+C_{L_{\alpha}} \cdot \alpha-C_{L_{\alpha, 4}} \cdot \alpha^4 
 \]</div>
 <div class="math notranslate nohighlight" id="equation-cd-eq">
-<span class="eqno">(24)<a class="headerlink" href="#equation-cd-eq" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">()<a class="headerlink" href="#equation-cd-eq" title="Permalink to this equation">#</a></span>\[
     C_D = C_{D_{0}} + \frac{C_L^2}{\pi \cdot AR \cdot e}+C_{D_{\alpha, 4}} \cdot \alpha^4
 \]</div>
 <div class="math notranslate nohighlight" id="equation-obj-eq">
-<span class="eqno">(25)<a class="headerlink" href="#equation-obj-eq" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">()<a class="headerlink" href="#equation-obj-eq" title="Permalink to this equation">#</a></span>\[
     obj = max \Biggl(\Bigl(\frac{C_L}{C_D} \Bigl)_{CIH}\Biggl)
 \]</div>
-<p>We are maximizing <span class="math notranslate nohighlight">\(\big(\frac{C_L}{C_D}\big)_{CIL}\)</span>, which is the low 95% confidence interval. Choosing this objective sheilds our design from the “worst-case” scenario of a low lift-to-drag ratio.</p>
+<p>We are maximizing <span class="math notranslate nohighlight">\(\big(\frac{C_L}{C_D}\big)_{CIL}\)</span>, which is the low 95% confidence interval. Choosing this objective shields our design from the “worst-case” scenario of a low lift-to-drag ratio.</p>
 </div>
 <div class="section" id="results">
 <h3>Results<a class="headerlink" href="#results" title="Permalink to this heading">#</a></h3>
@@ -563,14 +546,14 @@ document.write(`
 <col style="width: 50%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="figure align-default" id="id2">
+<tr class="row-odd"><td><div class="figure align-default" id="id1">
 <img alt="../_images/ci_alpha_uqpce.png" src="../_images/ci_alpha_uqpce.png" />
-<p class="caption"><span class="caption-number">Fig. 30 </span><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(\alpha\)</span> for UQPCE.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(\alpha\)</span> for UQPCE.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </div>
 </td>
-<td><div class="figure align-default" id="id3">
+<td><div class="figure align-default" id="id2">
 <img alt="../_images/ci_alpha_mc.png" src="../_images/ci_alpha_mc.png" />
-<p class="caption"><span class="caption-number">Fig. 31 </span><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(\alpha\)</span> for MC.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(\alpha\)</span> for MC.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
 </div>
 </td>
 </tr>
@@ -581,9 +564,9 @@ document.write(`
 <col style="width: 100%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="figure align-default" id="id4">
+<tr class="row-odd"><td><div class="figure align-default" id="id3">
 <a class="reference internal image-reference" href="../_images/ci_alpha_mc_zoomed.png"><img alt="../_images/ci_alpha_mc_zoomed.png" src="../_images/ci_alpha_mc_zoomed.png" style="width: 320.0px; height: 240.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">Zoomed in MC of <span class="math notranslate nohighlight">\(C_L/C_D\)</span> with comparisons of mean and CI of optimizing the mean versus lower bound.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text">Zoomed in MC of <span class="math notranslate nohighlight">\(C_L/C_D\)</span> with comparisons of mean and CI of optimizing the mean versus lower bound.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </div>
 </td>
 </tr>
@@ -595,14 +578,14 @@ document.write(`
 <col style="width: 50%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="figure align-default" id="id5">
+<tr class="row-odd"><td><div class="figure align-default" id="id4">
 <img alt="../_images/ci_AR_uqpce.png" src="../_images/ci_AR_uqpce.png" />
-<p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying aspect ratio for UQPCE.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying aspect ratio for UQPCE.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
 </div>
 </td>
-<td><div class="figure align-default" id="id6">
+<td><div class="figure align-default" id="id5">
 <img alt="../_images/ci_AR_mc.png" src="../_images/ci_AR_mc.png" />
-<p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying aspect ratio for MC.</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying aspect ratio for MC.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
 </div>
 </td>
 </tr>
@@ -614,14 +597,14 @@ document.write(`
 <col style="width: 50%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="figure align-default" id="id7">
+<tr class="row-odd"><td><div class="figure align-default" id="id6">
 <img alt="../_images/ci_CL_alpha_uqpce.png" src="../_images/ci_CL_alpha_uqpce.png" />
-<p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(C_{L_{\alpha}}\)</span> for UQPCE.</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(C_{L_{\alpha}}\)</span> for UQPCE.</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
 </div>
 </td>
-<td><div class="figure align-default" id="id8">
+<td><div class="figure align-default" id="id7">
 <img alt="../_images/ci_CL_alpha_mc.png" src="../_images/ci_CL_alpha_mc.png" />
-<p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(C_{L_{\alpha}}\)</span> for MC.</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(C_{L_{\alpha}}\)</span> for MC.</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
 </div>
 </td>
 </tr>
@@ -633,14 +616,14 @@ document.write(`
 <col style="width: 50%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="figure align-default" id="id9">
+<tr class="row-odd"><td><div class="figure align-default" id="id8">
 <img alt="../_images/ci_CL_alpha_zero_uqpce.png" src="../_images/ci_CL_alpha_zero_uqpce.png" />
-<p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(C_{L_{\alpha, 0}}\)</span> for UQPCE.</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(C_{L_{\alpha, 0}}\)</span> for UQPCE.</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
 </div>
 </td>
-<td><div class="figure align-default" id="id10">
+<td><div class="figure align-default" id="id9">
 <img alt="../_images/ci_CL_alpha_zero_mc.png" src="../_images/ci_CL_alpha_zero_mc.png" />
-<p class="caption"><span class="caption-number">Fig. 38 </span><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(C_{L_{\alpha, 0}}\)</span> for MC.</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+<p class="caption"><span class="caption-text"><span class="math notranslate nohighlight">\(C_L/C_D\)</span> plotted against varying <span class="math notranslate nohighlight">\(C_{L_{\alpha, 0}}\)</span> for MC.</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
 </div>
 </td>
 </tr>
@@ -777,24 +760,6 @@ document.write(`
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="confidence-interval.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Confidence Interval</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="limitations.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Limitations</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div></div>
   
 </div>
@@ -813,13 +778,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paraboloid-example">Paraboloid Example</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outputs">Outputs</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#airfoil-example">Airfoil Example</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-point">Initial Point</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#upper-bound-optimized-point">Upper-Bound Optimized Point</a></li>

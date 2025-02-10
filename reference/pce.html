@@ -184,7 +184,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../verification/verification.html">Verification</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../verification/pce.html">UQPCE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../verification/confidence-interval.html">Confidence Interval</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../verification/uq-with-openmdao.html">Uncertainty Quantificaion with OpenMDAO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../verification/limitations.html">Limitations</a></li>
 </ul>
 </li>
@@ -421,49 +420,68 @@ document.write(`
 <dt class="sig sig-object py" id="uqpce.pce.pce.PCE">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">uqpce.pce.pce.</span></span><span class="sig-name descname"><span class="pre">PCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.pce.PCE" title="Permalink to this definition">#</a></dt>
 <dd><dl>
-<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs - key word arguments used by UQPCE</dt><dd><p>input_file - file containing variables
-matrix_file - file containing matrix elements
-results_file  - file containing results 
-verification_results_file - file containing verification results
-verification_matrix_file - file containing verification matrix elements
-output_directory - directory that the outputs will be put in
-case - case name of input data
-significance - significance level of the confidence interval
-order - order of polynomial chaos expansion
-over_samp_ratio - over sampling ratio; factor for how many points to be</p>
-<blockquote>
-<div><p>used in calculations</p>
-</div></blockquote>
+<dt>kwargs :</dt><dd><p>key word arguments used by UQPCE</p>
 <dl class="simple">
-<dt>verify_over_samp_ratio - over sampling ratio for verification; factor </dt><dd><p>for how many points to be used in calculations</p>
+<dt>input_file :</dt><dd><p>file containing variables</p>
 </dd>
-<dt>aleat_sub_samp_size - the number of samples to check the new high and </dt><dd><p>low intervals at for each individual curve</p>
+<dt>matrix_file :</dt><dd><p>file containing matrix elements</p>
 </dd>
-<dt>epist_sub_samp_size - the number of curves to check the new high and low </dt><dd><p>intervals at for a set of curves</p>
+<dt>results_file  :</dt><dd><p>file containing results</p>
 </dd>
-<dt>conv_threshold_percent - the percent of the response mean to be used as </dt><dd><p>a threshold for tracking convergence</p>
+<dt>verification_results_file<span class="classifier"></span></dt><dd><p>file containing verification results</p>
 </dd>
-<dt>epist_samp_size - the number of times to sample for each varaible with </dt><dd><p>epistemic uncertainty</p>
+<dt>verification_matrix_file<span class="classifier"></span></dt><dd><p>file containing verification matrix elements</p>
 </dd>
-<dt>aleat_samp_size - the number of times to sample for each varaible with </dt><dd><p>aleatory uncertainty</p>
+<dt>output_directory<span class="classifier"></span></dt><dd><p>directory that the outputs will be put in</p>
+</dd>
+<dt>case<span class="classifier"></span></dt><dd><p>case name of input data</p>
+</dd>
+<dt>significance<span class="classifier"></span></dt><dd><p>significance level of the confidence interval</p>
+</dd>
+<dt>order<span class="classifier"></span></dt><dd><p>order of polynomial chaos expansion</p>
+</dd>
+<dt>over_samp_ratio<span class="classifier"></span></dt><dd><p>over sampling ratio; factor for how many points to be used in 
+calculations</p>
+</dd>
+<dt>verify_over_samp_ratio<span class="classifier"></span></dt><dd><p>over sampling ratio for verification; factor for how many points to be 
+used in calculations</p>
+</dd>
+<dt>aleat_sub_samp_size<span class="classifier"></span></dt><dd><p>the number of samples to check the new high and low intervals at for 
+each individual curve</p>
+</dd>
+<dt>epist_sub_samp_size<span class="classifier"></span></dt><dd><p>the number of curves to check the new high and low intervals at for a 
+set of curves</p>
+</dd>
+<dt>conv_threshold_percent<span class="classifier"></span></dt><dd><p>the percent of the response mean to be used as a threshold for tracking 
+convergence</p>
+</dd>
+<dt>epist_samp_size<span class="classifier"></span></dt><dd><p>the number of times to sample for each variable with epistemic 
+uncertainty</p>
+</dd>
+<dt>aleat_samp_size<span class="classifier"></span></dt><dd><p>the number of times to sample for each variable with aleatory 
+uncertainty</p>
+</dd>
+<dt>version<span class="classifier"></span></dt><dd><p>displays the version of the software</p>
+</dd>
+<dt>verbose<span class="classifier"></span></dt><dd><p>increase output verbosity</p>
+</dd>
+<dt>verify<span class="classifier"></span></dt><dd><p>allows verification of results</p>
+</dd>
+<dt>plot<span class="classifier"></span></dt><dd><p>generates factor vs response plots, pbox plot, and error plots</p>
+</dd>
+<dt>plot_stand<span class="classifier"></span></dt><dd><p>plots standardized variables</p>
+</dd>
+<dt>track_convergence_off<span class="classifier"></span></dt><dd><p>allows users to converge on confidence interval until the change between 
+the two iters is less than the threshold</p>
+</dd>
+<dt>model_conf_int<span class="classifier"></span></dt><dd><p>includes uncertainties associated with the model itself</p>
+</dd>
+<dt>stats<span class="classifier"></span></dt><dd><p>perform additional statistics for a more-comprehensive profile 
+of the model</p>
+</dd>
+<dt>seed<span class="classifier"></span></dt><dd><p>if UQPCE should use a seed for random values</p>
 </dd>
 </dl>
-<p>version - displays the version of the software
-verbose - increase output verbosity
-verify - allows verification of results
-plot - generates factor vs response plots, pbox plot, and error plots
-plot_stand - plots standardized variables
-track_convergence_off - allows users to converge on confidence interval</p>
-<blockquote>
-<div><p>until the change between the two iters is less 
-than the threshold</p>
-</div></blockquote>
-<p>model_conf_int - includes uncertainties associated with the model itself
-stats - perform additional statistics for a more-comprehensive profile</p>
-<blockquote>
-<div><p>of the model</p>
-</div></blockquote>
-<p>seed - if UQPCE should use a seed for random values</p>
 </dd>
 </dl>
 <p>The Polynomial Chaos Exapansion (PCE) model class. This class is intended to 
@@ -472,11 +490,11 @@ be an interface for programmers.</p>
 <dt class="sig sig-object py" id="uqpce.pce.pce.PCE.add_variable">
 <span class="sig-name descname"><span class="pre">add_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#uqpce.pce.pce.PCE.add_variable" title="Permalink to this definition">#</a></dt>
 <dd><dl class="simple">
-<dt><a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs<span class="classifier"></span></dt><dd><p>The input arguments required for the variable being added and the 
+<dt>kwargs<span class="classifier"></span></dt><dd><p>The input arguments required for the variable being added and the 
 name of the distribution being added.</p>
 </dd>
 </dl>
-<p>Adds a variable with <a href="#id5"><span class="problematic" id="id6">**</span></a>kwargs to the PCE object.</p>
+<p>Adds a variable with kwargs to the PCE object.</p>
 </dd></dl>
 
 <dl class="py method">

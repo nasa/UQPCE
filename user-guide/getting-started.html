@@ -184,7 +184,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../verification/verification.html">Verification</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../verification/pce.html">UQPCE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../verification/confidence-interval.html">Confidence Interval</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../verification/uq-with-openmdao.html">Uncertainty Quantificaion with OpenMDAO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../verification/limitations.html">Limitations</a></li>
 </ul>
 </li>
@@ -521,6 +520,7 @@ Generating aleatory resampling values
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openmdao.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">om</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Paraboloid</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">ExplicitComponent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -582,7 +582,28 @@ Generating aleatory resampling values
 <p>All of the <code class="docutils literal notranslate"><span class="pre">UQPCEGroup</span></code> inputs come from the PCE model, except for the <em>uncert_list</em> and <em>tanh_mu</em> parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">uqpce</span><span class="w"> </span><span class="kn">import</span> <span class="n">UQPCEGroup</span><span class="p">,</span> <span class="n">interface</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">uqpce</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCE</span><span class="p">,</span> <span class="n">UQPCEGroup</span><span class="p">,</span> <span class="n">interface</span>
+
+
+<span class="n">samp_count</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">aleat_cnt</span> <span class="o">=</span> <span class="mi">500000</span>
+<span class="n">epist_cnt</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">pce</span> <span class="o">=</span> <span class="n">PCE</span><span class="p">(</span>
+    <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">aleat_samp_size</span><span class="o">=</span><span class="n">aleat_cnt</span><span class="p">,</span> 
+    <span class="n">epist_samp_size</span><span class="o">=</span><span class="n">epist_cnt</span>
+<span class="p">)</span>
+
+<span class="c1"># Add two normal variables</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;uncerta&#39;</span><span class="p">)</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;uncertb&#39;</span><span class="p">)</span>
+
+<span class="c1"># Generate samples that correspond to the input variables</span>
+<span class="n">Xt</span> <span class="o">=</span> <span class="n">pce</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">samp_count</span><span class="p">)</span>
+
+<span class="n">pce</span><span class="o">.</span><span class="n">set_samples</span><span class="p">(</span><span class="n">Xt</span><span class="p">)</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">build_basis</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">resample_surrogate</span><span class="p">()</span>
 
 <span class="n">prob</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">Problem</span><span class="p">()</span>
 
@@ -599,7 +620,7 @@ Generating aleatory resampling values
         <span class="n">significance</span><span class="o">=</span><span class="n">pce</span><span class="o">.</span><span class="n">significance</span><span class="p">,</span> <span class="n">var_basis</span><span class="o">=</span><span class="n">pce</span><span class="o">.</span><span class="n">var_basis</span><span class="p">,</span> 
         <span class="n">norm_sq</span><span class="o">=</span><span class="n">pce</span><span class="o">.</span><span class="n">norm_sq</span><span class="p">,</span> <span class="n">resampled_var_basis</span><span class="o">=</span><span class="n">pce</span><span class="o">.</span><span class="n">resampled_var_basis</span><span class="p">,</span> 
         <span class="n">tail</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">epistemic_cnt</span><span class="o">=</span><span class="n">epist_cnt</span><span class="p">,</span> <span class="n">aleatory_cnt</span><span class="o">=</span><span class="n">aleat_cnt</span><span class="p">,</span>
-        <span class="n">uncert_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">],</span> <span class="n">tanh_omega</span><span class="o">=</span><span class="mf">0.0001</span>
+        <span class="n">uncert_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">],</span> <span class="n">tanh_omega</span><span class="o">=</span><span class="mf">0.01</span>
     <span class="p">),</span>
     <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">],</span> 
     <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span>
@@ -621,84 +642,58 @@ Generating aleatory resampling values
 <span class="n">prob</span><span class="o">.</span><span class="n">set_val</span><span class="p">(</span><span class="s1">&#39;desy&#39;</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
 
 <span class="n">interface</span><span class="o">.</span><span class="n">set_vals</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="n">pce</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="n">Xt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Adding variable number 1
 
-<span class="n">prob</span><span class="o">.</span><span class="n">run_driver</span><span class="p">()</span>
+Adding variable number 2
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design variable `desx` is: &#39;</span><span class="p">,</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;desx&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+Constructing surrogate model
+
+Building norm-squared matrix
+
+Assembling psi matrix
+
+17% Complete
+
+33% Complete
+
+50% Complete
+
+67% Complete
+
+83% Complete
+
+100% Complete
+
+Psi matrix assembled
+
+Evaluating psi matrix
+
+Generating aleatory resampling values
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">run_driver</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design variable `desx` is: &#39;</span><span class="p">,</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;desx&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design variable `desy` is: &#39;</span><span class="p">,</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;desy&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">uqpce</span><span class="w"> </span><span class="kn">import</span> <span class="n">UQPCEGroup</span><span class="p">,</span> <span class="n">interface</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">prob</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">Problem</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="s1">&#39;parab&#39;</span><span class="p">,</span> 
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">Paraboloid</span><span class="p">(</span><span class="n">vec_size</span><span class="o">=</span><span class="n">samp_count</span><span class="p">),</span> 
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;uncerta&#39;</span><span class="p">,</span> <span class="s1">&#39;uncertb&#39;</span><span class="p">,</span> <span class="s1">&#39;desx&#39;</span><span class="p">,</span> <span class="s1">&#39;desy&#39;</span><span class="p">],</span> 
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="s1">&#39;uq&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">UQPCEGroup</span><span class="p">(</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="p">)</span>
-
-<span class="nn">File ~/.conda/envs/mbsae4me/lib/python3.8/site-packages/openmdao/core/problem.py:218,</span> in <span class="ni">Problem.__init__</span><span class="nt">(self, model, driver, comm, name, reports, **options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">215</span> <span class="k">global</span> <span class="n">_problem_names</span>
-<span class="g g-Whitespace">    </span><span class="mi">217</span> <span class="c1"># this function doesn&#39;t do anything after the first call</span>
-<span class="ne">--&gt; </span><span class="mi">218</span> <span class="n">_load_report_plugins</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">220</span> <span class="bp">self</span><span class="o">.</span><span class="n">_driver</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">221</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reports</span> <span class="o">=</span> <span class="n">get_reports_to_activate</span><span class="p">(</span><span class="n">reports</span><span class="p">)</span>
-
-<span class="nn">File ~/.conda/envs/mbsae4me/lib/python3.8/site-packages/openmdao/utils/reports_system.py:616,</span> in <span class="ni">_load_report_plugins</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">613</span> <span class="n">_plugins_loaded</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="g g-Whitespace">    </span><span class="mi">615</span> <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">_iter_entry_points</span><span class="p">(</span><span class="s1">&#39;openmdao_report&#39;</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">616</span>     <span class="n">register_func</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">617</span>     <span class="n">register_func</span><span class="p">()</span>
-
-<span class="nn">File ~/.conda/envs/mbsae4me/lib/python3.8/importlib/metadata.py:77,</span> in <span class="ni">EntryPoint.load</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">72</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Load the entry point from its definition. If only a module</span>
-<span class="g g-Whitespace">     </span><span class="mi">73</span><span class="sd"> is indicated by the value, return that module. Otherwise,</span>
-<span class="g g-Whitespace">     </span><span class="mi">74</span><span class="sd"> return the named object.</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">77</span> <span class="n">module</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;module&#39;</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">78</span> <span class="n">attrs</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;attr&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="nb">getattr</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span>
-
-<span class="nn">File ~/.conda/envs/mbsae4me/lib/python3.8/importlib/__init__.py:127,</span> in <span class="ni">import_module</span><span class="nt">(name, package)</span>
-<span class="g g-Whitespace">    </span><span class="mi">125</span>             <span class="k">break</span>
-<span class="g g-Whitespace">    </span><span class="mi">126</span>         <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="ne">--&gt; </span><span class="mi">127</span> <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:1014,</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:991,</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:961,</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:219,</span> in <span class="ni">_call_with_frames_removed</span><span class="nt">(f, *args, **kwds)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:1014,</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:991,</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:961,</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:219,</span> in <span class="ni">_call_with_frames_removed</span><span class="nt">(f, *args, **kwds)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:1014,</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:991,</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:973,</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;aviary&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design variable `desx` is:  9.686119804377931e-05
+Design variable `desy` is:  -1.322245082486511e-05
 </pre></div>
 </div>
 </div>
