@@ -60,7 +60,7 @@ class TestCoefficientsComp(unittest.TestCase):
         act_coeffs = np.array([9.24875496, 0.22670994, 2.18217806])
         calc_coeffs = self.prob.get_val('comp.matrix_coeffs')
         self.assertTrue(
-            np.isclose(calc_coeffs, act_coeffs), 
+            np.isclose(calc_coeffs, act_coeffs).all(), 
             msg='CoefficientsComp is not calculating coefficients correctly'
         )
 
