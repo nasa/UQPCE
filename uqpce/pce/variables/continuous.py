@@ -6,7 +6,7 @@ from multiprocessing import Process, Manager
 
 from sympy import *
 import numpy as np
-from scipy.stats import norm, beta as fbeta, gamma, expon, uniform
+from scipy.stats import norm, beta as fbeta, gamma, expon, uniform, lognorm
 from scipy.linalg import pascal
 from scipy.integrate import quad
 
@@ -42,7 +42,6 @@ class ContinuousVariable(Variable):
             interval_high- the high interval of the variable
             order- the order of the model to calculate the orthogonal
             polynomials and norm squared values
-            type- the type of variable
             name- the name of the variable
             number- the number of the variable from the file
 
@@ -619,7 +618,6 @@ class UniformVariable(ContinuousVariable):
             interval_high- the high interval of the variable
             order- the order of the model to calculate the orthogonal
             polynomials and norm squared values
-            type- the type of variable
             name- the name of the variable
             number- the number of the variable from the file
 
@@ -661,7 +659,9 @@ class UniformVariable(ContinuousVariable):
         self.check_num_string()
 
     def generate_samples(self, count, standardize=False):
-        return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
 
     def generate_orthopoly(self):
         """
@@ -792,7 +792,6 @@ class NormalVariable(ContinuousVariable):
             stdev- the standard deviation of the variable
             order- the order of the model to calculate the orthogonal
             polynomials and norm squared values
-            type- the type of variable
             name- the name of the variable
             number- the number of the variable from the file
 
@@ -947,7 +946,9 @@ class NormalVariable(ContinuousVariable):
             self.stdev = float(self.stdev.replace('pi', str(np.pi)))
 
     def generate_samples(self, count, standardize=False):
-        return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
     
     def get_mean(self):
         return self.mean
@@ -961,7 +962,6 @@ class BetaVariable(ContinuousVariable):
             interval_high- the high interval of the variable
             order- the order of the model to calculate the orthogonal
             polynomials and norm squared values
-            type- the type of variable
             name- the name of the variable
             number- the number of the variable from the file
 
@@ -1005,7 +1005,9 @@ class BetaVariable(ContinuousVariable):
         self.type = UncertaintyType.ALEATORY
 
         scale = self.interval_high - self.interval_low
-        self.dist = fbeta(self.alpha, self.beta, loc=self.interval_low, scale=scale)
+        self.dist = fbeta(
+            self.alpha, self.beta, loc=self.interval_low, scale=scale
+        )
 
         low = 0
         high = 1
@@ -1032,7 +1034,9 @@ class BetaVariable(ContinuousVariable):
         self.check_num_string()
 
     def generate_samples(self, count, standardize=False):
-        return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
 
     def generate_orthopoly(self):
         """
@@ -1175,7 +1179,6 @@ class ExponentialVariable(ContinuousVariable):
             interval_low- the low interval of the variable
             order- the order of the model to calculate the orthogonal
             polynomials and norm squared values
-            type- the type of variable
             name- the name of the variable
             number- the number of the variable from the file
 
@@ -1232,7 +1235,9 @@ class ExponentialVariable(ContinuousVariable):
         self.check_num_string()
     
     def generate_samples(self, count, standardize=False):
-        return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
 
     def standardize(self, orig, std_vals):
         """
@@ -1313,7 +1318,6 @@ class GammaVariable(ContinuousVariable):
             interval_low- the low interval of the variable
             order- the order of the model to calculate the orthogonal
             polynomials and norm squared values
-            type- the type of variable
             name- the name of the variable
             number- the number of the variable from the file
 
@@ -1449,6 +1453,163 @@ class GammaVariable(ContinuousVariable):
         Return the mean of the variable.
         """
         return self.interval_low + (self.alpha * self.theta)
+
+class LogNormalVariable(ContinuousVariable):
+    """
+    Inputs: mu- the mean, or expected value, of the variable
+            stdev- the standard deviation of the variable's natural logarithm
+            interval_low- the low interval of the variable
+            order- the order of the model to calculate the orthogonal
+            polynomials and norm squared values
+            name- the name of the variable
+            number- the number of the variable from the file
+
+    Represents a lognormal variable. The methods in this class correspond to
+    those of a lognormal variable.
+    """
+
+    __slots__ = ('mu', 'stdev')
+
+    # This is the standardized form required for the UQPCE variable basis and
+    # norm squared.
+    equation = '(1/(x*sqrt(2*pi))) * exp(-(ln(x))**2/2)'
+
+    def __init__(self, mu, stdev, interval_low=0, order=2, name='', number=0):
+
+        if not (stdev > 0):
+            raise VariableInputError(
+                'LogNormalVariable stdev must be greater than 0.'
+            )
+
+        self.mu = mu
+        self.stdev = stdev
+        self.interval_low = interval_low
+        self.order = order
+        
+        self.name = f'x{number}' if name == '' else name
+        self.var_str = f'x{number}'
+        self.x = symbols(self.var_str)
+
+        self.distribution = Distribution.LOGNORMAL
+        self.type = UncertaintyType.ALEATORY
+        self.dist = lognorm(
+            s=self.stdev, scale=np.exp(self.mu), loc=self.interval_low
+        )
+
+        low = 0
+        high = 'oo'
+
+        self.check_num_string()
+
+        x = symbols(self.var_str)
+
+        parsed_dist = parse_expr(
+            self.equation,
+            local_dict={
+                's':parse_expr(str(Fraction(self.stdev))), 
+                'mu':parse_expr(str(Fraction(self.mu))), 'x':x}
+        )
+
+        self.recursive_var_basis(parsed_dist, low, high, self.order)
+        self.norm_sq_vals = np.zeros(len(self.var_orthopoly_vect))
+        self.create_norm_sq(low, high, parsed_dist)
+
+        # if inf bounds, find approximate bound
+        low_percent = 8e-17
+        high_percent = 1 - low_percent
+        
+        self.low_approx = self.interval_low
+        self.high_approx = self.dist.ppf(high_percent)
+
+        upper = self.dist.ppf(high_percent)
+
+        self.bounds = (self.interval_low, upper)
+        self.std_bounds = (low, self.standardize_points(upper))
+
+    def generate_samples(self, count, standardize=False):
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
+    
+    def standardize(self, orig, std_vals):
+        """
+        Inputs: orig- the un-standardized values
+                std_vals- the attribue name for the standardized vals
+        
+        Overrides the Variable class standardize to align with
+        a lognormal distribution.
+        """
+        x_orig = getattr(self, orig)
+        unstd_cdf = self.dist.cdf(x_orig)
+        standard = lognorm(s=1, scale=1).ppf(unstd_cdf)
+
+        setattr(self, std_vals, standard)
+
+        return getattr(self, std_vals)
+
+
+    def standardize_points(self, values):
+        """
+        Inputs: values- unstandardized points corresponding to the variable's
+        distribution
+
+        Standardizes and returns the inputs points.
+        """
+        unstd_cdf = self.dist.cdf(values)
+
+        return lognorm(s=1, scale=1).ppf(unstd_cdf)
+
+
+    def unstandardize_points(self, value):
+        """
+        Inputs: value- the standardized value to be unstandardized
+
+        Calculates and returns the unscaled variable value from the
+        standardized value.
+        """
+        std_cdf = lognorm(s=1, scale=1).cdf(value)
+
+        return self.dist.ppf(std_cdf)
+
+
+    def check_distribution(self, X):
+        """
+        Overrides the Variable class check_distribution to align with
+        a lognormal distribution.
+        """
+        shift = lognorm(s=1, scale=1).ppf(0.99)
+        std_vals = self.standardize_points(X)
+
+        mx = np.max(std_vals)
+        mn = np.min(std_vals)
+
+        if rank == 0 and (mx > shift) or (mn < 0):
+            print(
+                f'Large standardized value for variable {self.name} '
+                'with lognormal distribution found. Check input and run matrix.', 
+                file=sys.stderr
+            )
+            return -1
+
+
+    def check_num_string(self):
+        """
+        Searches to replace sring 'pi' with its numpy equivalent in any of the
+        values that might contain it.
+        """
+        if isinstance(self.mu, str) and 'pi' in self.mu:
+            self.mu = float(self.mu.replace('pi', str(np.pi)))
+
+        if isinstance(self.stdev, str) and 'pi' in self.stdev:
+            self.stdev = float(self.stdev.replace('pi', str(np.pi)))
+
+
+    def get_mean(self):
+        """
+        Return the mean of the variable.
+        """
+        return self.dist.stats('m')
+
 
 class EpistemicVariable(UniformVariable):
     

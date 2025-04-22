@@ -22,7 +22,7 @@ import numpy as np
 from uqpce.pce.variables.variable import Variable
 from uqpce.pce.variables.continuous import (
     NormalVariable, UniformVariable, BetaVariable, ExponentialVariable, 
-    GammaVariable, EpistemicVariable
+    GammaVariable, LogNormalVariable, EpistemicVariable
 )
 from uqpce.pce.variables.discrete import (
     DiscreteVariable, PoissonVariable, NegativeBinomialVariable, 
@@ -358,6 +358,21 @@ class PCE():
                 )
             var = GammaVariable(
                 alpha, theta, number=self._var_count, order=curr_order, **kwargs
+            )
+
+        elif dist is Distribution.LOGNORMAL:
+            req_1 = 'mu'
+            req_2 = 'stdev'
+            try:
+                mu = kwargs.pop(req_1)
+                stdev = kwargs.pop(req_2)
+            except:
+                print(
+                    f'Key word arguments `{req_1}` and `{req_2}` are required '
+                    f'inputs for the {distribution} variable.', file=sys.stderr
+                )
+            var = LogNormalVariable(
+                mu, stdev, number=self._var_count, order=curr_order, **kwargs
             )
 
         elif dist is Distribution.CONTINUOUS:
