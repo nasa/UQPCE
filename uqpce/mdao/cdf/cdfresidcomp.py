@@ -93,6 +93,8 @@ class CDFResidComp(om.ExplicitComponent):
         self.options.declare('sample_ref0', types=(float, int), default=0.0, desc='Reference scale for 0 of the sample data')
         self.options.declare('sample_ref', types=(float, int), default=1.0, desc='Reference scale for 1 of the sample data')
 
+        self._no_check_partials = True
+
     def setup(self):
         alpha = self.options['alpha']
         aleat_cnt = self.options['aleatory_cnt']
