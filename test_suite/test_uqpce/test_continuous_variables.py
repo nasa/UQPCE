@@ -11,7 +11,7 @@ import numpy as np
 
 from uqpce.pce.variables.continuous import (
     ContinuousVariable, UniformVariable, NormalVariable, BetaVariable,
-    ExponentialVariable, GammaVariable, EpistemicVariable, LogNormalVariable
+    ExponentialVariable, GammaVariable, EpistemicVariable, LognormalVariable
 )
 from uqpce.pce.enums import UncertaintyType
 
@@ -1671,7 +1671,7 @@ class TestGammaVariable(unittest.TestCase):
         )
 
 
-class TestLogNormalVariable(unittest.TestCase):
+class TestLognormalVariable(unittest.TestCase):
 
     def setUp(self):
         np.random.seed(33)
@@ -1682,7 +1682,7 @@ class TestLogNormalVariable(unittest.TestCase):
         order = 5
         samp_size = 5000
 
-        self.lognorm_var = LogNormalVariable(
+        self.lognorm_var = LognormalVariable(
             self.mu, self.stdev, interval_low=self.interval_low, order=order
         )
 
@@ -1703,7 +1703,7 @@ class TestLogNormalVariable(unittest.TestCase):
 
     def test_standardize(self):
         """
-        Testing the LogNormalVariable standardize and insuring that the values
+        Testing the LognormalVariable standardize and insuring that the values
         follow a standardized distribution.
         """
         std_vals = self.lognorm_var.std_vals
@@ -1714,12 +1714,12 @@ class TestLogNormalVariable(unittest.TestCase):
 
         self.assertTrue(
             np.isclose(stand_samps, std_vals).all(),
-            msg='LogNormalVariable standardize is not correct'
+            msg='LognormalVariable standardize is not correct'
         )
 
     def test_standardize_points(self):
         """
-        Testing the LogNormalVariable standardize_points and insuring that the 
+        Testing the LognormalVariable standardize_points and insuring that the 
         values follow a standardized distribution.
         """
         p_val_min = 0.05
@@ -1736,22 +1736,22 @@ class TestLogNormalVariable(unittest.TestCase):
 
         self.assertTrue(
             p_val > p_val_min,
-            msg='LogNormalVariable standardize_points is not correct'
+            msg='LognormalVariable standardize_points is not correct'
         )
 
         self.assertTrue(
             ks_stat < ks_stat_max,
-            msg='LogNormalVariable standardize_points is not correct'
+            msg='LognormalVariable standardize_points is not correct'
         )
 
         self.assertTrue(
             np.isclose(stand_samps, std_vals).all(),
-            msg='LogNormalVariable standardize_points is not correct'
+            msg='LognormalVariable standardize_points is not correct'
         )
 
     def test_unstandardize_points(self):
         """
-        Testing the LogNormalVariable unstandardize_points and insuring that 
+        Testing the LognormalVariable unstandardize_points and insuring that 
         the values follow an unstandardized distribution.
         """
         stand_samps = np.array([
@@ -1766,24 +1766,24 @@ class TestLogNormalVariable(unittest.TestCase):
         unstand_points_calc = self.lognorm_var.unstandardize_points(stand_samps)
         self.assertTrue(
             np.isclose(unstand_points_calc, self.lognorm_var.vals).all(),
-            msg='LogNormalVariable standardize_points is not correct'
+            msg='LognormalVariable standardize_points is not correct'
         )
 
     def test_check_distribution(self):
         """
-        Testing the LogNormalVariable check_distribution and insuring that no
+        Testing the LognormalVariable check_distribution and insuring that no
         warning is raised.
         """
         no_warn = None
 
         self.assertEqual(
             self.lognorm_warn, no_warn,
-            msg='LogNormalVariable check_distribution is not correct'
+            msg='LognormalVariable check_distribution is not correct'
         )
 
     def test_generate_samples(self):
         """
-        Testing the LogNormalVariable generate_samples and comparing the output
+        Testing the LognormalVariable generate_samples and comparing the output
         to the numpy distribution in a Kolmogorov-Smirnov test.
         """
         p_val_min = 0.05
@@ -1795,17 +1795,17 @@ class TestLogNormalVariable(unittest.TestCase):
 
         self.assertTrue(
             p_val > p_val_min,
-            msg='LogNormalVariable generate_samples is not correct'
+            msg='LognormalVariable generate_samples is not correct'
         )
 
         self.assertTrue(
             ks_stat < ks_stat_max,
-            msg='LogNormalVariable generate_samples is not correct'
+            msg='LognormalVariable generate_samples is not correct'
         )
 
     def test_create_norm_sq(self):
         """
-        Testing the LogNormalVariable create_norm_sq and ensuring that the norm
+        Testing the LognormalVariable create_norm_sq and ensuring that the norm
         squared values are correct.
         """
         neg_pi = -np.pi
@@ -1817,17 +1817,17 @@ class TestLogNormalVariable(unittest.TestCase):
 
         self.assertEqual(
             self.lognorm_var.mu, neg_pi,
-            msg='LogNormalVariable check_num_string is not correct'
+            msg='LognormalVariable check_num_string is not correct'
         )
 
         self.assertEqual(
             self.lognorm_var.stdev, pos_pi,
-            msg='LogNormalVariable check_num_string is not correct'
+            msg='LognormalVariable check_num_string is not correct'
         )
 
     def test_recursive_var_basis(self):
         """
-        Testing the LogNormalVariable generate_orthopoly and ensuring that the
+        Testing the LognormalVariable generate_orthopoly and ensuring that the
         orthogonal polynomials are correct.
         """
         tol = 1e-6
@@ -1865,12 +1865,12 @@ class TestLogNormalVariable(unittest.TestCase):
 
         self.assertTrue(
             evaled.all(),
-            msg='LogNormalVariable recursive_var_basis is not correct'
+            msg='LognormalVariable recursive_var_basis is not correct'
         )
 
     def test_get_norm_sq_val(self):
         """
-        Testing the LogNormalVariable get_norm_sq_val and ensuring that the norm
+        Testing the LognormalVariable get_norm_sq_val and ensuring that the norm
         squared values are correct.
         """
         norm_sq_count = 6
@@ -1886,7 +1886,7 @@ class TestLogNormalVariable(unittest.TestCase):
     
         self.assertTrue(
             np.isclose(true_norm_sq, norm_sq, rtol=0, atol=1e-6).all(),
-            msg='LogNormalVariable get_norm_sq_val is not correct'
+            msg='LognormalVariable get_norm_sq_val is not correct'
         )
 
     def test_get_mean(self):
@@ -1903,12 +1903,12 @@ class TestLogNormalVariable(unittest.TestCase):
 
         self.assertTrue(
             np.isclose(act_mean, self.lognorm_var.get_mean()),
-            msg='LogNormalVariable get_mean is not correct'
+            msg='LognormalVariable get_mean is not correct'
         )
 
         self.assertTrue(
             np.abs(act_mean - calc_mean) < tol,
-            msg='LogNormalVariable get_mean is not correct'
+            msg='LognormalVariable get_mean is not correct'
         )
 
 

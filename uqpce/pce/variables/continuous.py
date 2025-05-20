@@ -1454,7 +1454,7 @@ class GammaVariable(ContinuousVariable):
         """
         return self.interval_low + (self.alpha * self.theta)
 
-class LogNormalVariable(ContinuousVariable):
+class LognormalVariable(ContinuousVariable):
     """
     Inputs: mu- the mean, or expected value, of the variable
             stdev- the standard deviation of the variable's natural logarithm
@@ -1478,7 +1478,7 @@ class LogNormalVariable(ContinuousVariable):
 
         if not (stdev > 0):
             raise VariableInputError(
-                'LogNormalVariable stdev must be greater than 0.'
+                'LognormalVariable stdev must be greater than 0.'
             )
 
         self.mu = mu

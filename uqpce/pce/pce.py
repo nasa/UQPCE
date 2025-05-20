@@ -22,7 +22,7 @@ import numpy as np
 from uqpce.pce.variables.variable import Variable
 from uqpce.pce.variables.continuous import (
     NormalVariable, UniformVariable, BetaVariable, ExponentialVariable, 
-    GammaVariable, LogNormalVariable, EpistemicVariable
+    GammaVariable, LognormalVariable, EpistemicVariable
 )
 from uqpce.pce.variables.discrete import (
     DiscreteVariable, PoissonVariable, NegativeBinomialVariable, 
@@ -371,7 +371,7 @@ class PCE():
                     f'Key word arguments `{req_1}` and `{req_2}` are required '
                     f'inputs for the {distribution} variable.', file=sys.stderr
                 )
-            var = LogNormalVariable(
+            var = LognormalVariable(
                 mu, stdev, number=self._var_count, order=curr_order, **kwargs
             )
 
