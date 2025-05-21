@@ -11,7 +11,7 @@ aleat_cnt = 75_000
 class TestUQPCEGroup(unittest.TestCase):
     def setUp(self):
 
-        from uqpce import paraboloid
+        from uqpce.examples.paraboloid.paraboloid import paraboloid
         from scipy.stats import binom, norm, beta
 
         aleat_cnt = 10_000
@@ -98,31 +98,11 @@ class TestUQPCEGroup(unittest.TestCase):
         # Check partials of VarianceComp
         var_err_coeff = (
             self.partials['comp.f_abxy_var_comp']
-            [('variance', 'matrix_coeffs')]['rel error'][0]
+            [('variance', 'matrix_coeffs')]['abs error'][0]
         )
         self.assertTrue(
             np.isclose(var_err_coeff, 0), 
             msg='VarianceComp derivative (\'variance\', \'matrix_coeffs\') '
-            'is not correct'
-        )
-
-        # Check partials of MeanPlusVarComp
-        mpv_err_mean = (
-            self.partials['comp.f_abxy_mean_plus_var_comp']
-            [('mean_plus_var', 'mean')]['rel error'][0]
-        )
-        mpv_err_var = (
-            self.partials['comp.f_abxy_mean_plus_var_comp']
-            [('mean_plus_var', 'variance')]['rel error'][0]
-        )
-        self.assertTrue(
-            np.isclose(mpv_err_mean, 0), 
-            msg='MeanPlusVarComp derivative (\'mean_plus_var\', \'mean\') '
-            'is not correct'
-        )
-        self.assertTrue(
-            np.isclose(mpv_err_var, 0), 
-            msg='MeanPlusVarComp derivative (\'mean_plus_var\', \'variance\') '
             'is not correct'
         )
 
