@@ -1877,7 +1877,7 @@ class TestLognormalVariable(unittest.TestCase):
 
         true_norm_sq = np.array([
             1, 4.6707743, 1629.3091942, 34101168.748002, 40259083404382.54, 
-            2625599016180850360320
+            2625599016180850360320.
         ])
         norm_sq = np.zeros(norm_sq_count)
 
