@@ -10,8 +10,7 @@ Documentation for the most recent verison of UQPCE can be found [here](https://n
 
 Install library with `pip install -e .` in the location of your choice.
 
-Run the test case in `python examples/paraboloid/paraboloid_example.py`
-
+Run the unittests using `python -m unittest discover uqpce`
 
 ## Notices
 Copyright © 2020-2024 United States Government as represented by the 
