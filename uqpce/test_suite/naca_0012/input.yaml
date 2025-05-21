@@ -1,0 +1,37 @@
+Variable 0:
+  name: mach
+  distribution: normal
+  mean: 0.8
+  stdev: 0.002
+  type: aleatory
+Variable 1:
+  name: alpha
+  distribution: normal
+  mean: 1.7
+  stdev: 0.085
+  type: aleatory
+Variable 2:
+  name: altitude
+  distribution: normal
+  mean: 35000
+  stdev: 350
+  type: aleatory
+Variable 3:
+  name: vonKarman
+  distribution: uniform
+  interval_low: 0.38
+  interval_high: 0.42
+  type: epistemic
+Variable 4:
+  name: sigma
+  distribution: uniform
+  interval_low: 0.6
+  interval_high: 1.0
+  type: epistemic
+
+Settings:
+  order: 2
+  version: true
+  verbose: true
+  plot: true
+  plot_stand: true
