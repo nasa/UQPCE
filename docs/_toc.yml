@@ -44,6 +44,7 @@ parts:
       - file: reference/continuous/beta
       - file: reference/continuous/gamma
       - file: reference/continuous/exponential
+      - file: reference/continuous/lognormal
       - file: reference/continuous/user-input
       - file: reference/continuous/epistemic
     - file: reference/discrete-variables
