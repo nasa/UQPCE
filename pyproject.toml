@@ -35,6 +35,16 @@ dependencies = [
     "mpi4py"
 ]
 
+[project.optional-dependencies]
+all = [
+    "uqpce[docs]"
+]
+
+docs = [
+    "jupyter",
+    "jupyter-book==0.15.1"
+]
+
 [tool.hatch.version]
 path = "uqpce/__init__.py"
 
