@@ -1,0 +1,43 @@
+Variable 0:
+  distribution: exponential
+  lambda: 0.25
+  interval_low: 3
+  type: aleatory
+Variable 1:
+  distribution: exponential
+  lambda: 3.0
+  interval_low: -2
+  type: aleatory
+Variable 2:
+  distribution: beta
+  alpha: 2.0
+  beta: 4.0
+  interval_low: 3
+  interval_high: 7
+  type: aleatory
+Variable 3:
+  distribution: beta
+  alpha: 0.5
+  beta: 2.0
+  interval_low: -1
+  interval_high: 1
+  type: aleatory
+Variable 4:
+  distribution: gamma
+  alpha: 1.0
+  theta: 0.5
+  interval_low: 1
+  type: aleatory
+Variable 5:
+  distribution: gamma
+  alpha: 3.0
+  theta: 2.0
+  interval_low: 3
+  type: aleatory
+
+Settings:
+    order: 2
+    version: true
+    verbose: true
+    plot: true
+    plot_stand: true
