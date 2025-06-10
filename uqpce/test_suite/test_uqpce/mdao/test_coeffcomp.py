@@ -12,6 +12,7 @@ class TestCoefficientsComp(unittest.TestCase):
     def setUp(self):
 
         prob = om.Problem(reports=False)
+
         var_basis = np.array([
                 [1.00000000e+00, -1.69821781e+00, 9.67008130e-01],
                 [ 1.00000000e+00, 2.64654707e-01, -5.54940304e-01],

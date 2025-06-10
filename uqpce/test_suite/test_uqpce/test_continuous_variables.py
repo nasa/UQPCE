@@ -1912,7 +1912,6 @@ class TestLognormalVariable(unittest.TestCase):
         )
 
 
-
 class TestEpistemicVariable(unittest.TestCase):
 
     def setUp(self):

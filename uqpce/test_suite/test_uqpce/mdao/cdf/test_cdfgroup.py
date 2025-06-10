@@ -30,6 +30,7 @@ class TestCDFGroup(unittest.TestCase):
         alpha = 0.05
 
         prob = om.Problem(reports=False)
+
         prob.model.add_subsystem(
             'lower',
             CDFGroup(
@@ -94,6 +95,7 @@ class TestCDFGroup(unittest.TestCase):
         tanh_omega = 1e-8
 
         prob = om.Problem(reports=False)
+
         prob.model.add_subsystem(
             'lower',
             CDFGroup(
@@ -157,6 +159,7 @@ class TestCDFGroup(unittest.TestCase):
         tanh_omega = 1e-10
 
         prob = om.Problem(reports=False)
+
         prob.model.add_subsystem(
             'lower',
             CDFGroup(
@@ -222,6 +225,7 @@ class TestCDFGroup(unittest.TestCase):
         samps = self.beta_samples - self.expon_samples + self.nbinom_samples
 
         prob = om.Problem(reports=False)
+
         prob.model.add_subsystem(
             'lower',
             CDFGroup(
@@ -288,6 +292,7 @@ class TestCDFGroup(unittest.TestCase):
         samps = self.beta_samples**6 + self.expon_samples**5 - self.nbinom_samples**3
 
         prob = om.Problem(reports=False)
+
         prob.model.add_subsystem(
             'lower',
             CDFGroup(
