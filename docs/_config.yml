@@ -47,6 +47,7 @@ sphinx:
   extra_extensions:
   - 'sphinx.ext.autodoc'
   - 'sphinx.ext.autosummary'
+  - 'sphinx.ext.napoleon'
   config:
     html_favicon: favicon.ico
     autosummary_generate: True

@@ -29,7 +29,6 @@ The basic input files are required when executing UQPCE as a module. Files can b
 
 * When adding comments to the YAML file, comments need to begin with a new line a new line and start with ``"#"``. Comments that are in-line with an input should begin with ``" #"`` (space before the ``#``).
 
-```
 
 ### Example
 

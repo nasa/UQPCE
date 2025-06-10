@@ -6,6 +6,8 @@ class CoefficientsComp(om.ExplicitComponent):
     def initialize(self):
         self.options.declare('var_basis', types=np.ndarray)
 
+        self._no_check_partials = True
+
     def setup(self):
         var_basis = self.options['var_basis']
         resp_cnt, term_cnt = var_basis.shape

@@ -14,6 +14,7 @@ The following section will discuss what is required for each variable when using
 | **BetaVariable** | ``beta`` | alpha, beta | interval_low *(default = 0)*, <br /> interval_high *(default = 1)* |
 | **ExponentialVariable** | ``exponential`` | lambda | interval_low *(default = 0)* |
 | **GammaVariable** | ``gamma`` | alpha, theta | interval_low *(default = 0)* |
+| **LognormalVariable** | ``lognormal`` | mean, stdev | interval_low *(default = 0)* |
 | **DiscreteVariable** | ``discrete`` | pdf, interval_low, interval_high |  |
 | **DiscreteEpistemicVariable** | ``discrete_uniform`` | interval_low, interval_high |  |
 | **NegativeBinomialVariable** | ``negative_binomial`` | r, p | interval_low *(default = 0)* |
@@ -29,8 +30,8 @@ The following section will discuss what is required for each variable when using
 |**name** | ``str`` | The name for the physical meaning of the variable *(default = x{number})*|
 |**distribution** | ``str`` | a string value for the chosen distribution; can be any of the types in the above ``Distribution`` column|
 |**pdf** | ``str`` | The [PDF](../theory/symbols-and-defs) for a user-input variable; must follow [SymPy notation](https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html)|
-|**mean** | ``float`` | This option is the mean of the data|
-|**stdev** | ``float`` | This option is the standard deviation of the data|
+|**mean** | ``float`` | This option is the mean of a NormalVariable and the mean of the natural logarithm for the LognormalVariable|
+|**stdev** | ``float`` | This option is the standard deviation of a NormalVariable and the mean of the natural logarithm for the LognormalVariable|
 |**interval_low** | ``float`` | This option is the lower interval on which the data lies|
 |**interval_high** | ``float`` | This option is the upper interval on which the data lies|
 |**alpha** | ``float`` | The $\alpha$ parameter of the BetaVariable and the GammaVariable|

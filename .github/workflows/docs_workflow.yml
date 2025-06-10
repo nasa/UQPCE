@@ -31,6 +31,8 @@ jobs:
             SCIPY: '1.13'
             PYYAML: '6.0.2'
             OPENMDAO: 'latest'
+            MPI4PY: '3.1.4'
+            OPTIONAL: '[docs]'
             PUBLISH_DOCS: 1
 
           # # make sure the latest versions of things don't break the docs
@@ -92,13 +94,31 @@ jobs:
             pip install openmdao==${{ matrix.OPENMDAO }}
           fi
 
+      - name: Install PyYAML
+        if: matrix.PYYAML
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install PyYAML"
+          echo "============================================================="
+          pip install PyYAML==${{ matrix.PYYAML }}
+
+      - name: Install mpi4py
+        if: matrix.MPI4PY
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install mpi4py"
+          echo "============================================================="
+          conda install mpi4py==${{ matrix.MPI4PY }} -q -y
+
       - name: Install UQPCE
         shell: bash -l {0}
         run: |
           echo "============================================================="
           echo "Install UQPCE"
           echo "============================================================="
-          pip install .
+          pip install .${{ matrix.OPTIONAL }}
 
       - name: Display environment info
         id: env_info

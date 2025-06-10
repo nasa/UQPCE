@@ -11,6 +11,7 @@ class Distribution(Enum):
     BETA = auto()
     EXPONENTIAL = auto()
     GAMMA = auto()
+    LOGNORMAL = auto()
     CONTINUOUS_EPISTEMIC = auto()
 
     DISCRETE = auto()
