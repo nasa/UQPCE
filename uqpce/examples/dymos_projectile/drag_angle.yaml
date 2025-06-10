@@ -1,0 +1,23 @@
+Variable 0:
+  name: c_d
+  distribution: uniform
+  interval_high: 0.9 #0.5
+  interval_low: 0.1 #0.2
+  type: aleatory
+
+Variable 1:
+  name: theta
+  distribution: normal
+  mean: 30 #30
+  stdev: 2 #5
+  type: aleatory
+
+
+Settings:
+    order: 2
+    over_samp_ratio: 2
+    backend: Agg
+    track_convergence_off: False 
+    aleat_samp_size: 500000
+    verbose: True
+    plot: True
