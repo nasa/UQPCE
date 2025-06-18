@@ -201,5 +201,5 @@ jobs:
           echo "Publishing Docs to github.io"
           echo "============================================================="
           pip install ghp-import
-          cd $HOME/work/UQPCE
+          cd $HOME/work/UQPCE/UQPCE
           ghp-import -n -p -f docs/_build/html
