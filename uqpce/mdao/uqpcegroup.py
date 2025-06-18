@@ -10,9 +10,18 @@ from uqpce.mdao.cdf.cdfgroup import CDFGroup
 from uqpce.mdao.meanplusvarcomp import MeanPlusVarComp
 
 class UQPCEGroup(om.Group):
+    """
+    Class definition for the UQPCEGroup.
+
+    A UQPCEGroup object builds a Polynomial Chaos Expansion (PCE) model for an 
+    arbitrary response. This object outputs statistics for the mean, variance, 
+    and confidence interval on a given response.
+    """
 
     def initialize(self):
-
+        """
+        Declare any options for a UQPCEGroup.
+        """
         self.options.declare(
             'uncert_list', allow_none=False,
             desc='The string names of the uncertain outputs for the user\'s problem.'
@@ -57,7 +66,9 @@ class UQPCEGroup(om.Group):
         )
 
     def setup(self):
-
+        """
+        Setup the UQPCEGroup.
+        """
         uncert_list = self.options['uncert_list']
         tail = self.options['tail']
         aleatory_cnt = self.options['aleatory_cnt']
@@ -150,12 +161,8 @@ class UQPCEGroup(om.Group):
             cnt += 1
 
 
-    def configure(self):
-        pass
-
-
 if __name__ == '__main__':
-    from uqpce import paraboloid
+    from uqpce.examples.paraboloid.paraboloid import paraboloid
 
     aleat_cnt = 10_000
     epist_cnt = 250

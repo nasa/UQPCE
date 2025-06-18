@@ -164,6 +164,11 @@ class ContinuousVariable(Variable):
     def check_distribution(self, X):
         """
         Checks all values in an array to ensure that they are standardized.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
 
         std_vals = self.standardize_points(X)
@@ -714,6 +719,18 @@ class UniformVariable(ContinuousVariable):
         self.check_num_string()
 
     def generate_samples(self, count, standardize=False):
+        """
+        Overrides the Variable class generate_samples to align with
+        a uniform distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
         return super(ContinuousVariable, self).generate_samples(
             count, standardize=standardize
         )
@@ -811,6 +828,11 @@ class UniformVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         a uniform distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         std_vals = self.standardize_points(X)
 
@@ -990,6 +1012,11 @@ class NormalVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         a normal distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
 
         std_vals = self.standardize_points(X)
@@ -1032,6 +1059,18 @@ class NormalVariable(ContinuousVariable):
             self.stdev = float(self.stdev.replace('pi', str(np.pi)))
 
     def generate_samples(self, count, standardize=False):
+        """
+        Overrides the Variable class generate_samples to align with
+        a normal distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
         return super(ContinuousVariable, self).generate_samples(
             count, standardize=standardize
         )
@@ -1129,6 +1168,18 @@ class BetaVariable(ContinuousVariable):
         self.check_num_string()
 
     def generate_samples(self, count, standardize=False):
+        """
+        Overrides the Variable class generate_samples to align with
+        a beta distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
         return super(ContinuousVariable, self).generate_samples(
             count, standardize=standardize
         )
@@ -1232,6 +1283,11 @@ class BetaVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         an beta distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         shift = 8
 
@@ -1346,6 +1402,18 @@ class ExponentialVariable(ContinuousVariable):
         self.check_num_string()
     
     def generate_samples(self, count, standardize=False):
+        """
+        Overrides the Variable class generate_samples to align with
+        a exponential distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
         return super(ContinuousVariable, self).generate_samples(
             count, standardize=standardize
         )
@@ -1397,6 +1465,11 @@ class ExponentialVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         an exponential distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         shift = 15
 
@@ -1508,6 +1581,18 @@ class GammaVariable(ContinuousVariable):
         self.std_bounds = (low, self.standardize_points(upper))
 
     def generate_samples(self, count, standardize=False):
+        """
+        Overrides the Variable class generate_samples to align with
+        a gamma distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
         return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
     
     def standardize(self, orig, std_vals):
@@ -1557,6 +1642,11 @@ class GammaVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         a gamma distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         shift = 15
 
@@ -1672,6 +1762,18 @@ class LognormalVariable(ContinuousVariable):
         self.std_bounds = (low, self.standardize_points(upper))
 
     def generate_samples(self, count, standardize=False):
+        """
+        Overrides the Variable class generate_samples to align with
+        a lognormal distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
         return super(ContinuousVariable, self).generate_samples(
             count, standardize=standardize
         )
@@ -1730,6 +1832,11 @@ class LognormalVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         a lognormal distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         shift = lognorm(s=1, scale=1).ppf(0.99)
         std_vals = self.standardize_points(X)

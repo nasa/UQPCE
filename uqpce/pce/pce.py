@@ -548,7 +548,7 @@ class PCE():
 
         Parameters
         ----------
-        order : 
+        order :
             An int for the order of the model to build
         """
         from uqpce.pce.model import MatrixSystem
@@ -653,13 +653,12 @@ class PCE():
 
         Parameters
         ----------
-        X : 
+        X :
             An m-by-n matrix with the first dimension having the number of 
             samples in the model (m) and the second having the number of 
             variables in the model (n).
-
-        y : 
-            The 2D numpy array of responses from the user's analytic tool. The 
+        y :
+            The 2D numpy array of responses from the user's analytic tool. 
         """
         self.set_samples(X)
 
@@ -786,15 +785,16 @@ class PCE():
             An m-by-n matrix with the first dimension having the number of 
             samples in the model (m) and the second having the number of 
             variables in the model (n).
-
         return_uncert : 
             Boolean for if the method should return the uncertainty associated 
             with the predicted responses.
 
         Returns
         -------
-        resp_pred : the predicted value
-        uncert_mean : the uncertainty on the predicted value
+        resp_pred :
+            the predicted value
+        uncert_mean :
+            the uncertainty on the predicted value
         """
         Xnew = np.zeros(X.shape)
         for var in range(self._var_count):
@@ -892,7 +892,14 @@ class PCE():
     def verify_sample(self, count: int=-1, seed=None) -> np.ndarray:
         """
         Sample the number of verification values according to the input count or 
-        the set attribute verify_over_samp_ratio.
+        the set attribute `verify_over_samp_ratio`.
+
+        Parameters
+        ----------
+        count :
+            The number of verification samples to generate. A value of `-1` 
+            creates a number of samples based on the attribute 
+            `verify_over_samp_ratio`.
         """
         from uqpce.pce._helpers import term_count
 
@@ -905,6 +912,12 @@ class PCE():
     def sample(self, count: int=-1, seed=None) -> np.ndarray:
         """
         This method returns a matrix of samples from the input variables.
+
+        Parameters
+        ----------
+        count :
+            The number of samples to generate. A value of `-1` creates a number 
+            of samples based on the attribute `over_samp_ratio`.
         """
         from scipy.stats.qmc import LatinHypercube
         from uqpce.pce.variables.continuous import ContinuousVariable
@@ -1013,6 +1026,11 @@ class PCE():
         Saves figures for all of the variables with their values plotted on 
         them, if the data is available, which serves as a check if the user's 
         run matrix does not match their distributions well.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distributions 
         """
         from uqpce.pce.variables.continuous import ContinuousVariable
         from uqpce.pce.variables.discrete import DiscreteVariable
@@ -1109,7 +1127,6 @@ class PCE():
             An m-by-n matrix with the first dimension having the number of 
             samples in the model (m) and the second having the number of 
             variables in the model (n).
-        
         equation : 
             A string represenation of the desired equation, using x0 for the 
             first variable, x1 for the second, and so on.
