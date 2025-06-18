@@ -1,0 +1,205 @@
+# Build docs
+
+name: UQPCE Docs
+
+on:
+  # Trigger on push, pull request
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Trigger via workflow_dispatch event
+  workflow_dispatch:
+
+jobs:
+
+  docs_ubuntu:
+    runs-on: ubuntu-22.04
+
+    timeout-minutes: 90
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # baseline versions except with pyoptsparse but no SNOPT
+          # build docs to verify those that use pyoptsparse do not use SNOPT
+          - NAME: baseline_no_snopt
+            PY: '3.11'
+            NUMPY: '1.26'
+            SCIPY: '1.13'
+            PYYAML: '6.0.2'
+            JAX: '0.6.1'
+            OPENMDAO: 'latest'
+            DYMOS: 'latest'
+            MPI4PY: '3.1.4'
+            OPTIONAL: '[docs]'
+            PUBLISH_DOCS: 1
+
+          # # make sure the latest versions of things don't break the docs
+          # # sticking with Python 3.12 for now, 3.13 requires NumPy 2.1 which does not work yet with PETSc/pyoptsparse
+          # # Pin PETSc back to 3.22.2
+          # - NAME: latest
+          #   PY: '3.12'
+          #   NUMPY: 1
+          #   SCIPY: 1
+          #   PETSc: 3.21.0
+          #   PYOPTSPARSE: 'latest'
+          #   SNOPT: 7.7
+          #   OPENMDAO: 'dev'
+          #   OPTIONAL: '[docs]'
+          #   JAX: 'latest'
+          #   PUBLISH_DOCS: 0
+
+    steps:
+      - name: Display run details
+        run: |
+          echo "============================================================="
+          echo "Run #${GITHUB_RUN_NUMBER}"
+          echo "Run ID: ${GITHUB_RUN_ID}"
+          echo "Testing: ${GITHUB_REPOSITORY}"
+          echo "Triggered by: ${GITHUB_EVENT_NAME}"
+          echo "Initiated by: ${GITHUB_ACTOR}"
+          echo "============================================================="
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: ${{ matrix.PY }}
+          channels: conda-forge
+          conda-remove-defaults: true
+
+      - name: Install Numpy/Scipy
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install Numpy/Scipy"
+          echo "============================================================="
+          conda install numpy=${{ matrix.NUMPY }} scipy=${{ matrix.SCIPY }} -q -y
+
+      - name: Install OpenMDAO
+        if: matrix.OPENMDAO
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install OpenMDAO"
+          echo "============================================================="
+          if [[ "${{ matrix.OPENMDAO }}" == "dev" ]]; then
+            pip install git+https://github.com/OpenMDAO/OpenMDAO
+          elif [[ "${{ matrix.OPENMDAO }}" == "latest" ]]; then
+            pip install openmdao
+          else
+            pip install openmdao==${{ matrix.OPENMDAO }}
+          fi
+
+      - name: Install Dymos
+        if: matrix.DYMOS
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install Dymos"
+          echo "============================================================="
+          if [[ "${{ matrix.DYMOS }}" == "dev" ]]; then
+            pip install git+https://github.com/OpenMDAO/dymos
+          elif [[ "${{ matrix.DYMOS }}" == "latest" ]]; then
+            pip install dymos
+          else
+            pip install dymos==${{ matrix.DYMOS }}
+          fi
+
+      - name: Install PyYAML
+        if: matrix.PYYAML
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install PyYAML"
+          echo "============================================================="
+          pip install PyYAML==${{ matrix.PYYAML }}
+
+      - name: Install JAX
+        if: matrix.JAX
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install JAX"
+          echo "============================================================="
+          pip install jax==${{ matrix.JAX }}
+
+      - name: Install mpi4py
+        if: matrix.MPI4PY
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install mpi4py"
+          echo "============================================================="
+          conda install mpi4py==${{ matrix.MPI4PY }} -q -y
+
+      - name: Install UQPCE
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install UQPCE"
+          echo "============================================================="
+          pip install .${{ matrix.OPTIONAL }}
+
+      - name: Display environment info
+        id: env_info
+        shell: bash -l {0}
+        run: |
+          conda info
+          conda list
+
+          echo "============================================================="
+          echo "Check installed versions of Python, Numpy and Scipy"
+          echo "============================================================="
+          python -c "import sys; assert str(sys.version).startswith(str(${{ matrix.PY }})), \
+                    f'Python version {sys.version} is not the requested version (${{ matrix.PY }})'"
+
+          python -c "import numpy; assert str(numpy.__version__).startswith(str(${{ matrix.NUMPY }})), \
+                    f'Numpy version {numpy.__version__} is not the requested version (${{ matrix.NUMPY }})'"
+
+          python -c "import scipy; assert str(scipy.__version__).startswith(str(${{ matrix.SCIPY }})), \
+                    f'Scipy version {scipy.__version__} is not the requested version (${{ matrix.SCIPY }})'"
+
+      - name: Display dependency tree
+        if: failure() && steps.env_info.outcome == 'failure'
+        run: |
+          pip install pipdeptree
+          pipdeptree
+
+      - name: Build docs
+        id: build_docs
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Building Docs"
+          echo "============================================================="
+          export PYDEVD_DISABLE_FILE_VALIDATION=1
+          jupyter-book build -W --keep-going docs
+
+      - name: Display doc build reports
+        continue-on-error: True
+        if: failure() && steps.build_docs.outcome == 'failure'
+        run: |
+          echo $PWD
+          find docs/_build/html/reports/ -type f -name '*.log' \
+          -exec echo "#################################################################" \; \
+          -exec echo {} \; \
+          -exec echo "#################################################################" \; \
+          -exec cat {} \;
+
+      - name: Publish docs to github.io
+        if: |
+          github.event_name == 'push' && matrix.PUBLISH_DOCS == '1'
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Publishing Docs to github.io"
+          echo "============================================================="
+          pip install ghp-import
+          cd $HOME/work/UQPCE
+          ghp-import -n -p -f docs/_build/html

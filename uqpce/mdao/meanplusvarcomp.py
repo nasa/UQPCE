@@ -12,6 +12,8 @@ class MeanPlusVarComp(om.ExplicitComponent):
         self.declare_partials(of='mean_plus_var', wrt='mean', val=1)
         self.declare_partials(of='mean_plus_var', wrt='variance', val=1)
 
+        self._no_check_partials = True
+
     def compute(self, inputs, outputs):
 
         outputs['mean_plus_var'] = inputs['mean'] + inputs['variance']

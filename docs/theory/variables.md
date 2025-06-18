@@ -52,7 +52,16 @@ f(x) = \frac{1}{\Gamma(\alpha)\theta^{\alpha}} (x\ -\ a)^{\alpha - 1} e^{-\frac{
 $$
 
 
+### Lognormal Variable
+The equation UQPCE uses for a lognormal variable is shown below where $\mu \ \epsilon \ \mathbb{R}$ and $\sigma > 0$. Parameter $\mu$ is the mean of the variable's natural logarithm, and $\sigma$ is the standard deviation of the variable's natural logarithm. The support range of this variable is [a, $\infty$].
+
+$$
+f(x) = \frac{1}{(x - a) \sigma \sqrt{2 \pi}} \cdot e^{-\frac{\bigg(ln \big(x-a \big) - \mu \bigg)^{2}}{2 \sigma}}
+$$
+
+
 (variable)=
+
 
 ### User-Input Variable
 This is an option for the user to input a variable that has an arbitrary continuous distribution. While this gives the user flexibility, there are some requirements the distribution must adhere to:

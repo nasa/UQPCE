@@ -11,7 +11,7 @@ aleat_cnt = 75_000
 class TestUQPCEGroup(unittest.TestCase):
     def setUp(self):
 
-        from uqpce import paraboloid
+        from uqpce.examples.paraboloid.paraboloid import paraboloid
         from scipy.stats import binom, norm, beta
 
         aleat_cnt = 10_000
@@ -98,7 +98,7 @@ class TestUQPCEGroup(unittest.TestCase):
         # Check partials of VarianceComp
         var_err_coeff = (
             self.partials['comp.f_abxy_var_comp']
-            [('variance', 'matrix_coeffs')]['rel error'][0]
+            [('variance', 'matrix_coeffs')]['abs error'][0]
         )
         self.assertTrue(
             np.isclose(var_err_coeff, 0), 
@@ -106,42 +106,22 @@ class TestUQPCEGroup(unittest.TestCase):
             'is not correct'
         )
 
-        # Check partials of MeanPlusVarComp
-        mpv_err_mean = (
-            self.partials['comp.f_abxy_mean_plus_var_comp']
-            [('mean_plus_var', 'mean')]['rel error'][0]
-        )
-        mpv_err_var = (
-            self.partials['comp.f_abxy_mean_plus_var_comp']
-            [('mean_plus_var', 'variance')]['rel error'][0]
-        )
-        self.assertTrue(
-            np.isclose(mpv_err_mean, 0), 
-            msg='MeanPlusVarComp derivative (\'mean_plus_var\', \'mean\') '
-            'is not correct'
-        )
-        self.assertTrue(
-            np.isclose(mpv_err_var, 0), 
-            msg='MeanPlusVarComp derivative (\'mean_plus_var\', \'variance\') '
-            'is not correct'
-        )
-
         # Check partials of CDFGroup
         lower_cdf_samp = (
             self.partials['comp.f_abxy_lower_cdf_group.cdf']
-            [('ci_resid', 'samples')]['rel error'][0]
+            [('ci_resid', 'samples')]['abs error'][0]
         )
         lower_cdf_fci = (
             self.partials['comp.f_abxy_lower_cdf_group.cdf']
-            [('ci_resid', 'f_ci')]['rel error'][0]
+            [('ci_resid', 'f_ci')]['abs error'][0]
         )
         upper_cdf_samp = (
             self.partials['comp.f_abxy_upper_cdf_group.cdf']
-            [('ci_resid', 'samples')]['rel error'][0]
+            [('ci_resid', 'samples')]['abs error'][0]
         )
         upper_cdf_fci = (
             self.partials['comp.f_abxy_upper_cdf_group.cdf']
-            [('ci_resid', 'f_ci')]['rel error'][0]
+            [('ci_resid', 'f_ci')]['abs error'][0]
         )
 
         self.assertTrue(

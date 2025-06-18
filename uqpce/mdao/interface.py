@@ -55,8 +55,9 @@ def deterministic(uncert_var_list: np.ndarray, deterministic: bool=False):
 
 def analysis(prob: om.Problem, response: str, input_file: str, matrix_file: str, deterministic: bool=False):
     import os
-    from uqpce.__main__ import main
-    from uqpce.pce.utility import defaults, arg_parser
+    import subprocess
+    import shlex
+    from subprocess import PIPE
 
     if deterministic:
         import sys
@@ -72,25 +73,23 @@ def analysis(prob: om.Problem, response: str, input_file: str, matrix_file: str,
     responses = prob.get_val(response)
 
     np.savetxt(res_file, responses.T, header='# '+response, fmt='%.25e')
-    defs = defaults()
-    defs = defs._replace(
-        input_file=input_file, matrix_file=matrix_file, results_file=res_file,
-        verbose=False
+    res_file = f'uq_results_{response.replace(":", "_")}.dat'
+    prob.run_model() # Run the model once to get the values
+    responses = prob.get_val(response)
+    np.savetxt(res_file, responses.T, header='# '+response, fmt='%.25e')
+    command = (
+                f'python -m uqpce -i {input_file} -m '
+                f'{matrix_file} -r {res_file}'
     )
+    sys_name = os.name
+    is_linux = sys_name == 'posix'
+    is_windows = sys_name == 'nt'
+    if is_windows:
+        subprocess.check_output(shlex.split(command))
 
-    args = arg_parser(defs)
-    args = args._asdict()
+    elif is_linux:
+        subprocess.call(shlex.split(command), stdout=PIPE, stderr=PIPE)
 
-    args['input_file'] = input_file
-    args['matrix_file'] = matrix_file
-    args['results_file'] = res_file
-
-    args['output_directory'] = 'outputs_'+response.replace(':', '_')
-
-    args['plot'] = True
-    args['verbose'] = False
-
-    main(**args)
     os.remove(res_file)
 
 def counter(prob: om.Problem, subsys_name: str,):

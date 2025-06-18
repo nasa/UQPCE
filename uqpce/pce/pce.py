@@ -22,7 +22,7 @@ import numpy as np
 from uqpce.pce.variables.variable import Variable
 from uqpce.pce.variables.continuous import (
     NormalVariable, UniformVariable, BetaVariable, ExponentialVariable, 
-    GammaVariable, EpistemicVariable
+    GammaVariable, LognormalVariable, EpistemicVariable
 )
 from uqpce.pce.variables.discrete import (
     DiscreteVariable, PoissonVariable, NegativeBinomialVariable, 
@@ -37,6 +37,9 @@ from uqpce.pce.stats.statistics import (
 
 class PCE():
     """
+    The Polynomial Chaos Exapansion (PCE) model class. This class is intended to 
+    be an interface for programmers.
+
     Parameters
     ----------
     kwargs :
@@ -101,9 +104,6 @@ class PCE():
             of the model
         seed : 
             if UQPCE should use a seed for random values
-        
-    The Polynomial Chaos Exapansion (PCE) model class. This class is intended to 
-    be an interface for programmers.
     """
 
     def __init__(self, **kwargs):
@@ -176,13 +176,13 @@ class PCE():
 
     def update_settings(self, **kwargs) -> None:
         """
+        A method to update the object attributes with the input kwargs.
+
         Parameters
         ----------
         kwargs : 
             The key-value pairs for the keyword arguments to update for the
             PCE model
-
-        A method to update the object attributes with the input kwargs.
         """
         for key, val in kwargs.items():
             setattr(self, key, val)
@@ -216,13 +216,13 @@ class PCE():
 
     def _add_variable(self, variable: Variable) -> None:
         """
+        Method to add a variable to the model and increment the PCE object's 
+        variable count.
+
         Parameters
         ----------
         variable : 
             A Variable object to add to the model
-
-        Method to add a variable to the model and increment the PCE object's 
-        variable count.
         """
         if self.verbose:
             print(f'Adding variable number {self._var_count+1}\n')
@@ -233,13 +233,13 @@ class PCE():
 
     def add_variable(self, **kwargs) -> None:
         """
+        Adds a variable with kwargs to the PCE object.
+        
         Parameters
         ----------
-        **kwargs : 
+        kwargs : 
             The input arguments required for the variable being added and the 
             name of the distribution being added.
-        
-        Adds a variable with **kwargs to the PCE object.
         """
         from uqpce.pce.enums import Distribution, UncertaintyType
         from uqpce.pce.variables.continuous import (
@@ -358,6 +358,21 @@ class PCE():
                 )
             var = GammaVariable(
                 alpha, theta, number=self._var_count, order=curr_order, **kwargs
+            )
+
+        elif dist is Distribution.LOGNORMAL:
+            req_1 = 'mu'
+            req_2 = 'stdev'
+            try:
+                mu = kwargs.pop(req_1)
+                stdev = kwargs.pop(req_2)
+            except:
+                print(
+                    f'Key word arguments `{req_1}` and `{req_2}` are required '
+                    f'inputs for the {distribution} variable.', file=sys.stderr
+                )
+            var = LognormalVariable(
+                mu, stdev, number=self._var_count, order=curr_order, **kwargs
             )
 
         elif dist is Distribution.CONTINUOUS:
@@ -481,13 +496,13 @@ class PCE():
 
     def from_yaml(self, input_file: str) -> dict:
         """
+        Update the PCE object from the UQPCE YAML file. Adds the variables to 
+        the object and updates the settings.
+
         Parameters
         ----------
         input_file : 
             A string for the file name of the input yaml file
-
-        Update the PCE object from the UQPCE YAML file. Adds the variables to 
-        the object and updates the settings.
         """
         from uqpce.pce.io import read_input_file
         var_dict, settings_dict = read_input_file(input_file)
@@ -503,12 +518,12 @@ class PCE():
 
     def load_matrix_file(self, filename: str) -> np.ndarray:
         """
+        Loads and returns a matrix file.
+
         Parameters
         ----------
         filename : 
             A string for the file name of the run matrix file
-
-        Loads and returns a matrix file.
         """
         return np.loadtxt(filename, ndmin=2)
 
@@ -527,14 +542,14 @@ class PCE():
 
     def build_basis(self, order: int) -> None:
         """
-        Parameters
-        ----------
-        order : 
-            An int for the order of the model to build
-
         Builds the variable basis and norm squared for the model. This sets up 
         the variable- and order- based information for the model that is 
         independent of the response samples.
+
+        Parameters
+        ----------
+        order :
+            An int for the order of the model to build
         """
         from uqpce.pce.model import MatrixSystem
 
@@ -634,17 +649,16 @@ class PCE():
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> np.ndarray:
         """
+        Fits the PCE model and returns the matrix coefficients of the model.
+
         Parameters
         ----------
-        X : 
+        X :
             An m-by-n matrix with the first dimension having the number of 
             samples in the model (m) and the second having the number of 
             variables in the model (n).
-
-        y : 
-            The 2D numpy array of responses from the user's analytic tool. The 
-
-        Fits the PCE model and returns the matrix coefficients of the model.
+        y :
+            The 2D numpy array of responses from the user's analytic tool. 
         """
         self.set_samples(X)
 
@@ -763,23 +777,24 @@ class PCE():
 
     def predict(self, X: np.ndarray, return_uncert: bool=False) -> np.ndarray:
         """
+        Predicts the model responses of an input matrix of values.
+
         Parameters
         ----------
         X : 
             An m-by-n matrix with the first dimension having the number of 
             samples in the model (m) and the second having the number of 
             variables in the model (n).
-
         return_uncert : 
             Boolean for if the method should return the uncertainty associated 
             with the predicted responses.
 
         Returns
         -------
-        resp_pred : the predicted value
-        uncert_mean : the uncertainty on the predicted value
-
-        Predicts the model responses of an input matrix of values.
+        resp_pred :
+            the predicted value
+        uncert_mean :
+            the uncertainty on the predicted value
         """
         Xnew = np.zeros(X.shape)
         for var in range(self._var_count):
@@ -805,6 +820,9 @@ class PCE():
 
     def verification(self, X: np.ndarray, y: np.ndarray) -> np.ndarray:
         """
+        Predicts the response for the verification samples and compares the 
+        predicted responses to the user-provided verification response file.
+
         Parameters
         ----------
         X : 
@@ -819,9 +837,6 @@ class PCE():
         -------
         ver_error :
             The error between the truth and the predicted reponses.
-
-        Predicts the response for the verification samples and compares the 
-        predicted responses to the user-provided verification response file.
         """
         y = y.reshape(-1, self.model_cnt)
         pred_resp = self.predict(X)
@@ -877,7 +892,14 @@ class PCE():
     def verify_sample(self, count: int=-1, seed=None) -> np.ndarray:
         """
         Sample the number of verification values according to the input count or 
-        the set attribute verify_over_samp_ratio.
+        the set attribute `verify_over_samp_ratio`.
+
+        Parameters
+        ----------
+        count :
+            The number of verification samples to generate. A value of `-1` 
+            creates a number of samples based on the attribute 
+            `verify_over_samp_ratio`.
         """
         from uqpce.pce._helpers import term_count
 
@@ -890,6 +912,12 @@ class PCE():
     def sample(self, count: int=-1, seed=None) -> np.ndarray:
         """
         This method returns a matrix of samples from the input variables.
+
+        Parameters
+        ----------
+        count :
+            The number of samples to generate. A value of `-1` creates a number 
+            of samples based on the attribute `over_samp_ratio`.
         """
         from scipy.stats.qmc import LatinHypercube
         from uqpce.pce.variables.continuous import ContinuousVariable
@@ -998,6 +1026,11 @@ class PCE():
         Saves figures for all of the variables with their values plotted on 
         them, if the data is available, which serves as a check if the user's 
         run matrix does not match their distributions well.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distributions 
         """
         from uqpce.pce.variables.continuous import ContinuousVariable
         from uqpce.pce.variables.discrete import DiscreteVariable
@@ -1085,19 +1118,18 @@ class PCE():
 
     def generate_responses(self, X, equation: str) -> np.ndarray:
         """
+        For testing purposes; allows users to generate samples according to 
+        an input function.
+
         Parameters
         ----------
         X : 
             An m-by-n matrix with the first dimension having the number of 
             samples in the model (m) and the second having the number of 
             variables in the model (n).
-        
         equation : 
             A string represenation of the desired equation, using x0 for the 
             first variable, x1 for the second, and so on.
-
-        For testing purposes; allows users to generate samples according to 
-        an input function.
         """
         from uqpce.pce._helpers import user_function
         from uqpce.pce.error import DimensionError

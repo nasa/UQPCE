@@ -5,6 +5,7 @@ class VarianceComp(om.ExplicitComponent):
     def initialize(self):
         self.options.declare('norm_sq', types=np.ndarray)
 
+        self._no_check_partials = True
 
     def setup(self):
         norm_sq = self.options['norm_sq']

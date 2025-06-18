@@ -7,8 +7,12 @@ root: intro
 
 parts:
 - caption: User Guide
+  maxdepth: 1
   chapters:
   - file: user-guide/getting-started
+    sections:
+      - file: user-guide/running-uqpce
+      - file: user-guide/multiphase_projectile_example
   - file: user-guide/variables
   - file: user-guide/inputs
   - file: user-guide/settings
@@ -44,6 +48,7 @@ parts:
       - file: reference/continuous/beta
       - file: reference/continuous/gamma
       - file: reference/continuous/exponential
+      - file: reference/continuous/lognormal
       - file: reference/continuous/user-input
       - file: reference/continuous/epistemic
     - file: reference/discrete-variables

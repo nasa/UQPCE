@@ -4,10 +4,13 @@ import numpy as np
 
 class Variable():
     """
-    Inputs: number- the number of the variable from the file
-    
     Class represents an input variable that is used to create and evaluate 
     the model.
+
+    Parameters
+    ----------
+    number :
+        the number of the variable from the file
     """
     __slots__ = (
         'distribution', 'samples', 'std_vals', 'type', 'name', 'verify_vals', 'std_verify_vals', 'vals', 'number', 'var_str',
@@ -21,20 +24,28 @@ class Variable():
 
     def get_norm_sq_val(self, matrix_val):
         """
-        Inputs: matrix_val- the value in the model matrix to consider
-        
         Returns the norm squared value corresponding to the matrix value.
+        
+        Parameters
+        ----------
+        matrix_val :
+            the value in the model matrix to consider
         """
         return float(self.norm_sq_vals[matrix_val])
 
     def get_var_basis(self, matrix_size, model_matrix, index):
         """
-        Inputs: matrix_size- the size of the model matrix
-                model_matrix- the model matrix
-                index- the variable index to consider
-        
         Creates the variable basis for the variable based on the values in the 
         model matrix that correspond to the variable index.
+
+        Parameters
+        ----------
+        matrix_size :
+            the size of the model matrix
+        model_matrix :
+            the model matrix
+        index :
+            the variable index to consider
         """
         var_basis = np.zeros(matrix_size, dtype=object)
 
@@ -44,6 +55,14 @@ class Variable():
         return var_basis
 
     def resample(self, count):
+        """
+        Generates the resampled values.
+
+        Parameters
+        ----------
+        count :
+            the number of resampled values
+        """
         samps = self.generate_samples(count, standardize=True)
         # samps[np.argmin(samps)] = self.std_bounds[0]
         # samps[np.argmax(samps)] = self.std_bounds[1]
@@ -51,10 +70,13 @@ class Variable():
 
     def generate_samples(self, count, standardize=False):
         """
-        Inputs: count- the number of points needed to be generated
-
         Overrides the Variable class generate_samples to align with
         a normal distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
         """
         from scipy.stats.qmc import LatinHypercube
         sampler = LatinHypercube(d=1)

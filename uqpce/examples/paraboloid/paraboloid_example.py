@@ -1,5 +1,5 @@
 import openmdao.api as om
-from paraboloid.paraboloid import Paraboloid
+from uqpce.examples.paraboloid.paraboloid.paraboloid import Paraboloid
 from uqpce.mdao.uqpcegroup import UQPCEGroup
 from uqpce.mdao import interface
 

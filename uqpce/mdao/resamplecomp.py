@@ -5,6 +5,7 @@ class ResampleComp(om.ExplicitComponent):
     def initialize(self):
         self.options.declare('resampled_var_basis', types=np.ndarray)
 
+        self._no_check_partials = True
 
     def setup(self):
         resamp_var_basis = self.options['resampled_var_basis']

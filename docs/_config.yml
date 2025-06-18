@@ -9,7 +9,8 @@ logo: images/UQPCE_logo.png
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
+  execute_notebooks: cache
+  timeout: 800
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -47,6 +48,7 @@ sphinx:
   extra_extensions:
   - 'sphinx.ext.autodoc'
   - 'sphinx.ext.autosummary'
+  - 'sphinx.ext.napoleon'
   config:
     html_favicon: favicon.ico
     autosummary_generate: True

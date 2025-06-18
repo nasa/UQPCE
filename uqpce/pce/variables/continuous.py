@@ -6,7 +6,7 @@ from multiprocessing import Process, Manager
 
 from sympy import *
 import numpy as np
-from scipy.stats import norm, beta as fbeta, gamma, expon, uniform
+from scipy.stats import norm, beta as fbeta, gamma, expon, uniform, lognorm
 from scipy.linalg import pascal
 from scipy.integrate import quad
 
@@ -37,16 +37,23 @@ from uqpce.pce.error import VariableInputError
 
 class ContinuousVariable(Variable):
     """
-    Inputs: pdf- the equation that defines the pdf of the variable values
-            interval_low- the low interval of the variable
-            interval_high- the high interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-
     Class represents a continuous variable.
+
+    Parameters
+    ----------
+    pdf :
+        the equation that defines the pdf of the variable values
+    interval_low :
+        the low interval of the variable
+    interval_high :
+        the high interval of the variable
+    order :
+        the order of the model to calculate the orthogonal
+        polynomials and norm squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
 
     def __init__(self, pdf, interval_low, interval_high, order=2, name='', number=0):
@@ -114,11 +121,15 @@ class ContinuousVariable(Variable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-
         For each variable, it adds a new attribute for the standardized values
         from the original input values.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         setattr(self, std_vals, getattr(self, orig))
 
@@ -127,20 +138,25 @@ class ContinuousVariable(Variable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         return values  # general variable must already be standardized
 
 
     def unstandardize_points(self, value):
         """
-        Inputs: value- the standardized value to be unstandardized
-
         Calculates and returns the unscaled variable value from the
         standardized value.
+
+        Parameters
+        ----------
+        value :
+            the standardized value to be unstandardized
         """
         return value  # general variable must already be standardized
 
@@ -148,6 +164,11 @@ class ContinuousVariable(Variable):
     def check_distribution(self, X):
         """
         Checks all values in an array to ensure that they are standardized.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
 
         std_vals = self.standardize_points(X)
@@ -166,10 +187,13 @@ class ContinuousVariable(Variable):
 
     def generate_samples(self, samp_size, **kwargs):
         """
-        Inputs: samp_size- the number of points needed to be generated
-
         Generates points according to the Latin hypercube; each point is in an
         interval of equal probability.
+
+        Parameters
+        ----------
+        samp_size :
+            the number of points needed to be generated
         """
         decimals = 30
 
@@ -328,13 +352,18 @@ class ContinuousVariable(Variable):
 
     def create_norm_sq(self, low, high, func):
         """
-        Inputs: low- the low interval bound for the distribution
-                high- the high interval bound for the distribution
-                func- the function corresponding to the distribution
-
         Calculates the norm squared values up to the order of polynomial
         expansion based on the probability density function and its
         corresponding orthogonal polynomials.
+
+        Parameters
+        ----------
+        low :
+            the low interval bound for the distribution
+        high :
+            the high interval bound for the distribution
+        func :
+            the function corresponding to the distribution
         """
         orthopoly_count = len(self.var_orthopoly_vect)
         self.norm_sq_vals = np.zeros(orthopoly_count)
@@ -373,16 +402,24 @@ class ContinuousVariable(Variable):
 
     def _norm_sq(self, low, high, func, i, region, proc_dict):
         """
-        Inputs: low- the low interval bound for the distribution
-                high- the high interval bound for the distribution
-                func- the function corresponding to the distribution
-                i- the index of the norm squared to calculate
-                region- which sympy calculation to try for the norm squared
-                proc_dict- the dictionary in which the output will be stored
-
         An assistant to create_norm_sq; allows the norm squared calculations to
         have a timeout if an error isn't raised and the solution isn't found
         reasonably quickly.
+
+        Parameters
+        ----------
+        low :
+            the low interval bound for the distribution
+        high :
+            the high interval bound for the distribution
+        func :
+            the function corresponding to the distribution
+        i :
+            the index of the norm squared to calculate
+        region :
+            which sympy calculation to try for the norm squared
+        proc_dict :
+            the dictionary in which the output will be stored
         """
         proc_dict['out'] = None
 
@@ -466,12 +503,18 @@ class ContinuousVariable(Variable):
 
     def recursive_var_basis(self, func, low, high, order):
         """
-        Inputs: func- the probability density function of the input equation
-                low- the low bound on the variable
-                high- the high bound on the variable
-                order- the order of polynomial expansion
-
         Recursively calculates the variable basis up to the input 'order'.
+
+        Parameters
+        ----------
+        func :
+            the probability density function of the input equation
+        low :
+            the low bound on the variable
+        high :
+            the high bound on the variable
+        order :
+            the order of polynomial expansion
         """
         tol = 1e-12
 
@@ -518,20 +561,25 @@ class ContinuousVariable(Variable):
 
     def get_resamp_vals(self, samp_size):
         """
-        Inputs: samp_size- the number of samples to generate according to the
-                distribution
-
         Generates samp_num number of samples according to the pdf of the
         Variable.
+
+        Parameters
+        ----------
+        samp_size :
+            the number of samples to generate according to the distribution
         """
         return self.generate_samples(samp_size)
 
 
     def _calc_cdf(self, proc_dict):
         """
-        Inputs: proc_dict- the dictionary in which the output will be stored
-        
         Calculates the cumulative density function of the distribution.
+
+        Parameters
+        ----------
+        proc_dict :
+            the dictionary in which the output will be stored
         """
         try:
             proc_dict['cum_dens_func'] = integrate(
@@ -543,9 +591,13 @@ class ContinuousVariable(Variable):
 
     def _invert(self, proc_dict):
         """
-        Inputs: proc_dict- the dictionary in which the output will be stored
-        
         Solves for the inverse function of the cumulative density function.
+
+        Parameters
+        ----------
+        proc_dict :
+            the dictionary in which the output will be stored
+    
         """
         y = symbols('y')
 
@@ -615,16 +667,22 @@ class ContinuousVariable(Variable):
 
 class UniformVariable(ContinuousVariable):
     """
-    Inputs: interval_low- the low interval of the variable
-            interval_high- the high interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-
     Represents a uniform variable. The methods in this class correspond to
     those of a uniform variable.
+
+    Parameters
+    ----------
+    interval_low :
+        the low interval of the variable
+    interval_high :
+        the high interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
 
     def __init__(
@@ -661,7 +719,21 @@ class UniformVariable(ContinuousVariable):
         self.check_num_string()
 
     def generate_samples(self, count, standardize=False):
-        return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
+        """
+        Overrides the Variable class generate_samples to align with
+        a uniform distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
 
     def generate_orthopoly(self):
         """
@@ -696,11 +768,15 @@ class UniformVariable(ContinuousVariable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-        
         Overrides the Variable class standardize to align with
         a uniform distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         original = getattr(self, orig)
 
@@ -713,10 +789,12 @@ class UniformVariable(ContinuousVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         mean = (
             (self.interval_high - self.interval_low) / 2 + self.interval_low
@@ -729,10 +807,13 @@ class UniformVariable(ContinuousVariable):
 
     def unstandardize_points(self, value):
         """
-        Inputs: value- the standardized value to be unstandardized
-
         Calculates and returns the unscaled variable value from the
         standardized value.
+
+        Parameters
+        ----------
+        value :
+            the standardized value to be unstandardized
         """
         shift = (
             (self.interval_high - self.interval_low) / 2 + self.interval_low
@@ -747,6 +828,11 @@ class UniformVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         a uniform distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         std_vals = self.standardize_points(X)
 
@@ -763,10 +849,13 @@ class UniformVariable(ContinuousVariable):
 
     def get_norm_sq_val(self, matrix_val):
         """
-        Inputs: matrix_val- the value in the model matrix to consider
-        
         Overrides the Variable class get_norm_sq_val to align with
         a uniform distribution.
+
+        Parameters
+        ----------
+        matrix_val :
+            the value in the model matrix to consider
         """
         return 1.0 / (2.0 * matrix_val + 1.0)
 
@@ -788,16 +877,22 @@ class UniformVariable(ContinuousVariable):
 
 class NormalVariable(ContinuousVariable):
     """
-    Inputs: mean- the mean of the variable
-            stdev- the standard deviation of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-
     Represents a normal variable. The methods in this class correspond to
     those of a normal variable.
+
+    Parameters
+    ----------
+    mean :
+        the mean of the variable
+    stdev :
+        the standard deviation of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
 
     __slots__ = ('mean', 'stdev')
@@ -871,11 +966,15 @@ class NormalVariable(ContinuousVariable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-
         Overrides the Variable class standardize to align with
         a normal distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         original = getattr(self, orig)
         standard = self.standardize_points(original)
@@ -886,20 +985,25 @@ class NormalVariable(ContinuousVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         return (values - self.mean) / self.stdev
 
 
     def unstandardize_points(self, value):
         """
-        Inputs: value- the standardized value to be unstandardized
-
         Calculates and returns the unscaled variable value from the
         standardized value.
+
+        Parameters
+        ----------
+        value :
+            the standardized value to be unstandardized
         """
         return (value * self.stdev) + self.mean
 
@@ -908,6 +1012,11 @@ class NormalVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         a normal distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
 
         std_vals = self.standardize_points(X)
@@ -926,10 +1035,13 @@ class NormalVariable(ContinuousVariable):
 
     def get_norm_sq_val(self, matrix_value):
         """
-        Inputs: matrix_val- the value in the model matrix to consider
-        
         Overrides the Variable class get_norm_sq_val to align with
         a normal distribution.
+
+        Parameters
+        ----------
+        matrix_val :
+            the value in the model matrix to consider
         """
         return math.factorial(matrix_value)
 
@@ -947,7 +1059,21 @@ class NormalVariable(ContinuousVariable):
             self.stdev = float(self.stdev.replace('pi', str(np.pi)))
 
     def generate_samples(self, count, standardize=False):
-        return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
+        """
+        Overrides the Variable class generate_samples to align with
+        a normal distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
     
     def get_mean(self):
         return self.mean
@@ -955,18 +1081,26 @@ class NormalVariable(ContinuousVariable):
 
 class BetaVariable(ContinuousVariable):
     """
-    Inputs: alpha- the alpha parameter of the variable
-            beta- the beta parameter of the variable
-            interval_low- the low interval of the variable
-            interval_high- the high interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-
     Represents a beta variable. The methods in this class correspond to
     those of a beta variable.
+
+    Parameters
+    ----------
+    alpha :
+        the alpha parameter of the variable
+    beta :
+        the beta parameter of the variable
+    interval_low :
+        the low interval of the variable
+    interval_high :
+        the high interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
     __slots__ = ('alpha', 'beta')
 
@@ -1005,7 +1139,9 @@ class BetaVariable(ContinuousVariable):
         self.type = UncertaintyType.ALEATORY
 
         scale = self.interval_high - self.interval_low
-        self.dist = fbeta(self.alpha, self.beta, loc=self.interval_low, scale=scale)
+        self.dist = fbeta(
+            self.alpha, self.beta, loc=self.interval_low, scale=scale
+        )
 
         low = 0
         high = 1
@@ -1032,7 +1168,21 @@ class BetaVariable(ContinuousVariable):
         self.check_num_string()
 
     def generate_samples(self, count, standardize=False):
-        return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
+        """
+        Overrides the Variable class generate_samples to align with
+        a beta distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
 
     def generate_orthopoly(self):
         """
@@ -1074,11 +1224,15 @@ class BetaVariable(ContinuousVariable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-
         Overrides the Variable class standardize to align with
         a beta distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         original = getattr(self, orig)
         standard = (
@@ -1092,10 +1246,12 @@ class BetaVariable(ContinuousVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         standard = (
             (values - self.interval_low)
@@ -1107,10 +1263,13 @@ class BetaVariable(ContinuousVariable):
 
     def unstandardize_points(self, value):
         """
-        Inputs: value- the standardized value to be unstandardized
-
         Calculates and returns the unscaled variable value from the
         standardized value.
+
+        Parameters
+        ----------
+        value :
+            the standardized value to be unstandardized
         """
         unscaled_value = value = (
             value * (self.interval_high - self.interval_low)
@@ -1124,6 +1283,11 @@ class BetaVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         an beta distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         shift = 8
 
@@ -1171,16 +1335,22 @@ class BetaVariable(ContinuousVariable):
 
 class ExponentialVariable(ContinuousVariable):
     """
-    Inputs: lambd- the lambda parameter of the variable values
-            interval_low- the low interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-
     Represents an exponential variable. The methods in this class correspond to
     those of an exponential variable.
+
+    Parameters
+    ----------
+    lambd :
+        the lambda parameter of the variable values
+    interval_low :
+        the low interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
 
     __slots__ = ('lambda')
@@ -1232,14 +1402,32 @@ class ExponentialVariable(ContinuousVariable):
         self.check_num_string()
     
     def generate_samples(self, count, standardize=False):
-        return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
+        """
+        Overrides the Variable class generate_samples to align with
+        a exponential distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-        
         Overrides the Variable class standardize to align with an exponential distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         original = getattr(self, orig)
         standard = (original[:] - self.interval_low)
@@ -1250,20 +1438,25 @@ class ExponentialVariable(ContinuousVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         return values - self.interval_low
 
 
     def unstandardize_points(self, value):
         """
-        Inputs: value- the standardized value to be unstandardized
-
         Calculates and returns the unscaled variable value from the
         standardized value.
+
+        Parameters
+        ----------
+        value :
+            the standardized value to be unstandardized
         """
         return value + self.interval_low
 
@@ -1272,6 +1465,11 @@ class ExponentialVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         an exponential distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         shift = 15
 
@@ -1308,17 +1506,24 @@ class ExponentialVariable(ContinuousVariable):
 
 class GammaVariable(ContinuousVariable):
     """
-    Inputs: alpha- the alpha parameter of the variable
-            theta- the theta parameter of the variable
-            interval_low- the low interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-
     Represents a gamma variable. The methods in this class correspond to
     those of a gamma variable.
+
+    Parameters
+    ----------
+    alpha :
+        the alpha parameter of the variable
+    theta :
+        the theta parameter of the variable
+    interval_low :
+        the low interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
 
     __slots__ = ('alpha', 'theta')
@@ -1376,15 +1581,31 @@ class GammaVariable(ContinuousVariable):
         self.std_bounds = (low, self.standardize_points(upper))
 
     def generate_samples(self, count, standardize=False):
+        """
+        Overrides the Variable class generate_samples to align with
+        a gamma distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
         return super(ContinuousVariable, self).generate_samples(count, standardize=standardize)
     
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-        
         Overrides the Variable class standardize to align with
         a gamma distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         standard = (getattr(self, orig) - self.interval_low) / self.theta
         setattr(self, std_vals, standard)
@@ -1394,20 +1615,25 @@ class GammaVariable(ContinuousVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         return (values - self.interval_low) / self.theta
 
 
     def unstandardize_points(self, value):
         """
-        Inputs: value- the standardized value to be unstandardized
-
         Calculates and returns the unscaled variable value from the
         standardized value.
+
+        Parameters
+        ----------
+        value :
+            the standardized value to be unstandardized
         """
         return (value * self.theta) + self.interval_low
 
@@ -1416,6 +1642,11 @@ class GammaVariable(ContinuousVariable):
         """
         Overrides the Variable class check_distribution to align with
         a gamma distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         shift = 15
 
@@ -1449,6 +1680,197 @@ class GammaVariable(ContinuousVariable):
         Return the mean of the variable.
         """
         return self.interval_low + (self.alpha * self.theta)
+
+class LognormalVariable(ContinuousVariable):
+    """
+    Represents a lognormal variable. The methods in this class correspond to
+    those of a lognormal variable.
+
+    Parameters
+    ----------
+    mu :
+        the mean, or expected value, of the variable
+    stdev :
+        the standard deviation of the variable's natural logarithm
+    interval_low :
+        the low interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
+    """
+
+    __slots__ = ('mu', 'stdev')
+
+    # This is the standardized form required for the UQPCE variable basis and
+    # norm squared.
+    equation = '(1/(x*sqrt(2*pi))) * exp(-(ln(x))**2/2)'
+
+    def __init__(self, mu, stdev, interval_low=0, order=2, name='', number=0):
+
+        if not (stdev > 0):
+            raise VariableInputError(
+                'LognormalVariable stdev must be greater than 0.'
+            )
+
+        self.mu = mu
+        self.stdev = stdev
+        self.interval_low = interval_low
+        self.order = order
+        
+        self.name = f'x{number}' if name == '' else name
+        self.var_str = f'x{number}'
+        self.x = symbols(self.var_str)
+
+        self.distribution = Distribution.LOGNORMAL
+        self.type = UncertaintyType.ALEATORY
+        self.dist = lognorm(
+            s=self.stdev, scale=np.exp(self.mu), loc=self.interval_low
+        )
+
+        low = 0
+        high = 'oo'
+
+        self.check_num_string()
+
+        x = symbols(self.var_str)
+
+        parsed_dist = parse_expr(
+            self.equation,
+            local_dict={
+                's':parse_expr(str(Fraction(self.stdev))), 
+                'mu':parse_expr(str(Fraction(self.mu))), 'x':x}
+        )
+
+        self.recursive_var_basis(parsed_dist, low, high, self.order)
+        self.norm_sq_vals = np.zeros(len(self.var_orthopoly_vect))
+        self.create_norm_sq(low, high, parsed_dist)
+
+        # if inf bounds, find approximate bound
+        low_percent = 8e-17
+        high_percent = 1 - low_percent
+        
+        self.low_approx = self.interval_low
+        self.high_approx = self.dist.ppf(high_percent)
+
+        upper = self.dist.ppf(high_percent)
+
+        self.bounds = (self.interval_low, upper)
+        self.std_bounds = (low, self.standardize_points(upper))
+
+    def generate_samples(self, count, standardize=False):
+        """
+        Overrides the Variable class generate_samples to align with
+        a lognormal distribution.
+
+        Parameters
+        ----------
+        count :
+            the number of points needed to be generated
+        standardize :
+            boolean for generating samples for the standardized version of the
+            variable
+        """
+        return super(ContinuousVariable, self).generate_samples(
+            count, standardize=standardize
+        )
+    
+    def standardize(self, orig, std_vals):
+        """
+        Overrides the Variable class standardize to align with
+        a lognormal distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
+        """
+        x_orig = getattr(self, orig)
+        unstd_cdf = self.dist.cdf(x_orig)
+        standard = lognorm(s=1, scale=1).ppf(unstd_cdf)
+
+        setattr(self, std_vals, standard)
+
+        return getattr(self, std_vals)
+
+
+    def standardize_points(self, values):
+        """
+        Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
+        """
+        unstd_cdf = self.dist.cdf(values)
+
+        return lognorm(s=1, scale=1).ppf(unstd_cdf)
+
+
+    def unstandardize_points(self, value):
+        """
+        Calculates and returns the unscaled variable value from the
+        standardized value.
+
+        Parameters
+        ----------
+        value :
+            the standardized value to be unstandardized
+        """
+        std_cdf = lognorm(s=1, scale=1).cdf(value)
+
+        return self.dist.ppf(std_cdf)
+
+
+    def check_distribution(self, X):
+        """
+        Overrides the Variable class check_distribution to align with
+        a lognormal distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
+        """
+        shift = lognorm(s=1, scale=1).ppf(0.99)
+        std_vals = self.standardize_points(X)
+
+        mx = np.max(std_vals)
+        mn = np.min(std_vals)
+
+        if rank == 0 and (mx > shift) or (mn < 0):
+            print(
+                f'Large standardized value for variable {self.name} '
+                'with lognormal distribution found. Check input and run matrix.', 
+                file=sys.stderr
+            )
+            return -1
+
+
+    def check_num_string(self):
+        """
+        Searches to replace sring 'pi' with its numpy equivalent in any of the
+        values that might contain it.
+        """
+        if isinstance(self.mu, str) and 'pi' in self.mu:
+            self.mu = float(self.mu.replace('pi', str(np.pi)))
+
+        if isinstance(self.stdev, str) and 'pi' in self.stdev:
+            self.stdev = float(self.stdev.replace('pi', str(np.pi)))
+
+
+    def get_mean(self):
+        """
+        Return the mean of the variable.
+        """
+        return self.dist.stats('m')
+
 
 class EpistemicVariable(UniformVariable):
     
