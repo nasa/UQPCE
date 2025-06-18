@@ -31,6 +31,7 @@ jobs:
             SCIPY: '1.13'
             PYYAML: '6.0.2'
             OPENMDAO: 'latest'
+            DYMOS: 'latest'
             MPI4PY: '3.1.4'
             OPTIONAL: '[docs]'
             PUBLISH_DOCS: 1
@@ -92,6 +93,21 @@ jobs:
             pip install openmdao
           else
             pip install openmdao==${{ matrix.OPENMDAO }}
+          fi
+
+      - name: Install Dymos
+        if: matrix.DYMOS
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install Dymos"
+          echo "============================================================="
+          if [[ "${{ matrix.DYMOS }}" == "dev" ]]; then
+            pip install git+https://github.com/OpenMDAO/Dymos
+          elif [[ "${{ matrix.DYMOS }}" == "latest" ]]; then
+            pip install dymos
+          else
+            pip install dymos==${{ matrix.DYMOS }}
           fi
 
       - name: Install PyYAML
