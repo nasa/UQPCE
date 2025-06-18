@@ -30,8 +30,8 @@ jobs:
             NUMPY: '1.26'
             SCIPY: '1.13'
             PYYAML: '6.0.2'
+            JAX: '0.6.1'
             OPENMDAO: 'latest'
-            DYMOS: 'latest'
             MPI4PY: '3.1.4'
             OPTIONAL: '[docs]'
             PUBLISH_DOCS: 1
@@ -95,21 +95,6 @@ jobs:
             pip install openmdao==${{ matrix.OPENMDAO }}
           fi
 
-      - name: Install Dymos
-        if: matrix.DYMOS
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install Dymos"
-          echo "============================================================="
-          if [[ "${{ matrix.DYMOS }}" == "dev" ]]; then
-            pip install git+https://github.com/OpenMDAO/Dymos
-          elif [[ "${{ matrix.DYMOS }}" == "latest" ]]; then
-            pip install dymos
-          else
-            pip install dymos==${{ matrix.DYMOS }}
-          fi
-
       - name: Install PyYAML
         if: matrix.PYYAML
         shell: bash -l {0}
@@ -118,6 +103,15 @@ jobs:
           echo "Install PyYAML"
           echo "============================================================="
           pip install PyYAML==${{ matrix.PYYAML }}
+
+      - name: Install JAX
+        if: matrix.JAX
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install JAX"
+          echo "============================================================="
+          pip install jax==${{ matrix.JAX }}
 
       - name: Install mpi4py
         if: matrix.MPI4PY
