@@ -31,18 +31,25 @@ from uqpce.pce.error import VariableInputError
 
 class DiscreteVariable(Variable):
     """
-    Inputs: pdf- the equation that defines the pdf of the variable values
-            interval_low- the low interval of the variable
-            interval_high- the high interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-    
     Class represents a discrete variable. When using a variable of only this 
     type, the x_values must be standardized for the desired distribution and 
     the probabilities must add up to 1.
+
+    Parameters
+    ----------
+    pdf :
+        the equation that defines the pdf of the variable values
+    interval_low :
+        the low interval of the variable
+    interval_high :
+        the high interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
 
     __slots__ = ('distribution', 'x_values', 'probabilities')
@@ -82,6 +89,11 @@ class DiscreteVariable(Variable):
     def check_distribution(self, X):
         """
         Checks all values in an array to ensure that they are standardized.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         std_vals = self.standardize_points(X)
 
@@ -147,10 +159,13 @@ class DiscreteVariable(Variable):
 
     def generate_samples(self, samp_size, **kwargs):
         """ 
-        Inputs: samp_size- the number of points needed to be generated
-
         Overrides the Variable class generate_samples to align with 
         a discrete uniform distribution.
+
+        Parameters
+        ----------
+        samp_size :
+            the number of points needed to be generated
         """
         vals = np.array(
             random.choices(
@@ -163,11 +178,13 @@ class DiscreteVariable(Variable):
 
     def resample(self, samp_size):
         """
-        Inputs: samp_size- the number of samples to generate according to the
-                distribution
-
         Overrides the Variable class resample to align with 
         a discrete uniform distribution.
+
+        Parameters
+        ----------
+        samp_size :
+            the number of samples to generate according to the distribution
         """
         return self.generate_samples(samp_size, standardize=True)
 
@@ -175,12 +192,14 @@ class DiscreteVariable(Variable):
 
     def create_norm_sq(self, x_values, probabilities):
         """
-        Inputs: x_values- the x-values associated with the variable
-                probabilities- the probabilities associated with the x-values
-        
         Calculates the norm squared values up to the order of polynomial 
         expansion based on the probability density function and its 
         corresponding orthogonal polynomials.
+
+        x_values :
+            the x-values associated with the variable
+        probabilities: 
+            the probabilities associated with the x-values
         """
         orthopoly_count = len(self.var_orthopoly_vect)
         self.norm_sq_vals = np.zeros(orthopoly_count)
@@ -206,11 +225,16 @@ class DiscreteVariable(Variable):
 
     def recursive_var_basis(self, x_values, probabilities, order):
         """
-        Inputs: x_values- the x-values associated with the variable
-                probabilities- the probabilities associated with the x-values
-                order- the order of polynomial expansion
-                
         Recursively calculates the variable basis up to the input 'order'.
+
+        Parameters
+        ----------
+        x_values :
+            the x-values associated with the variable
+        probabilities :
+            the probabilities associated with the x-values
+        order :
+            the order of polynomial expansion
         """
 
         if order == 0:
@@ -252,11 +276,15 @@ class DiscreteVariable(Variable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-        
-        Overrides the Variable class standardize to align with 
-        a discrete uniform distribution.
+        Overrides the Variable class standardize to align with a discrete 
+        uniform distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         setattr(self, std_vals, getattr(self, orig))
 
@@ -265,21 +293,25 @@ class DiscreteVariable(Variable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         return values  # general discrete variable must already be standardized
 
 
     def unstandardize_points(self, value):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Calculates and returns the unscaled variable value from the 
         standardized value.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         return value  # general discrete variable must already be standardized
 
@@ -303,16 +335,22 @@ class DiscreteVariable(Variable):
 
 class PoissonVariable(DiscreteVariable):
     """
-    Inputs: lambd- the lambda parameter of the variable
-            interval_low- the low interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-            
     Represents a discrete poisson variable. The methods in this class correspond to 
     those of a discrete poisson variable.
+
+    Parameters
+    ----------
+    lambd :
+        the lambda parameter of the variable
+    interval_low :
+        the low interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
     __slots__ = ('lambda')
 
@@ -382,11 +420,15 @@ class PoissonVariable(DiscreteVariable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-
         Overrides the Variable class standardize to align with 
         a discrete poisson distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         standardized = getattr(self, orig) - self.interval_low
         setattr(self, std_vals, standardized)
@@ -395,10 +437,12 @@ class PoissonVariable(DiscreteVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         standardized = values - self.interval_low
         return standardized
@@ -406,10 +450,13 @@ class PoissonVariable(DiscreteVariable):
 
     def unstandardize_points(self, values):
         """
-        Inputs: values- the standardized value to be unstandardized
-        
         Calculates and returns the unscaled variable value from the 
         standardized value.
+
+        Parameters
+        ----------
+        values :
+            the standardized value to be unstandardized
         """
         unstandardized = values + self.interval_low
         return unstandardized
@@ -419,6 +466,11 @@ class PoissonVariable(DiscreteVariable):
         """
         Overrides the Variable class check_distribution to align with 
         a discrete poisson distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         std_vals = self.standardize_points(X)
 
@@ -455,17 +507,24 @@ class PoissonVariable(DiscreteVariable):
 
 class NegativeBinomialVariable(DiscreteVariable):
     """
-    Inputs: r- the r parameter of the variable
-            p- the p parameter of the variable
-            interval_low- the low interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-    
     Represents a discrete NegativeBinomial variable. The methods in this class correspond to 
     those of a discrete NegativeBinomial variable.
+
+    Parameters
+    ----------
+    r :
+        the r parameter of the variable
+    p :
+        the p parameter of the variable
+    interval_low :
+        the low interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
 
     __slots__ = ('r', 'p', 'divisions', 'dist')
@@ -542,11 +601,15 @@ class NegativeBinomialVariable(DiscreteVariable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
+        Overrides the Variable class standardize to align with a discrete 
+        NegativeBinomial distribution.
 
-        Overrides the Variable class standardize to align with 
-        a discrete NegativeBinomial distribution.
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         original = getattr(self, orig)
         standard = original - self.interval_low
@@ -557,10 +620,12 @@ class NegativeBinomialVariable(DiscreteVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         standard = values - self.interval_low
 
@@ -569,10 +634,13 @@ class NegativeBinomialVariable(DiscreteVariable):
 
     def unstandardize_points(self, values):
         """
-        Inputs: values- the standardized value to be unstandardized
-        
         Calculates and returns the unscaled variable value from the 
         standardized value.
+
+        Parameters
+        ----------
+        values :
+            the standardized value to be unstandardized
         """
         unstandard = values + self.interval_low
 
@@ -583,6 +651,11 @@ class NegativeBinomialVariable(DiscreteVariable):
         """
         Overrides the Variable class check_distribution to align with 
         a discrete NegativeBinomial distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         std_vals = self.standardize_points(X)
 
@@ -623,18 +696,26 @@ class NegativeBinomialVariable(DiscreteVariable):
 
 class HypergeometricVariable(DiscreteVariable):
     """
-    Inputs: M- the M parameter of the variable
-            n- the n parameter of the variable
-            N- the N parameter of the variable
-            interval_low- the low interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-    
     Represents a discrete hypergeometric variable. The methods in this class correspond to 
     those of a discrete hypergeometric variable.
+
+    Parameters
+    ----------
+    M :
+        the M parameter of the variable
+    n :
+        the n parameter of the variable
+    N :
+        the N parameter of the variable
+    interval_low :
+        the low interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
     __slots__ = ('M', 'n', 'N', 'dist')
 
@@ -717,11 +798,15 @@ class HypergeometricVariable(DiscreteVariable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-        
-        Overrides the Variable class standardize to align with 
-        a discrete Hypergeomeric distribution.
+        Overrides the Variable class standardize to align with a discrete 
+        Hypergeomeric distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         original = getattr(self, orig)
         standard = original - self.interval_low
@@ -732,10 +817,12 @@ class HypergeometricVariable(DiscreteVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         standard = values - self.interval_low
 
@@ -744,10 +831,13 @@ class HypergeometricVariable(DiscreteVariable):
 
     def unstandardize_points(self, values):
         """
-        Inputs: values- the standardized value to be unstandardized
-        
         Calculates and returns the unscaled variable value from the 
         standardized value.
+
+        Parameters
+        ----------
+        values :
+            the standardized value to be unstandardized
         """
         unstandard = values + self.interval_low
 
@@ -758,6 +848,11 @@ class HypergeometricVariable(DiscreteVariable):
         """
         Overrides the Variable class check_distribution to align with 
         a discrete hypergeometric distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         std_vals = self.standardize_points(X)
 
@@ -790,16 +885,22 @@ class HypergeometricVariable(DiscreteVariable):
 
 class UniformVariable(DiscreteVariable):
     """
-    Inputs: interval_low- the low interval of the variable
-            interval_high- the high interval of the variable
-            order- the order of the model to calculate the orthogonal
-            polynomials and norm squared values
-            type- the type of variable
-            name- the name of the variable
-            number- the number of the variable from the file
-    
     Represents a discrete uniform variable. The methods in this class correspond to 
     those of a categorical variable.
+
+    Parameters
+    ----------
+    interval_low :
+        the low interval of the variable
+    interval_high :
+        the high interval of the variable
+    order :
+        the order of the model to calculate the orthogonal polynomials and norm 
+        squared values
+    name :
+        the name of the variable
+    number :
+        the number of the variable from the file
     """
 
     def __init__(
@@ -850,11 +951,15 @@ class UniformVariable(DiscreteVariable):
 
     def standardize(self, orig, std_vals):
         """
-        Inputs: orig- the un-standardized values
-                std_vals- the attribue name for the standardized vals
-        
-        Overrides the Variable class standardize to align with 
-        a discrete uniform distribution.
+        Overrides the Variable class standardize to align with a discrete 
+        uniform distribution.
+
+        Parameters
+        ----------
+        orig :
+            the un-standardized values
+        std_vals :
+            the attribue name for the standardized vals
         """
         original = getattr(self, orig)
 
@@ -870,10 +975,12 @@ class UniformVariable(DiscreteVariable):
 
     def standardize_points(self, values):
         """
-        Inputs: values- unstandardized points corresponding to the variable's
-        distribution
-
         Standardizes and returns the inputs points.
+
+        Parameters
+        ----------
+        values :
+            unstandardized points corresponding to the variable's distribution
         """
         rng = self.interval_high - self.interval_low
         mean = rng / 2 + self.interval_low
@@ -884,10 +991,13 @@ class UniformVariable(DiscreteVariable):
 
     def unstandardize_points(self, value):
         """
-        Inputs: value- the standardized value to be unstandardized
-        
         Calculates and returns the unscaled variable value from the 
         standardized value.
+
+        Parameters
+        ----------
+        value :
+            the standardized value to be unstandardized
         """
         rng = self.interval_high - self.interval_low
         mean = rng / 2 + self.interval_low
@@ -900,6 +1010,11 @@ class UniformVariable(DiscreteVariable):
         """
         Overrides the Variable class check_distribution to align with 
         a discrete uniform distribution.
+
+        Parameters
+        ----------
+        X :
+           The array of samples to check against the variable distribution
         """
         std_vals = self.standardize_points(X)
 

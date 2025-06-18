@@ -7,8 +7,12 @@ root: intro
 
 parts:
 - caption: User Guide
+  maxdepth: 1
   chapters:
   - file: user-guide/getting-started
+    sections:
+      - file: user-guide/running-uqpce
+      - file: user-guide/multiphase_projectile_example
   - file: user-guide/variables
   - file: user-guide/inputs
   - file: user-guide/settings

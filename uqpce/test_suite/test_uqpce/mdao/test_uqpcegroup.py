@@ -109,19 +109,19 @@ class TestUQPCEGroup(unittest.TestCase):
         # Check partials of CDFGroup
         lower_cdf_samp = (
             self.partials['comp.f_abxy_lower_cdf_group.cdf']
-            [('ci_resid', 'samples')]['rel error'][0]
+            [('ci_resid', 'samples')]['abs error'][0]
         )
         lower_cdf_fci = (
             self.partials['comp.f_abxy_lower_cdf_group.cdf']
-            [('ci_resid', 'f_ci')]['rel error'][0]
+            [('ci_resid', 'f_ci')]['abs error'][0]
         )
         upper_cdf_samp = (
             self.partials['comp.f_abxy_upper_cdf_group.cdf']
-            [('ci_resid', 'samples')]['rel error'][0]
+            [('ci_resid', 'samples')]['abs error'][0]
         )
         upper_cdf_fci = (
             self.partials['comp.f_abxy_upper_cdf_group.cdf']
-            [('ci_resid', 'f_ci')]['rel error'][0]
+            [('ci_resid', 'f_ci')]['abs error'][0]
         )
 
         self.assertTrue(
