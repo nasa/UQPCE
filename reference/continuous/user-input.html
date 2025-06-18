@@ -1,0 +1,826 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>User-Input Variable &#8212; UQPCE Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/continuous/user-input';</script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Epistemic Variable" href="epistemic.html" />
+    <link rel="prev" title="Lognormal Variable" href="lognormal.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/UQPCE_logo.png" class="logo__image only-light" alt="UQPCE Documentation - Home"/>
+    <script>document.write(`<img src="../../_static/UQPCE_logo.png" class="logo__image only-dark" alt="UQPCE Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to UQPCE
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../user-guide/getting-started.html">Getting Started with UQPCE</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../user-guide/running-uqpce.html">Running UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user-guide/multiphase_projectile_example.html">Building Multi-Phase Trajectory with UQPCE and Dymos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/inputs.html">Input Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/outputs.html">Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/analysis.html">Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../theory/theory.html">Theory and Background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/symbols-and-defs.html">Symbols and Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/pce.html">Polynomial Chaos Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/sampling.html">Sample Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/techniques.html">Techniques</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../theory/openmdao.html">Compatability with OpenMDAO</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/uqpcegroup-overview.html">UQPCEGroup Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/derivatives.html">Analytic Derivatives</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../verification/verification.html">Verification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../verification/pce.html">UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verification/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verification/limitations.html">Limitations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../reference.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../continuous-variables.html">Continuous Variables</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="normal.html">Normal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="beta.html">Beta Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gamma.html">Gamma Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exponential.html">Exponential Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lognormal.html">Lognormal Variable</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../discrete-variables.html">Discrete Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../discrete/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../discrete/poisson.html">Poisson Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../discrete/hypergeometric.html">Hypergeometric Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../discrete/negative-binomial.html">Negative Binomial Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../discrete/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../discrete/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../pce.html">PCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../uqpce-group.html">UQPCEGroup</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../release-notes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE/issues/new?title=Issue%20on%20page%20%2Freference/continuous/user-input.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/reference/continuous/user-input.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>User-Input Variable</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="user-input-variable">
+<h1>User-Input Variable<a class="headerlink" href="#user-input-variable" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">uqpce.pce.variables.continuous.</span></span><span class="sig-name descname"><span class="pre">ContinuousVariable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable" title="Permalink to this definition">#</a></dt>
+<dd><p>Class represents a continuous variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pdf</strong> – the equation that defines the pdf of the variable values</p></li>
+<li><p><strong>interval_low</strong> – the low interval of the variable</p></li>
+<li><p><strong>interval_high</strong> – the high interval of the variable</p></li>
+<li><p><strong>order</strong> – the order of the model to calculate the orthogonal
+polynomials and norm squared values</p></li>
+<li><p><strong>name</strong> – the name of the variable</p></li>
+<li><p><strong>number</strong> – the number of the variable from the file</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.bounds">
+<span class="sig-name descname"><span class="pre">bounds</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.bounds" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.check_distribution">
+<span class="sig-name descname"><span class="pre">check_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.check_distribution" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks all values in an array to ensure that they are standardized.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> – The array of samples to check against the variable distribution</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.check_num_string">
+<span class="sig-name descname"><span class="pre">check_num_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.check_num_string" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks for values in the input file that correspond to pi, -oo, or oo.
+If these values exist, they are converted into values that Python can
+use to create resampling points.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.create_norm_sq">
+<span class="sig-name descname"><span class="pre">create_norm_sq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.create_norm_sq" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the norm squared values up to the order of polynomial
+expansion based on the probability density function and its
+corresponding orthogonal polynomials.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>low</strong> – the low interval bound for the distribution</p></li>
+<li><p><strong>high</strong> – the high interval bound for the distribution</p></li>
+<li><p><strong>func</strong> – the function corresponding to the distribution</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.cum_dens_func">
+<span class="sig-name descname"><span class="pre">cum_dens_func</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.cum_dens_func" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.dist">
+<span class="sig-name descname"><span class="pre">dist</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.dist" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.distribution">
+<span class="sig-name descname"><span class="pre">distribution</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.distribution" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.failed">
+<span class="sig-name descname"><span class="pre">failed</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.failed" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.generate_samples">
+<span class="sig-name descname"><span class="pre">generate_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samp_size</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.generate_samples" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates points according to the Latin hypercube; each point is in an
+interval of equal probability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>samp_size</strong> – the number of points needed to be generated</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.get_mean">
+<span class="sig-name descname"><span class="pre">get_mean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.get_mean" title="Permalink to this definition">#</a></dt>
+<dd><p>Return the mean of the variable.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.get_probability_density_func">
+<span class="sig-name descname"><span class="pre">get_probability_density_func</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.get_probability_density_func" title="Permalink to this definition">#</a></dt>
+<dd><p>Turns the input function into the corresponding probability density
+function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.get_resamp_vals">
+<span class="sig-name descname"><span class="pre">get_resamp_vals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samp_size</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.get_resamp_vals" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates samp_num number of samples according to the pdf of the
+Variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>samp_size</strong> – the number of samples to generate according to the distribution</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.high_approx">
+<span class="sig-name descname"><span class="pre">high_approx</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.high_approx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.interval_high">
+<span class="sig-name descname"><span class="pre">interval_high</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.interval_high" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.interval_low">
+<span class="sig-name descname"><span class="pre">interval_low</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.interval_low" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.low_approx">
+<span class="sig-name descname"><span class="pre">low_approx</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.low_approx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.mean" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.name" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.norm_sq_vals">
+<span class="sig-name descname"><span class="pre">norm_sq_vals</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.norm_sq_vals" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.number">
+<span class="sig-name descname"><span class="pre">number</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.number" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.order">
+<span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.order" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.poly_denom">
+<span class="sig-name descname"><span class="pre">poly_denom</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.poly_denom" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.recursive_var_basis">
+<span class="sig-name descname"><span class="pre">recursive_var_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.recursive_var_basis" title="Permalink to this definition">#</a></dt>
+<dd><p>Recursively calculates the variable basis up to the input ‘order’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> – the probability density function of the input equation</p></li>
+<li><p><strong>low</strong> – the low bound on the variable</p></li>
+<li><p><strong>high</strong> – the high bound on the variable</p></li>
+<li><p><strong>order</strong> – the order of polynomial expansion</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.samples">
+<span class="sig-name descname"><span class="pre">samples</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.samples" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.standardize">
+<span class="sig-name descname"><span class="pre">standardize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_vals</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.standardize" title="Permalink to this definition">#</a></dt>
+<dd><p>For each variable, it adds a new attribute for the standardized values
+from the original input values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orig</strong> – the un-standardized values</p></li>
+<li><p><strong>std_vals</strong> – the attribue name for the standardized vals</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.standardize_points">
+<span class="sig-name descname"><span class="pre">standardize_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.standardize_points" title="Permalink to this definition">#</a></dt>
+<dd><p>Standardizes and returns the inputs points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> – unstandardized points corresponding to the variable’s distribution</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.std_bounds">
+<span class="sig-name descname"><span class="pre">std_bounds</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.std_bounds" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.std_vals">
+<span class="sig-name descname"><span class="pre">std_vals</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.std_vals" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.std_verify_vals">
+<span class="sig-name descname"><span class="pre">std_verify_vals</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.std_verify_vals" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.test_samples">
+<span class="sig-name descname"><span class="pre">test_samples</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.test_samples" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.type" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.unstandardize_points">
+<span class="sig-name descname"><span class="pre">unstandardize_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.unstandardize_points" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates and returns the unscaled variable value from the
+standardized value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> – the standardized value to be unstandardized</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.vals">
+<span class="sig-name descname"><span class="pre">vals</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.vals" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.var_orthopoly_vect">
+<span class="sig-name descname"><span class="pre">var_orthopoly_vect</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.var_orthopoly_vect" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.var_str">
+<span class="sig-name descname"><span class="pre">var_str</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.var_str" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.verify_vals">
+<span class="sig-name descname"><span class="pre">verify_vals</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.verify_vals" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="uqpce.pce.variables.continuous.ContinuousVariable.x">
+<span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#uqpce.pce.variables.continuous.ContinuousVariable.x" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./reference/continuous"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lognormal.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lognormal Variable</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="epistemic.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Epistemic Variable</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Benjamin Phillips and Joanna Schmidt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

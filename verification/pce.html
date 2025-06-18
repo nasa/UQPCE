@@ -1,0 +1,1699 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>UQPCE &#8212; UQPCE Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'verification/pce';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Confidence Interval" href="confidence-interval.html" />
+    <link rel="prev" title="Verification" href="verification.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/UQPCE_logo.png" class="logo__image only-light" alt="UQPCE Documentation - Home"/>
+    <script>document.write(`<img src="../_static/UQPCE_logo.png" class="logo__image only-dark" alt="UQPCE Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to UQPCE
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user-guide/getting-started.html">Getting Started with UQPCE</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide/running-uqpce.html">Running UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide/multiphase_projectile_example.html">Building Multi-Phase Trajectory with UQPCE and Dymos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/inputs.html">Input Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/outputs.html">Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/analysis.html">Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/theory.html">Theory and Background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory/symbols-and-defs.html">Symbols and Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/pce.html">Polynomial Chaos Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/sampling.html">Sample Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/techniques.html">Techniques</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/openmdao.html">Compatability with OpenMDAO</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory/uqpcegroup-overview.html">UQPCEGroup Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/derivatives.html">Analytic Derivatives</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="verification.html">Verification</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="limitations.html">Limitations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/continuous-variables.html">Continuous Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/normal.html">Normal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/beta.html">Beta Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/gamma.html">Gamma Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/exponential.html">Exponential Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/lognormal.html">Lognormal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/discrete-variables.html">Discrete Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/poisson.html">Poisson Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/hypergeometric.html">Hypergeometric Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/negative-binomial.html">Negative Binomial Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pce.html">PCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/uqpce-group.html">UQPCEGroup</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE/issues/new?title=Issue%20on%20page%20%2Fverification/pce.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/verification/pce.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>UQPCE</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transonic-naca-0012-airfoil">Transonic NACA 0012 Airfoil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outputs">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supersonic-diamond-airfoil">Supersonic Diamond Airfoil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oneram6-airfoil">OneraM6 Airfoil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analytical-case">Analytical Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-analytical-case">High Order Analytical Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-input-variable-case">User Input Variable Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interval-case">Interval Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#small-mean-case">Small Mean Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-case">Discrete Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-parabola-case">Discrete Parabola Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-input-continuous-and-discrete-case">User Input Continuous and Discrete Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Outputs</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uqpce">
+<h1>UQPCE<a class="headerlink" href="#uqpce" title="Permalink to this heading">#</a></h1>
+<p>With the data files included, the user can run UQPCE using the input casefiles and compare the mean, variance, and confidence intervals with the results in this section. Files containing the data from the Monte Carlo Simulation approach will be provided upon request. These examples are included to demonstrate the use of UQPCE for varying problems.</p>
+<section id="transonic-naca-0012-airfoil">
+<span id="naca-airfoil"></span><h2>Transonic NACA 0012 Airfoil<a class="headerlink" href="#transonic-naca-0012-airfoil" title="Permalink to this heading">#</a></h2>
+<section id="background">
+<h3>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h3>
+<p>The lift coefficient (CL) and drag coefficient (CD) of a NACA 0012 airfoil are studied in the case of transonic flight running an RANS CFD code. The inputs for the simulation are the Mach number, angle of attack (alpha), altitude, von Karman constant, and turbulent Prandtl number.</p>
+</section>
+<section id="outputs">
+<h3>Outputs<a class="headerlink" href="#outputs" title="Permalink to this heading">#</a></h3>
+<p>When you execute the module, you should get results similar to those below.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="naca-lift-coeff">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Lift coefficient PCE versus MC results.</span><a class="headerlink" href="#naca-lift-coeff" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>0.21875</p></td>
+<td><p>0.21875</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>1.425e-4</p></td>
+<td><p>1.420e-4</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[0.1843, 0.2484]</p></td>
+<td><p>[0.1950, 0.2412]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="naca-drag-coeff">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Drag coefficient PCE versus MC results.</span><a class="headerlink" href="#naca-drag-coeff" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>0.028205</p></td>
+<td><p>0.028204</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>1.236e-06</p></td>
+<td><p>1.231e-06</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[0.0253, 0.0313]</p></td>
+<td><p>[0.0261, 0.0304]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="align-default" id="naca0012-lc-pbox">
+<a class="reference internal image-reference" href="../_images/p-box.png"><img alt="../_images/p-box.png" src="../_images/p-box.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">The 95% confidence interval of the lift coefficient is found by interpolating to find the values that belong at 2.5% and 97.5% of the responses.</span><a class="headerlink" href="#naca0012-lc-pbox" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="cil-conv">
+<a class="reference internal image-reference" href="../_images/CIL_convergence.png"><img alt="../_images/CIL_convergence.png" src="../_images/CIL_convergence.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">The lower confidence intervals of the lift coefficient for each curve converging with additional evaluations.</span><a class="headerlink" href="#cil-conv" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="cih-conv">
+<a class="reference internal image-reference" href="../_images/CIH_convergence.png"><img alt="../_images/CIH_convergence.png" src="../_images/CIH_convergence.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">The convergence of the upper intervals of the lift coefficient coefficient for each curve converging with additional evaluations.</span><a class="headerlink" href="#cih-conv" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Along with these convergence plots of the individual curves, the sets of curves have their overall convergence intervals written to a file.</p>
+<p>The corresponding output of this file for the lift coefficient is shown below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set: [0.18745724466451097, 0.24735395659860618]
+set: [0.18607906409253214, 0.2475065011187474]
+set: [0.18607906409253214, 0.2475065011187474]
+set: [0.18607906409253214, 0.24759772917464634]
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used with the included files, the user should get an output similar to the following for the lift coefficient:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 3.146e-05
+</pre></div>
+</div>
+<p>The user should get an output similar to the following for the drag coefficient:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 1.3294e-06
+</pre></div>
+</div>
+</section>
+</section>
+<section id="supersonic-diamond-airfoil">
+<h2>Supersonic Diamond Airfoil<a class="headerlink" href="#supersonic-diamond-airfoil" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Background<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>The ground noise, obtained from the off-body pressure signature, is the response of interest in the case of the diamond airfoil. The inputs are the Mach number, the angle of attack (AoA), ground altitude, reflection factor (RF), x-velocity of wind, y-velocity of wind, relative humidity (hum), and temperature.</p>
+</section>
+<section id="id2">
+<h3>Outputs<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>When you run these files, you should get similar results to those below.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="diamond-dba">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the A-weighted decibels (dBA).</span><a class="headerlink" href="#diamond-dba" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>100.9</p></td>
+<td><p>100.87</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>0.098999</p></td>
+<td><p>0.090497</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[100.13, 101.72]</p></td>
+<td><p>[100.31, 101.46]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used with the included files, the user should get an output similar to the following for the lift coefficient:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 0.0086068
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">0.0061665</span></code>, which suggests that the model is a good fit for the data.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="diamond-dbc">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the C-weighted decibels (dBC).</span><a class="headerlink" href="#diamond-dbc" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>116.5</p></td>
+<td><p>116.48</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>0.0781</p></td>
+<td><p>0.0718</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[115.92, 117.12]</p></td>
+<td><p>[116.01, 116.97]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used with the included files, the user should get an output similar to the following for the lift coefficient:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 0.0016291
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">0.0010945</span></code>, which suggests that the model is a good fit for the data.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="diamond-pldb">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the perceived loudness decibels (PLdB).</span><a class="headerlink" href="#diamond-pldb" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>116.29</p></td>
+<td><p>116.26</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>0.1224</p></td>
+<td><p>0.1124</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[115.53, 117.17]</p></td>
+<td><p>[115.46, 117.1]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The above chart shows the UQPCE versus Monte Carlo mean, variance, and confidence intervals for the perceived loudness (PLdB).</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used with the included files, the user should get an output similar to the following for the lift coefficient:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 0.012474
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">0.0079942</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+<section id="oneram6-airfoil">
+<h2>OneraM6 Airfoil<a class="headerlink" href="#oneram6-airfoil" title="Permalink to this heading">#</a></h2>
+<section id="id3">
+<h3>Background<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>The lift coefficient (CL) and drag coefficient (CD) OneraM6 airfoil are studied. The inputs for the simulation are the Mach number and angle of attack.</p>
+</section>
+<section id="id4">
+<h3>Outputs<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>When you run these files, you should get results similar to those below.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="onera-lift-coeff">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the lift coefficient.</span><a class="headerlink" href="#onera-lift-coeff" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>0.29296</p></td>
+<td><p>0.29288</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>2.713e-4</p></td>
+<td><p>2.739e-4</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[0.26163, 0.3262]</p></td>
+<td><p>[0.2611, 0.3259]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 7.3086e-05
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">2.8925e-05</span></code>, which suggests that the model is a good fit for the data.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="onera-drag-coeff">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the drag coefficient.</span><a class="headerlink" href="#onera-drag-coeff" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>0.01767</p></td>
+<td><p>0.01766</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>3.660e-06</p></td>
+<td><p>3.686e-06</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[0.0145, 0.0219]</p></td>
+<td><p>[0.0144, 0.0219]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 1.1883e-05
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">2.8941e-06</span></code>, which suggests that the model is a good fit for the data.</p>
+<p>The below plots are created using the <code class="docutils literal notranslate"><span class="pre">--plot</span></code> and <code class="docutils literal notranslate"><span class="pre">--plot-stand</span></code> flags. They represent the outputs for the drag coefficient case with <code class="docutils literal notranslate"><span class="pre">order</span> <span class="pre">=</span> <span class="pre">3</span></code>.</p>
+<figure class="align-default" id="onera-m6-cd-pbox">
+<a class="reference internal image-reference" href="../_images/onera_m6_CD_pbox.png"><img alt="../_images/onera_m6_CD_pbox.png" src="../_images/onera_m6_CD_pbox.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">The lift coefficient probability box for the OneraM6 airfoil.</span><a class="headerlink" href="#onera-m6-cd-pbox" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="onera-m6-cil">
+<a class="reference internal image-reference" href="../_images/onera_m6_CIL_convergence.png"><img alt="../_images/onera_m6_CIL_convergence.png" src="../_images/onera_m6_CIL_convergence.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">The convergence of the lower confidence interval for the OneraM6 airfoil.</span><a class="headerlink" href="#onera-m6-cil" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="onera-m6-cih">
+<a class="reference internal image-reference" href="../_images/onera_m6_CIH_convergence.png"><img alt="../_images/onera_m6_CIH_convergence.png" src="../_images/onera_m6_CIH_convergence.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">The convergence of the upper confidence interval for the OneraM6 airfoil.</span><a class="headerlink" href="#onera-m6-cih" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The file containing the convergence values looks like the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>low:  [0.014457565322569664, 0.014457565322569664, 0.01445999863254389, 0.014449842360062486]
+high: [0.021977720803637357, 0.02195451100712743, 0.021967892240129253, 0.021967892240129253]
+</pre></div>
+</div>
+<p>The above figures show the probability box plot and the lower and upper confidence interval convergence for the OneraM6 airfoil case. Since none of the variables are epistemic, there is only one curve for the probability box. As shown, these confidence intervals did not converge within the accepted threshold and instead used the maximum number of samples allowed. It is possible for the curves to converge and not appear to be converged as long as the last two differences between confidence intervals are within the specified convergence threshold.</p>
+</section>
+</section>
+<section id="analytical-case">
+<span id="analytical"></span><h2>Analytical Case<a class="headerlink" href="#analytical-case" title="Permalink to this heading">#</a></h2>
+<section id="id5">
+<h3>Background<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<p>This case is included to demonstrate a case which uses all of the common variable types- normal, uniform, exponential, beta, and gamma. In addition to using all variable types, the values of the variables were generated using distributions from MATLAB, and an equation was used to generate the corresponding response. Since this example is completely analytical, we can solve for the exact Sobol values for comparison.</p>
+<p>The equation used to generate the responses is given by</p>
+<div class="math notranslate nohighlight" id="equation-a">
+<span class="eqno">(22)<a class="headerlink" href="#equation-a" title="Permalink to this equation">#</a></span>\[
+f(x_0,x_1,x_2,x_3,x_4) = x_0 + 2x_1 +  3x_2+ 4x_3 + x_4 + x_0x_1 + x_4^2
+\]</div>
+<p>Using properties of the variance operator below,</p>
+<div class="math notranslate nohighlight" id="equation-b">
+<span class="eqno">(23)<a class="headerlink" href="#equation-b" title="Permalink to this equation">#</a></span>\[
+Var(aX) = a^2\sigma_{X}^2
+\]</div>
+<div class="math notranslate nohighlight" id="equation-c">
+<span class="eqno">(24)<a class="headerlink" href="#equation-c" title="Permalink to this equation">#</a></span>\[
+Var(X+Y) = \sigma_{X}^2 + \sigma_{Y}^2 + 2Cov(X,Y)
+\]</div>
+<div class="math notranslate nohighlight" id="equation-d">
+<span class="eqno">(25)<a class="headerlink" href="#equation-d" title="Permalink to this equation">#</a></span>\[
+Var(XY) = (E(X^2Y^2)-E(XY)^2)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(Var\)</span> is the variance, <span class="math notranslate nohighlight">\(Cov\)</span> is the covariance, and <span class="math notranslate nohighlight">\(E\)</span> is the expected value (mean), the expression for the variance of the function <span class="math notranslate nohighlight">\(f\)</span>, is given by:</p>
+<div class="math notranslate nohighlight" id="equation-var-ref">
+<span class="eqno">(26)<a class="headerlink" href="#equation-var-ref" title="Permalink to this equation">#</a></span>\[
+Var(f) = \sigma_{x_0}^2 + 4\sigma_{x_1}^2 + 9\sigma_{x_2}^2  + 16\sigma_{x_3}^2 + \sigma_{x_4}^2 + (E(x_0^2x_1^2)-E(x_0x_1)^2) + (E(x_4^2x_4^2)-E(x_4x_4)^2) + 2Cov(x_0+x_1,x_0x_1) + 2Cov(x_4x_4,x_4)
+\]</div>
+<p>Variance for the distributions of the independent variables are given in table below.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="pce-dists">
+<caption><span class="caption-number">Table 8 </span><span class="caption-text">Distributions for independent variables in the analytical example case.</span><a class="headerlink" href="#pce-dists" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Distribution</p></th>
+<th class="head"><p>Probability Density</p></th>
+<th class="head"><p>Mean</p></th>
+<th class="head"><p>Variance</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>normal</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\sqrt{2\pi\sigma^2}}e^{\frac{-(x-\mu)^2}{2\sigma^2}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma^2\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>uniform</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{b-a}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{2}(a+b)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{12}(b-a)^2\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>exponential</p></td>
+<td><p><span class="math notranslate nohighlight">\(\lambda e^{-\lambda x}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\lambda}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\lambda^2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>beta</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\alpha}{\alpha+\beta}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>gamma</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\Gamma(\alpha)\theta^\alpha}x^{\alpha-1}e^{\frac{-x}{\theta}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\theta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\theta^2\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Evaluating the variances for each of the independent parameters gives <span class="math notranslate nohighlight">\(Var(x_0)=0.25\)</span>, <span class="math notranslate nohighlight">\(Var(x_1)=0.0208\)</span>, <span class="math notranslate nohighlight">\(Var(x_2)=0.111\)</span>, <span class="math notranslate nohighlight">\(Var(x_3)=0.0457\)</span>, <span class="math notranslate nohighlight">\(Var(x_4)=0.25\)</span>. Substituting into Eq. <a class="reference internal" href="#equation-var-ref">(26)</a> yields</p>
+<div class="math notranslate nohighlight" id="equation-e">
+<span class="eqno">(27)<a class="headerlink" href="#equation-e" title="Permalink to this equation">#</a></span>\[
+Var(f) = 0.25 + 4(0.0208) + 9(0.111) + 16(0.0457) + 0.25 + 1.0257 + 1.2509 + 1.0825 + 0.9994
+\]</div>
+<p>Calculations for the covariance and expected quantity terms are left to the reader. Simplifying yields: <span class="math notranslate nohighlight">\(Var(f) = 6.674\)</span>. To determine the total Sobol indices for this analytical function, the total variance is decomposed into individual variable contributions. For variables that do not have any interaction components, i.e. <span class="math notranslate nohighlight">\(x_0x_1\)</span>, the decomposition is straight forward. The Sobol indices for <span class="math notranslate nohighlight">\(x_2\)</span>, <span class="math notranslate nohighlight">\(x_3\)</span> and <span class="math notranslate nohighlight">\(x_4\)</span> are given below.</p>
+<div class="math notranslate nohighlight" id="equation-f">
+<span class="eqno">(28)<a class="headerlink" href="#equation-f" title="Permalink to this equation">#</a></span>\[
+S_2 = \dfrac{ 9\sigma_{x_2}^2}{Var(f)} = 0.150
+\]</div>
+<div class="math notranslate nohighlight" id="equation-g">
+<span class="eqno">(29)<a class="headerlink" href="#equation-g" title="Permalink to this equation">#</a></span>\[
+S_3 = \dfrac{16\sigma_{x_3}^2}{Var(f)} = 0.110
+\]</div>
+<p>For <span class="math notranslate nohighlight">\(x_4\)</span> the total Sobol index includes the variance contributions from the quadratic terms as well.</p>
+<div class="math notranslate nohighlight" id="equation-h">
+<span class="eqno">(30)<a class="headerlink" href="#equation-h" title="Permalink to this equation">#</a></span>\[
+S_4 = \dfrac{\sigma_{x_4}^2 + (E(x_4^2x_4^2)-E(x_4x_4)^2) + 2Cov(x_4x_4,x_4)}{Var(f)} = 0.374
+\]</div>
+<p>Sobol indices for <span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(x_1\)</span> calculations are slightly more involved do to the interaction present. The variance contribution from the interaction term must be proportioned based on the ratio of the variable individual variances.</p>
+<div class="math notranslate nohighlight" id="equation-i">
+<span class="eqno">(31)<a class="headerlink" href="#equation-i" title="Permalink to this equation">#</a></span>\[
+S_0 = \dfrac{ \sigma_{x_0}^2 + 4\sigma_{x_1}^2 + 2Cov(x_0+x_1,x_0x_1) + (E(x_0^2x_1^2)-E(x_0x_1)^2) }{Var(f)} \dfrac{\sigma_{x_0}}{\sigma_{x_0}+\sigma_{x_1}} = 0.338
+\]</div>
+<div class="math notranslate nohighlight" id="equation-j">
+<span class="eqno">(32)<a class="headerlink" href="#equation-j" title="Permalink to this equation">#</a></span>\[
+S_1 = \dfrac{ \sigma_{x_0}^2 + 4\sigma_{x_1}^2 + 2Cov(x_0+x_1,x_0x_1) + (E(x_0^2x_1^2)-E(x_0x_1)^2) }{Var(f)} \dfrac{\sigma_{x_1}}{\sigma_{x_0}+\sigma_{x_1}} = 0.028
+\]</div>
+</section>
+<section id="id6">
+<h3>Outputs<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="analytical-resp">
+<caption><span class="caption-number">Table 9 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the analytical responses.</span><a class="headerlink" href="#analytical-resp" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>9.8</p></td>
+<td><p>9.7989</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>6.6741</p></td>
+<td><p>6.6727</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[5.6205, 15.5860]</p></td>
+<td><p>[5.6365, 15.5405]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This shows similar results as above. This case has data that has no units and no physical meaning, and we still see that the results are similar between using UQPCE and Monte Carlo sampling the system.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="analytical-sobols">
+<caption><span class="caption-number">Table 10 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the analytical Sobols.</span><a class="headerlink" href="#analytical-sobols" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Analytical Results</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sobol 0</p></td>
+<td><p>0.3376</p></td>
+<td><p>0.338</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 1</p></td>
+<td><p>0.0289</p></td>
+<td><p>0.028</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 2</p></td>
+<td><p>0.1497</p></td>
+<td><p>0.150</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 3</p></td>
+<td><p>0.1095</p></td>
+<td><p>0.110</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 4</p></td>
+<td><p>0.3743</p></td>
+<td><p>0.374</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Verifying the Sobol sensitivities is not something that can be done to a system in which the underlying function is unknown. Since the underlying function is known in this case, the Sobol indices can be calculated.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 2.3093e-14
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">2.6272e-14</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+<section id="high-order-analytical-case">
+<span id="high-order-analytical"></span><h2>High Order Analytical Case<a class="headerlink" href="#high-order-analytical-case" title="Permalink to this heading">#</a></h2>
+<section id="id7">
+<h3>Background<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<p>This case is included to demonstrate a case using a high order response and PCE model. In addition to using all variable types, the values of the variables were generated using distributions from MATLAB, and an equation was used to generate the corresponding response. Since this example allows us to know the exact values for responses when Monte Carlo sampling the system, the correct Sobol values in addition to the mean and variance can be found.</p>
+<p>The equation used to generate the responses is given by</p>
+<div class="math notranslate nohighlight" id="equation-k">
+<span class="eqno">(33)<a class="headerlink" href="#equation-k" title="Permalink to this equation">#</a></span>\[
+f(x_0,x_1,x_2,x_3,x_4) = 0.02x_0 + 0.03x_0^4 + 0.08x_0^5 - 0.05x_1 - 0.02x_1^4 + x_1^5 + x_2 + x_2^4 - 100x_2^5 - x_3 - x_3^4 + 1000x_3^5 - 0.09x_4 - 0.01x_4^4 + 0.01x_4^5
+\]</div>
+</section>
+<section id="id8">
+<h3>Outputs<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="high-order-analytical-resp">
+<caption><span class="caption-number">Table 11 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the high order analytical responses.</span><a class="headerlink" href="#high-order-analytical-resp" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>11.409</p></td>
+<td><p>11.403</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>418.27</p></td>
+<td><p>421.18</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[0.2492, 40.507]</p></td>
+<td><p>[0.2542, 40.205]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This shows similar results as above. This case has data that has no units and no physical meaning, and we still see that the results are similar between using UQPCE and Monte Carlo sampling the system.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="high-order-analytical-sobols">
+<caption><span class="caption-number">Table 12 </span><span class="caption-text">UQPCE versus Monte Carlo Sobols for the high order analytical responses.</span><a class="headerlink" href="#high-order-analytical-sobols" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sobol 0</p></td>
+<td><p>0.0399</p></td>
+<td><p>0.0404</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 1</p></td>
+<td><p>0.1504</p></td>
+<td><p>0.1530</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 2</p></td>
+<td><p>0.2993</p></td>
+<td><p>0.3008</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 3</p></td>
+<td><p>0.3094</p></td>
+<td><p>0.3135</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 4</p></td>
+<td><p>0.2011</p></td>
+<td><p>0.1926</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Verifying the Sobol sensitivities is not something that can be done to a system in which the underlying function is unknown. Since the underlying function is known in this case, the Sobol indices can be calculated.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 2.7579e-09
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">2.9757e-09</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+<section id="user-input-variable-case">
+<span id="general"></span><h2>User Input Variable Case<a class="headerlink" href="#user-input-variable-case" title="Permalink to this heading">#</a></h2>
+<section id="id9">
+<h3>Background<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<p>This case is included to demonstrate the accuracy and flexibility of inputting variables according to their equation instead of variable type.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using the equation approach for inputting a variable of one of the variable types (<code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">uniform</span></code>, <code class="docutils literal notranslate"><span class="pre">beta</span></code>, <code class="docutils literal notranslate"><span class="pre">exponential</span></code>, and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>) is not recommended when running the program. It will give you equivalent outputs, but the equation-based approach is much slower than the using the variable types.</p>
+</div>
+<p>The equation used to generate the responses is given by Eq. <a class="reference internal" href="#equation-a">(22)</a>.</p>
+</section>
+<section id="id10">
+<h3>Outputs<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="user-input-resp">
+<caption><span class="caption-number">Table 13 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the user-input variable example.</span><a class="headerlink" href="#user-input-resp" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>17.645</p></td>
+<td><p>17.643</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>15.225</p></td>
+<td><p>15.219</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[10.591, 25.657]</p></td>
+<td><p>[10.731, 25.864]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="user-input-sobols">
+<caption><span class="caption-number">Table 14 </span><span class="caption-text">UQPCE versus Monte Carlo Sobols for the user-input variable example.</span><a class="headerlink" href="#user-input-sobols" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sobol 0</p></td>
+<td><p>0.1199</p></td>
+<td><p>0.1198</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 1</p></td>
+<td><p>0.3230</p></td>
+<td><p>0.3231</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 2</p></td>
+<td><p>0.0328</p></td>
+<td><p>0.0329</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 3</p></td>
+<td><p>0.4912</p></td>
+<td><p>0.4912</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 4</p></td>
+<td><p>0.0422</p></td>
+<td><p>0.0422</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 4.2751e-14
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">2.8777e-14</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+<section id="interval-case">
+<span id="interval"></span><h2>Interval Case<a class="headerlink" href="#interval-case" title="Permalink to this heading">#</a></h2>
+<section id="id11">
+<h3>Background<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<p>This case is included to demonstrate the accuracy of modeling distributions with non-standard bounds on variables.</p>
+<p>The equation used to generate the responses is given by</p>
+<div class="math notranslate nohighlight">
+\[
+f(x_0,x_1,x_2,x_3,x_4,x_5) = x_0 + 2 x_1 + 3 x_2+ 4 x_3 + x_4 + x_0 x_1 + x_4^2 + 3 x_5 x_2
+\]</div>
+</section>
+<section id="id12">
+<h3>Outputs<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="interval-resp">
+<caption><span class="caption-number">Table 15 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the interval variable example.</span><a class="headerlink" href="#interval-resp" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>123.6</p></td>
+<td><p>123.60</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>2567.5</p></td>
+<td><p>2566.85</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[54.931, 249.540]</p></td>
+<td><p>[54.267, 248.388]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="interval-sobols">
+<caption><span class="caption-number">Table 16 </span><span class="caption-text">UQPCE versus Monte Carlo Sobols for the interval variable example.</span><a class="headerlink" href="#interval-sobols" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sobol 0</p></td>
+<td><p>0.0034</p></td>
+<td><p>0.0035</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 1</p></td>
+<td><p>0.0042</p></td>
+<td><p>0.0042</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 2</p></td>
+<td><p>0.1995</p></td>
+<td><p>0.1994</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 3</p></td>
+<td><p>0.0011</p></td>
+<td><p>0.0011</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 4</p></td>
+<td><p>0.0025</p></td>
+<td><p>0.0026</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 5</p></td>
+<td><p>0.8113</p></td>
+<td><p>0.8113</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 0.014425
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">0.0044884</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+<section id="small-mean-case">
+<h2>Small Mean Case<a class="headerlink" href="#small-mean-case" title="Permalink to this heading">#</a></h2>
+<section id="id13">
+<h3>Background<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<p>This case is included to demonstrate the accuracy of a case with a small mean.</p>
+<p>The equation used to generate the responses is given by</p>
+<div class="math notranslate nohighlight">
+\[
+  f(x_0,x_1,x_2,x_3,x_4,x_5) = 0.0000001(0.05x_0 + x_1^2 - 1.5x_3^2 + x_2 + x_1 + 0.1x_4x_5)
+\]</div>
+</section>
+<section id="id14">
+<h3>Outputs<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="small-mean-resp">
+<caption><span class="caption-number">Table 17 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the small mean example.</span><a class="headerlink" href="#small-mean-resp" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>6.4413e-7</p></td>
+<td><p>6.4412e-07</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>1.6863e-14</p></td>
+<td><p>1.6860e-14</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[4.073e-7, 9.137e-7]</p></td>
+<td><p>[4.060e-07, 9.140e-07]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="small-mean-sobols">
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">UQPCE versus Monte Carlo Sobols for the small mean example.</span><a class="headerlink" href="#small-mean-sobols" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sobol 0</p></td>
+<td><p>0.0237</p></td>
+<td><p>0.0237</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 1</p></td>
+<td><p>0.2123</p></td>
+<td><p>0.2124</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 2</p></td>
+<td><p>0.3012</p></td>
+<td><p>0.3011</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 3</p></td>
+<td><p>0.1647</p></td>
+<td><p>0.1648</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 4</p></td>
+<td><p>0.1379</p></td>
+<td><p>0.1377</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 5</p></td>
+<td><p>0.1779</p></td>
+<td><p>0.1780</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 5.1457e-22
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">3.7852e-22</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+<section id="discrete-case">
+<span id="discrete"></span><h2>Discrete Case<a class="headerlink" href="#discrete-case" title="Permalink to this heading">#</a></h2>
+<section id="id15">
+<h3>Background<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<p>This case is included to demonstrate the use of the discrete variables.</p>
+<p>The equation used to generate the responses is given by</p>
+<div class="math notranslate nohighlight">
+\[
+  f(x_0,x_1,x_2,x_3,x_4,x_5,x_6,x_7) = x_0^2 + 3x_1^2 + 20x_2^2 + 50x_3^3 + x_0 + 0.3x_4 + (0.15x_4)^2 + 0.07x_5^3 - x_6^2 - 0.004x_7 + 0.03x_7^3
+\]</div>
+</section>
+<section id="id16">
+<h3>Outputs<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="discrete-resp">
+<caption><span class="caption-number">Table 19 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the discrete variable example.</span><a class="headerlink" href="#discrete-resp" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>47.366</p></td>
+<td><p>47.366</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>190.33</p></td>
+<td><p>190.37</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[24.44, 76.76]</p></td>
+<td><p>[24.37, 76.48]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="discrete-sobols">
+<caption><span class="caption-number">Table 20 </span><span class="caption-text">UQPCE versus Monte Carlo Sobols for the discrete variable example.</span><a class="headerlink" href="#discrete-sobols" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sobol 0</p></td>
+<td><p>0.0213</p></td>
+<td><p>0.0213</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 1</p></td>
+<td><p>0.0673</p></td>
+<td><p>0.0672</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 2</p></td>
+<td><p>0.0175</p></td>
+<td><p>0.0175</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 3</p></td>
+<td><p>0.0113</p></td>
+<td><p>0.0113</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 4</p></td>
+<td><p>0.0170</p></td>
+<td><p>0.0170</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 5</p></td>
+<td><p>0.1449</p></td>
+<td><p>0.1449</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 6</p></td>
+<td><p>0.0941</p></td>
+<td><p>0.0938</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 7</p></td>
+<td><p>0.6266</p></td>
+<td><p>0.6266</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 1.1622e-12
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">1.1623e-12</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+<section id="discrete-parabola-case">
+<span id="parabola"></span><h2>Discrete Parabola Case<a class="headerlink" href="#discrete-parabola-case" title="Permalink to this heading">#</a></h2>
+<section id="id17">
+<h3>Background<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h3>
+<p>This case is included to demonstrate the use of the discrete variables.</p>
+<p>The equation used to generate the responses is given by</p>
+<div class="math notranslate nohighlight">
+\[
+  f(x_0,x_1,x_2,x_3) = \frac{1}{3}(15 + 3x_0 + 4x_0^2) + \frac{1}{3}(16 + 2x_1 + x_1^2) - \frac{1}{3}(5 + 0.8x_2 + 0.03x_2^2) + \frac{1}{3}(4 - x_3 + 4x_3^2)
+\]</div>
+<p>Variances for the distributions of the variables are given in table below.</p>
+<p>Using the mean of each variable to hold the variables constant, the Sobols are calculated using one-variable-at-a-time variable decomposition. The means of the independent variables are given in the above table.</p>
+</section>
+<section id="id18">
+<h3>Outputs<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="disc-parab-resp">
+<caption><span class="caption-number">Table 21 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the discrete parabola example.</span><a class="headerlink" href="#disc-parab-resp" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>12.416</p></td>
+<td><p>12.416</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>48.815</p></td>
+<td><p>48.824</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[-0.027, 27.79]</p></td>
+<td><p>[-0.04, 27.84]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="disc-parab-sobols">
+<caption><span class="caption-number">Table 22 </span><span class="caption-text">UQPCE versus Monte Carlo Sobols for the discrete parabola example.</span><a class="headerlink" href="#disc-parab-sobols" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sobol 0</p></td>
+<td><p>0.2887</p></td>
+<td><p>0.2888</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 1</p></td>
+<td><p>0.1554</p></td>
+<td><p>0.1553</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 2</p></td>
+<td><p>0.2724</p></td>
+<td><p>0.2722</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 3</p></td>
+<td><p>0.2836</p></td>
+<td><p>0.2835</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 5.4386e-14
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">3.0609e-14</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+<section id="user-input-continuous-and-discrete-case">
+<h2>User Input Continuous and Discrete Case<a class="headerlink" href="#user-input-continuous-and-discrete-case" title="Permalink to this heading">#</a></h2>
+<section id="id19">
+<h3>Background<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h3>
+<p>This case is included to demonstrate the use of both continuous and discrete user input variables in the same case.</p>
+<p>The equation used to generate the responses is given by</p>
+<div class="math notranslate nohighlight">
+\[
+  f(x_0,x_1,x_2,x_3,x_4,x_6,x_7) = 
+\]</div>
+</section>
+<section id="id20">
+<h3>Outputs<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="user-input-cont-disc-resp">
+<caption><span class="caption-number">Table 23 </span><span class="caption-text">UQPCE versus Monte Carlo mean, variance, and confidence intervals for the user-input continuous and discrete variable example.</span><a class="headerlink" href="#user-input-cont-disc-resp" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p>9.4994</p></td>
+<td><p>9.4995</p></td>
+</tr>
+<tr class="row-odd"><td><p>variance</p></td>
+<td><p>3.8326</p></td>
+<td><p>3.8332</p></td>
+</tr>
+<tr class="row-even"><td><p>confidence interval</p></td>
+<td><p>[5.739, 13.505]</p></td>
+<td><p>[5.683, 13.490]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="user-input-cont-disc-sobols">
+<caption><span class="caption-number">Table 24 </span><span class="caption-text">UQPCE versus Monte Carlo Sobols for the user-input continuous and discrete variable example.</span><a class="headerlink" href="#user-input-cont-disc-sobols" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>UQPCE</p></th>
+<th class="head"><p>Monte Carlo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sobol 0</p></td>
+<td><p>0.1099</p></td>
+<td><p>0.1100</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 1</p></td>
+<td><p>0.0870</p></td>
+<td><p>0.0868</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 2</p></td>
+<td><p>0.0235</p></td>
+<td><p>0.0235</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 3</p></td>
+<td><p>0.1220</p></td>
+<td><p>0.1219</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 4</p></td>
+<td><p>0.2854</p></td>
+<td><p>0.2855</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 5</p></td>
+<td><p>0.2348</p></td>
+<td><p>0.2348</p></td>
+</tr>
+<tr class="row-even"><td><p>Sobol 6</p></td>
+<td><p>0.0905</p></td>
+<td><p>0.0904</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sobol 7</p></td>
+<td><p>0.0469</p></td>
+<td><p>0.0470</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--verify</span></code> flag is used, you will see output similar to below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mean error between model and verification 2.5882e-13
+</pre></div>
+</div>
+<p>This value is similar to the mean error of the surrogate, <code class="docutils literal notranslate"><span class="pre">2.7263e-13</span></code>, which suggests that the model is a good fit for the data.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./verification"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="verification.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Verification</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="confidence-interval.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Confidence Interval</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transonic-naca-0012-airfoil">Transonic NACA 0012 Airfoil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outputs">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supersonic-diamond-airfoil">Supersonic Diamond Airfoil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oneram6-airfoil">OneraM6 Airfoil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analytical-case">Analytical Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-analytical-case">High Order Analytical Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-input-variable-case">User Input Variable Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interval-case">Interval Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#small-mean-case">Small Mean Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-case">Discrete Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-parabola-case">Discrete Parabola Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Outputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-input-continuous-and-discrete-case">User Input Continuous and Discrete Case</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Background</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Outputs</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Benjamin Phillips and Joanna Schmidt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

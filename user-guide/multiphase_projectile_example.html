@@ -1,0 +1,1292 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Building Multi-Phase Trajectory with UQPCE and Dymos &#8212; UQPCE Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user-guide/multiphase_projectile_example';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Variables" href="variables.html" />
+    <link rel="prev" title="Running UQPCE" href="running-uqpce.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/UQPCE_logo.png" class="logo__image only-light" alt="UQPCE Documentation - Home"/>
+    <script>document.write(`<img src="../_static/UQPCE_logo.png" class="logo__image only-dark" alt="UQPCE Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to UQPCE
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="getting-started.html">Getting Started with UQPCE</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="running-uqpce.html">Running UQPCE</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Building Multi-Phase Trajectory with UQPCE and Dymos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputs.html">Input Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/theory.html">Theory and Background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory/symbols-and-defs.html">Symbols and Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/pce.html">Polynomial Chaos Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/sampling.html">Sample Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/techniques.html">Techniques</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/openmdao.html">Compatability with OpenMDAO</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory/uqpcegroup-overview.html">UQPCEGroup Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/derivatives.html">Analytic Derivatives</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../verification/verification.html">Verification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../verification/pce.html">UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/limitations.html">Limitations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/continuous-variables.html">Continuous Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/normal.html">Normal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/beta.html">Beta Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/gamma.html">Gamma Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/exponential.html">Exponential Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/lognormal.html">Lognormal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/discrete-variables.html">Discrete Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/poisson.html">Poisson Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/hypergeometric.html">Hypergeometric Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/negative-binomial.html">Negative Binomial Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pce.html">PCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/uqpce-group.html">UQPCEGroup</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE/issues/new?title=Issue%20on%20page%20%2Fuser-guide/multiphase_projectile_example.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/user-guide/multiphase_projectile_example.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Building Multi-Phase Trajectory with UQPCE and Dymos</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indoor-shot-put">Indoor Shot Put</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#this-example-is-a-demonstration-of-a-simple-projectile-motion-problem-design-under-uncertainty">This example is a demonstration of a simple projectile motion problem design under uncertainty.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-composition">Problem Composition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#components">Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-constraint">Cost Constraint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-interval-width">Confidence Interval Width</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#velocity-components">Velocity Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-sectional-area">Cross-sectional Area</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#equations-of-motion">Equations of Motion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-definition">Trajectory Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-definition">Problem Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contour-plots">Contour Plots</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="building-multi-phase-trajectory-with-uqpce-and-dymos">
+<h1>Building Multi-Phase Trajectory with UQPCE and Dymos<a class="headerlink" href="#building-multi-phase-trajectory-with-uqpce-and-dymos" title="Permalink to this heading">#</a></h1>
+<p>This problem demonstrates how to collectively use the UQPCE, <a class="reference external" href="https://openmdao.org/dymos/docs/latest/index.html">Dymos</a>, and <a class="reference external" href="https://openmdao.org/newdocs/versions/latest/main.html">OpenMDAO</a> frameworks together.</p>
+<section id="indoor-shot-put">
+<h2>Indoor Shot Put<a class="headerlink" href="#indoor-shot-put" title="Permalink to this heading">#</a></h2>
+<p>Consider an indoor shot put game. The goal is to solve for optimal values of mass and velocity so the metal ball reaches as close as possible to the target 150m away, subject to physical constraints.</p>
+<p><img alt="Indoor sport" src="../_images/trajectory_img.png" /></p>
+<section id="this-example-is-a-demonstration-of-a-simple-projectile-motion-problem-design-under-uncertainty">
+<h3>This example is a demonstration of a simple projectile motion problem design under uncertainty.<a class="headerlink" href="#this-example-is-a-demonstration-of-a-simple-projectile-motion-problem-design-under-uncertainty" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Dymos</strong> is used for implementation of the differential equations of motion and mapping of trajectory paths.</p></li>
+<li><p><strong>UQPCE</strong> is used to develop a polynomial-chaos expansion surrogate model, where sample points of the uncertain variables are provided.</p></li>
+<li><p>UQPCE is connected to Dymos in this problem using the framework of <strong>OpenMDAO</strong>.</p></li>
+</ul>
+</section>
+</section>
+<section id="problem-composition">
+<h2>Problem Composition<a class="headerlink" href="#problem-composition" title="Permalink to this heading">#</a></h2>
+<p>The drag coefficient and angle relative to the ground are represented by uncertain variables, sampled from uniform and normal distributions, respectively. The distribution for the drag coefficient ranges from 0.1 to 0.9. The distribution for the angle <em>theta</em> has a mean of 30 and standard deviation of 2.<br />
+<br />
+Each trajectory correlates to uncertain sample values for drag coefficient and angle. The trajectory is composed of two phases, ascent and descent.</p>
+<p>The problem iterates to find the design variable (mass and velocity) values which optimize the objective function.</p>
+</section>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">A</span></code> - Projectile surface area (dependent on mass)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m</span></code> - Mass (design variable)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code> - Velocity (design variable)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">g</span></code> - Acceleration due to gravity (constant)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rho_0</span></code> - Density of air (constant)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vx</span></code> - Velocity x-component (dependent on velocity and theta)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vy</span></code> - Velocity y-component (dependent on velocity and theta)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c_d</span></code> - Drag coefficient (uncertain variable)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta</span></code> - Angle (uncertain variable)</p></li>
+</ul>
+</section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Obj</strong> (objective): This component motivates the problem to optimize towards a mean x-distance of 150.</p></li>
+<li><p><strong>Cost</strong> (constraint): This component defines cost in terms of kinetic energy.</p></li>
+<li><p><strong>WidthCI</strong> (constraint): This component constrains the upper bound of the confidence interval width, encouraging less variance.</p></li>
+<li><p><strong>Area</strong> (computation): The component is used to connect the current value of mass into the computation for cross-sectional area.</p></li>
+<li><p><strong>V_Comp</strong> (computation): This component separates the velocity vector into its respective x and y components.</p></li>
+<li><p><strong>EOM</strong> (computation): This component defines the equations of motion for the trajectories in this problem.</p></li>
+</ul>
+<p><img alt="xdsm" src="../_images/traj_xdsm.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openmdao.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">om</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dymos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uqpce.mdao</span><span class="w"> </span><span class="kn">import</span> <span class="n">interface</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uqpce.mdao.uqpcegroup</span><span class="w"> </span><span class="kn">import</span> <span class="n">UQPCEGroup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openmdao.core.parallel_group</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParallelGroup</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[fv-az881-322:02387] mca_base_component_repository_open: unable to open mca_btl_openib: librdmacm.so.1: cannot open shared object file: No such file or directory (ignored)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+<section id="cost-constraint">
+<h2>Cost Constraint<a class="headerlink" href="#cost-constraint" title="Permalink to this heading">#</a></h2>
+<p>In this problem, cost is evaluated as a constraint, taking inputs of <em>mass</em> and <em>velocity</em> and computing kinetic energy. This constraint is bounded between 500 and 5000.</p>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-a">
+<span class="eqno">(1)<a class="headerlink" href="#equation-mp-dymos-a" title="Permalink to this equation">#</a></span>\[
+KE(m, v) = \frac{1}{2}mv^2
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Cost</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">ExplicitComponent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OpenMDAO Explicit Component which computes cost using Kinetic Energy,</span>
+<span class="sd">    a function of mass and velocity. Component behaves as a constraint.</span>
+<span class="sd">    Underlying functionality transforms velocity from scalar to vector and</span>
+<span class="sd">    feeds mass directly through input to output.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="s1">&#39;num_samples&#39;</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;num_samples&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;cost&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;v_out&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;m_out&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;m_out&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;v_out&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;cost&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;cost&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;num_samples&#39;</span><span class="p">]</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;cost&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;v_out&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;m_out&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">partials</span><span class="p">):</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;cost&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">]</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;cost&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="confidence-interval-width">
+<h2>Confidence Interval Width<a class="headerlink" href="#confidence-interval-width" title="Permalink to this heading">#</a></h2>
+<p>The width of the confidence interval for x-distance is evaluated as a constraint, computing the difference between upper and lower CI.</p>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-b">
+<span class="eqno">(2)<a class="headerlink" href="#equation-mp-dymos-b" title="Permalink to this equation">#</a></span>\[
+CI_{diff} = CIU - CIL
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">WidthCI</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">ExplicitComponent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OpenMDAO Explicit Component which computes the difference between</span>
+<span class="sd">    upper and lower confidence interval bounds (with respect to distance traveled).</span>
+<span class="sd">    Component behaves as a constraint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;x_out:ci_lower&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;x_out:ci_upper&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="s1">&#39;x_out:ci_lower&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="s1">&#39;x_out:ci_upper&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;x_out:ci_upper&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;x_out:ci_lower&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">partials</span><span class="p">):</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:ci_lower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:ci_upper&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="velocity-components">
+<h2>Velocity Components<a class="headerlink" href="#velocity-components" title="Permalink to this heading">#</a></h2>
+<p>The V_Comp component is a method of computation to compute x-velocity and y-velocity components given the initial velocity of the problem and theta angle for each sample point.</p>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-c">
+<span class="eqno">(3)<a class="headerlink" href="#equation-mp-dymos-c" title="Permalink to this equation">#</a></span>\[
+V_x(v, \theta) = v \cdot cos(\theta)
+\]</div>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-d">
+<span class="eqno">(4)<a class="headerlink" href="#equation-mp-dymos-d" title="Permalink to this equation">#</a></span>\[
+V_y(v, \theta) = v \cdot sin(\theta)
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">V_Comp</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">ExplicitComponent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OpenMDAO Explicit Component which computes x and y velocity components</span>
+<span class="sd">    provided the angle theta and initial velocity.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="s1">&#39;num_samples&#39;</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;num_samples&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;v_in&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;rad&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;num_samples&#39;</span><span class="p">]</span>
+        <span class="n">ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="n">ar</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="n">ar</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">th_rad</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">]</span>
+        <span class="n">vx</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;v_in&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th_rad</span><span class="p">)</span>
+        <span class="n">vy</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;v_in&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th_rad</span><span class="p">)</span>
+
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;vx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vx</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;vy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vy</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">partials</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;num_samples&#39;</span><span class="p">]</span>
+        <span class="n">th_rad</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">]</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;v_in&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th_rad</span><span class="p">)</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="s1">&#39;v_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th_rad</span><span class="p">)</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;v_in&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th_rad</span><span class="p">)</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="s1">&#39;v_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th_rad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-sectional-area">
+<h2>Cross-sectional Area<a class="headerlink" href="#cross-sectional-area" title="Permalink to this heading">#</a></h2>
+<p>The Area component is a method of computation to determine the cross-sectional area of the projectile provided its mass.</p>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-e">
+<span class="eqno">(5)<a class="headerlink" href="#equation-mp-dymos-e" title="Permalink to this equation">#</a></span>\[
+m = \rho\frac{4}{3}\pi{r}^3 \Leftrightarrow r = \sqrt[3]{\frac{3}{4} \cdot \frac{m}{9340} \cdot \frac{1}{\pi}}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-f">
+<span class="eqno">(6)<a class="headerlink" href="#equation-mp-dymos-f" title="Permalink to this equation">#</a></span>\[
+A = \pi{r}^2
+\]</div>
+<p>Mass is a design variable that changes throughout the optimization. Since cross-sectional area depends on mass and the density is constant, the radius needs to be re-computed each iteration, which is then used to re-compute area.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Area</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">ExplicitComponent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OpenMDAO Explicit Component which computes surface area provided</span>
+<span class="sd">    the mass of the projectile.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m**2&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="c1"># Density = 9340 kg/m^3 for metal ball</span>
+        <span class="n">const</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">9340</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
+        
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">const</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">partials</span><span class="p">):</span>
+        <span class="n">const</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">9340</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
+
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">const</span><span class="o">*</span><span class="n">m</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="n">const</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="equations-of-motion">
+<h2>Equations of Motion<a class="headerlink" href="#equations-of-motion" title="Permalink to this heading">#</a></h2>
+<p>A <strong>Dymos</strong> trajectory is constructed using the equations of motion and derivatives for a projectile. This component is representative of the differential equations required to interpolate the trajectory values at a set of nodes along the curve.</p>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-g">
+<span class="eqno">(7)<a class="headerlink" href="#equation-mp-dymos-g" title="Permalink to this equation">#</a></span>\[
+\theta = arctan \bigg(\frac{V_y}{V_x} \bigg)
+\]</div>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-h">
+<span class="eqno">(8)<a class="headerlink" href="#equation-mp-dymos-h" title="Permalink to this equation">#</a></span>\[
+\rho = \rho_{0} \cdot e^{\frac{-y}{8500}}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-i">
+<span class="eqno">(9)<a class="headerlink" href="#equation-mp-dymos-i" title="Permalink to this equation">#</a></span>\[
+v = \sqrt{v_{x}^2 + v_{y}^2}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-j">
+<span class="eqno">(10)<a class="headerlink" href="#equation-mp-dymos-j" title="Permalink to this equation">#</a></span>\[
+D = \frac{1}{2}\rho{v}^2{c_D}A
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">EOM</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">JaxExplicitComponent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Jax Explicit Component which computes the equations of motion used by Dymos</span>
+<span class="sd">    for trajectory interpolation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="s1">&#39;num_nodes&#39;</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;num_nodes&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nn</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nn</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nn</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;c_d&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;unitless&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m**2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">val</span><span class="o">=</span><span class="mf">9.80665</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s**2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;rho_0&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">val</span><span class="o">=</span><span class="mf">1.22</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg/m**3&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;x_dot&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nn</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dymos.state_rate_source:x&#39;</span><span class="p">,</span> <span class="s1">&#39;dymos.state_units:m&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;y_dot&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nn</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dymos.state_rate_source:y&#39;</span><span class="p">,</span> <span class="s1">&#39;dymos.state_units:m&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;vx_dot&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nn</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s**2&#39;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dymos.state_rate_source:vx&#39;</span><span class="p">,</span> <span class="s1">&#39;dymos.state_units:m/s&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;vy_dot&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nn</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s**2&#39;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dymos.state_rate_source:vy&#39;</span><span class="p">,</span> <span class="s1">&#39;dymos.state_units:m/s&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nn</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_primal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">c_d</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">rho_0</span><span class="p">):</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">vy</span><span class="p">,</span> <span class="n">vx</span><span class="p">)</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">rho_0</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="o">/</span><span class="mi">8500</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">vy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="p">(</span><span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">c_d</span><span class="o">*</span><span class="n">A</span>
+
+        <span class="n">vx_dot</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">D</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">vy_dot</span> <span class="o">=</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span> <span class="p">(</span><span class="n">D</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">x_dot</span> <span class="o">=</span> <span class="n">vx</span>
+        <span class="n">y_dot</span> <span class="o">=</span> <span class="n">vy</span>
+
+        <span class="k">return</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">y_dot</span><span class="p">,</span> <span class="n">vx_dot</span><span class="p">,</span> <span class="n">vy_dot</span><span class="p">,</span> <span class="n">v</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
+<p>The objective for this problem is to optimize design variables such that constraints are followed and the projectile reaches the nearest possible x-distance to the target value (which is set to 150m in this problem).</p>
+<div class="math notranslate nohighlight" id="equation-mp-dymos-k">
+<span class="eqno">(11)<a class="headerlink" href="#equation-mp-dymos-k" title="Permalink to this equation">#</a></span>\[
+f(\mu, \sigma^{2}) = ({150-\mu})^2+\sigma^{2}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Obj</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">ExplicitComponent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OpenMDAO Explicit Component which defines the problem objective.</span>
+<span class="sd">    The goal is for the trajectory mean to be a minimum distance from</span>
+<span class="sd">    the target value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="s1">&#39;num_samples&#39;</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;x_out:mean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;x_out:variance&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;obj&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;obj&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="s1">&#39;x_out:mean&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">tgt</span> <span class="o">=</span> <span class="mi">150</span>
+        
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;obj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">tgt</span> <span class="o">-</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;x_out:mean&#39;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">partials</span><span class="p">):</span>
+        <span class="n">tgt</span> <span class="o">=</span> <span class="mi">150</span>
+
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;obj&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">tgt</span> <span class="o">-</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;x_out:mean&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+<section id="trajectory-definition">
+<h2>Trajectory Definition<a class="headerlink" href="#trajectory-definition" title="Permalink to this heading">#</a></h2>
+<p>Using <strong>Dymos</strong>, this function demonstrates the construction of a multiphase trajectory, composed of ascent and descent. The ascent phase is defined by constraining the trajectory to reach a final y-velocity of 0. The descent phase is defined by constraining the final height to 0. Note the addition of each trajectory to a parallel group.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">traj_init</span><span class="p">(</span><span class="n">parallel</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize each Dymos trajectory in parallel using set parameter values</span>
+<span class="sd">    and sample values. Each trajectory is multi-phase, composed of ascent and</span>
+<span class="sd">    descent phases.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialize trajectory of name variation i</span>
+    <span class="n">n_traj</span> <span class="o">=</span> <span class="s1">&#39;traj&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">()</span>
+    <span class="n">tx</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">PicardShooting</span><span class="p">(</span><span class="n">num_segments</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nodes_per_seg</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">solve_segments</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
+    <span class="n">tx2</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">PicardShooting</span><span class="p">(</span><span class="n">num_segments</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nodes_per_seg</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">solve_segments</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
+    <span class="n">parallel</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span><span class="n">n_traj</span><span class="p">,</span> <span class="n">traj</span><span class="p">)</span>
+
+    <span class="n">ascent</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">add_phase</span><span class="p">(</span><span class="s1">&#39;ascent&#39;</span><span class="p">,</span> <span class="n">dm</span><span class="o">.</span><span class="n">Phase</span><span class="p">(</span><span class="n">ode_class</span><span class="o">=</span><span class="n">EOM</span><span class="p">,</span> <span class="n">transcription</span><span class="o">=</span><span class="n">tx</span><span class="p">))</span>
+    
+    <span class="n">ascent</span><span class="o">.</span><span class="n">set_time_options</span><span class="p">(</span><span class="n">fix_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_duration</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rate_source</span><span class="o">=</span><span class="s1">&#39;x_dot&#39;</span><span class="p">,</span> <span class="n">fix_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">rate_source</span><span class="o">=</span><span class="s1">&#39;y_dot&#39;</span><span class="p">,</span> <span class="n">fix_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="n">rate_source</span><span class="o">=</span><span class="s1">&#39;vx_dot&#39;</span><span class="p">,</span> <span class="n">input_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_initial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="n">rate_source</span><span class="o">=</span><span class="s1">&#39;vy_dot&#39;</span><span class="p">,</span> <span class="n">input_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_initial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;c_d&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;unitless&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="n">vals</span><span class="p">[</span><span class="s1">&#39;c_d&#39;</span><span class="p">])</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m**2&#39;</span><span class="p">)</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s**2&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="n">vals</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">])</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;rho_0&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg/m**3&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="n">vals</span><span class="p">[</span><span class="s1">&#39;rho_0&#39;</span><span class="p">])</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)</span>
+
+    <span class="n">ascent</span><span class="o">.</span><span class="n">add_boundary_balance</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="s1">&#39;t_duration&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="n">tgt_val</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;final&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">100.0</span><span class="p">)</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">nonlinear_solver</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">NewtonSolver</span><span class="p">(</span><span class="n">solve_subsystems</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">iprint</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">debug_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">nonlinear_solver</span><span class="o">.</span><span class="n">linesearch</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">ArmijoGoldsteinLS</span><span class="p">()</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">nonlinear_solver</span><span class="o">.</span><span class="n">debug_print</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">linear_solver</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">DirectSolver</span><span class="p">()</span>
+
+    <span class="n">descent</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">add_phase</span><span class="p">(</span><span class="s1">&#39;descent&#39;</span><span class="p">,</span> <span class="n">dm</span><span class="o">.</span><span class="n">Phase</span><span class="p">(</span><span class="n">ode_class</span><span class="o">=</span><span class="n">EOM</span><span class="p">,</span> <span class="n">transcription</span><span class="o">=</span><span class="n">tx2</span><span class="p">))</span>
+    
+    <span class="n">descent</span><span class="o">.</span><span class="n">set_time_options</span><span class="p">(</span><span class="n">input_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_duration</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rate_source</span><span class="o">=</span><span class="s1">&#39;x_dot&#39;</span><span class="p">,</span> <span class="n">input_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">rate_source</span><span class="o">=</span><span class="s1">&#39;y_dot&#39;</span><span class="p">,</span> <span class="n">input_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="n">rate_source</span><span class="o">=</span><span class="s1">&#39;vx_dot&#39;</span><span class="p">,</span> <span class="n">input_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="n">rate_source</span><span class="o">=</span><span class="s1">&#39;vy_dot&#39;</span><span class="p">,</span> <span class="n">input_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fix_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;c_d&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;unitless&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="n">vals</span><span class="p">[</span><span class="s1">&#39;c_d&#39;</span><span class="p">])</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m**2&#39;</span><span class="p">)</span> <span class="c1">#, val=vals[&#39;A&#39;])</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m/s**2&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="n">vals</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">])</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;rho_0&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg/m**3&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="n">vals</span><span class="p">[</span><span class="s1">&#39;rho_0&#39;</span><span class="p">])</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)</span> <span class="c1">#, val=vals[&#39;m&#39;])</span>
+
+    <span class="n">descent</span><span class="o">.</span><span class="n">add_boundary_balance</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="s1">&#39;t_duration&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">tgt_val</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;final&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">100.0</span><span class="p">)</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">nonlinear_solver</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">NewtonSolver</span><span class="p">(</span><span class="n">solve_subsystems</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">iprint</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">debug_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">nonlinear_solver</span><span class="o">.</span><span class="n">linesearch</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">ArmijoGoldsteinLS</span><span class="p">()</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">nonlinear_solver</span><span class="o">.</span><span class="n">debug_print</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">linear_solver</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">DirectSolver</span><span class="p">()</span>
+
+    <span class="n">traj</span><span class="o">.</span><span class="n">link_phases</span><span class="p">(</span><span class="n">phases</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;ascent&#39;</span><span class="p">,</span> <span class="s1">&#39;descent&#39;</span><span class="p">),</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">traj</span><span class="p">,</span> <span class="n">ascent</span><span class="p">,</span> <span class="n">descent</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial values and ranges defined for phase state variables</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">phase_setup</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">ascent</span><span class="p">,</span> <span class="n">descent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    State initialization for each ascent and descent phase.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">set_time_val</span><span class="p">(</span><span class="n">initial</span><span class="o">=</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;t_init&#39;</span><span class="p">],</span> <span class="n">duration</span><span class="o">=</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;t_dur&#39;</span><span class="p">])</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">set_state_val</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;x_init&#39;</span><span class="p">],</span> <span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;x_dur&#39;</span><span class="p">]])</span>
+    <span class="n">ascent</span><span class="o">.</span><span class="n">set_state_val</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;y_init&#39;</span><span class="p">],</span> <span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;y_dur&#39;</span><span class="p">]])</span>
+
+    <span class="n">descent</span><span class="o">.</span><span class="n">set_time_val</span><span class="p">(</span><span class="n">initial</span><span class="o">=</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;t_init&#39;</span><span class="p">],</span> <span class="n">duration</span><span class="o">=</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;t_dur&#39;</span><span class="p">])</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">set_state_val</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;x_init&#39;</span><span class="p">],</span> <span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;x_dur&#39;</span><span class="p">]])</span>
+    <span class="n">descent</span><span class="o">.</span><span class="n">set_state_val</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;y_init&#39;</span><span class="p">],</span> <span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;y_dur&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-definition">
+<h2>Problem Definition<a class="headerlink" href="#problem-definition" title="Permalink to this heading">#</a></h2>
+<p>The problem is initialized with each component above added as a subsystem. Trajectories are defined for each sample point of uncertain variables. The problem is optimized and the resulting trajectories are plotted.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">():</span>
+    <span class="c1"># Initialize given input files</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s1">&#39;../../uqpce/examples/dymos_projectile/drag_angle.yaml&#39;</span>
+    <span class="n">matrix_file</span> <span class="o">=</span> <span class="s1">&#39;../../uqpce/examples/dymos_projectile/matrix_drag.dat&#39;</span>
+
+    <span class="p">(</span>
+        <span class="n">var_basis</span><span class="p">,</span> <span class="n">norm_sq</span><span class="p">,</span> <span class="n">resampled_var_basis</span><span class="p">,</span> 
+        <span class="n">aleatory_cnt</span><span class="p">,</span> <span class="n">epistemic_cnt</span><span class="p">,</span> <span class="n">resp_cnt</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> 
+        <span class="n">sig</span><span class="p">,</span> <span class="n">run_matrix</span>
+    <span class="p">)</span> <span class="o">=</span> <span class="n">interface</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">matrix_file</span><span class="p">)</span>
+
+    <span class="c1"># Problem setup</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">Problem</span><span class="p">()</span>
+    
+    <span class="n">phases</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;c_d&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+        <span class="s1">&#39;g&#39;</span><span class="p">:</span> <span class="mf">9.80665</span><span class="p">,</span>
+        <span class="s1">&#39;rho_0&#39;</span><span class="p">:</span> <span class="mf">1.22</span><span class="p">,</span>
+        <span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Cost constraint subsystem</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span>
+        <span class="s1">&#39;cost&#39;</span><span class="p">,</span> <span class="n">Cost</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">resp_cnt</span><span class="p">),</span>
+        <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">],</span> <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cost&#39;</span><span class="p">,</span> <span class="s1">&#39;v_out&#39;</span><span class="p">,</span> <span class="s1">&#39;m_out&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Velocity components subsystem</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span><span class="s1">&#39;v_comp&#39;</span><span class="p">,</span> <span class="n">V_Comp</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">resp_cnt</span><span class="p">),</span> 
+                                 <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;v_in&#39;</span><span class="p">,</span> <span class="s1">&#39;v_out&#39;</span><span class="p">),</span> <span class="s1">&#39;theta&#39;</span><span class="p">],</span> 
+                                 <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="s1">&#39;vy&#39;</span><span class="p">])</span>
+    
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span><span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="n">Area</span><span class="p">(),</span> <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">],</span> <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Parallel subsystem for trajectories</span>
+    <span class="n">parallel</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span><span class="s1">&#39;parallel&#39;</span><span class="p">,</span> <span class="n">ParallelGroup</span><span class="p">(),</span> <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">],</span> <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">resp_cnt</span><span class="p">):</span>
+        <span class="n">n_traj</span> <span class="o">=</span> <span class="s1">&#39;traj&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        
+        <span class="c1"># Set drag coefficient based on current sample</span>
+        <span class="n">vals</span><span class="p">[</span><span class="s1">&#39;c_d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">run_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        
+        <span class="c1"># Trajectory and phase initialization</span>
+        <span class="n">traj</span><span class="p">,</span> <span class="n">ascent</span><span class="p">,</span> <span class="n">descent</span> <span class="o">=</span> <span class="n">traj_init</span><span class="p">(</span><span class="n">parallel</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+        <span class="n">phases</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ascent</span><span class="p">,</span> <span class="n">descent</span><span class="p">))</span>
+
+        <span class="c1"># Connect initial velocity components to current trajectory</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.ascent.initial_states:vx&#39;</span><span class="p">,</span> <span class="n">src_indices</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.ascent.initial_states:vy&#39;</span><span class="p">,</span> <span class="n">src_indices</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;m_out&#39;</span><span class="p">,</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.ascent.parameters:m&#39;</span><span class="p">)</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.ascent.parameters:A&#39;</span><span class="p">)</span> 
+
+        <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;m_out&#39;</span><span class="p">,</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.descent.parameters:m&#39;</span><span class="p">)</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.descent.parameters:A&#39;</span><span class="p">)</span> 
+
+    <span class="c1"># MuxComp subsystem for trajectory final distance values    </span>
+    <span class="n">mux_comp</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;mux&#39;</span><span class="p">,</span> <span class="n">subsys</span><span class="o">=</span><span class="n">om</span><span class="o">.</span><span class="n">MuxComp</span><span class="p">(</span><span class="n">vec_size</span><span class="o">=</span><span class="n">resp_cnt</span><span class="p">))</span>
+    <span class="n">mux_comp</span><span class="o">.</span><span class="n">add_var</span><span class="p">(</span><span class="s1">&#39;x_out&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Connect timeseries.x for each traj to mux.x_out variable</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">resp_cnt</span><span class="p">):</span>
+        <span class="n">n_traj</span> <span class="o">=</span> <span class="s1">&#39;traj&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">xval</span> <span class="o">=</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="s1">&#39;descent.timeseries.x&#39;</span>
+        <span class="n">mux_val</span> <span class="o">=</span> <span class="s1">&#39;mux.x_out_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="c1"># Src_indices correlated to final value of timeseries.x</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span> <span class="n">mux_val</span><span class="p">,</span> <span class="n">src_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;mux.x_out&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out&#39;</span><span class="p">)</span>
+    
+    
+    <span class="c1"># MuxComp subsystem for trajectory max heights</span>
+    <span class="n">ymux_comp</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ymux&#39;</span><span class="p">,</span> <span class="n">subsys</span><span class="o">=</span><span class="n">om</span><span class="o">.</span><span class="n">MuxComp</span><span class="p">(</span><span class="n">vec_size</span><span class="o">=</span><span class="n">resp_cnt</span><span class="p">))</span>
+    <span class="n">ymux_comp</span><span class="o">.</span><span class="n">add_var</span><span class="p">(</span><span class="s1">&#39;y_max&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Connect ascent timeseries.y for each traj to mux.y_max variable</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">resp_cnt</span><span class="p">):</span>
+        <span class="n">n_traj</span> <span class="o">=</span> <span class="s1">&#39;traj&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">xval</span> <span class="o">=</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="s1">&#39;ascent.timeseries.y&#39;</span>
+        <span class="n">mux_val</span> <span class="o">=</span> <span class="s1">&#39;ymux.y_max_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="c1"># Src_indices correlated to final value of timeseries.x</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span> <span class="n">mux_val</span><span class="p">,</span> <span class="n">src_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+
+
+
+    <span class="c1"># UQPCE subsystem definition</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span>
+        <span class="s1">&#39;UQPCE&#39;</span><span class="p">,</span>
+        <span class="n">UQPCEGroup</span><span class="p">(</span>
+            <span class="n">significance</span><span class="o">=</span><span class="n">sig</span><span class="p">,</span> <span class="n">var_basis</span><span class="o">=</span><span class="n">var_basis</span><span class="p">,</span> <span class="n">norm_sq</span><span class="o">=</span><span class="n">norm_sq</span><span class="p">,</span>
+            <span class="n">resampled_var_basis</span><span class="o">=</span><span class="n">resampled_var_basis</span><span class="p">,</span> <span class="n">tail</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span>
+            <span class="n">epistemic_cnt</span><span class="o">=</span><span class="n">epistemic_cnt</span><span class="p">,</span> <span class="n">aleatory_cnt</span><span class="o">=</span><span class="n">aleatory_cnt</span><span class="p">,</span>
+            <span class="n">uncert_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x_out&#39;</span><span class="p">],</span> <span class="n">tanh_omega</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">sample_ref0</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">sample_ref</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">]</span>
+        <span class="p">),</span>
+        <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x_out&#39;</span><span class="p">],</span> 
+        <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x_out:mean&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:ci_upper&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:ci_lower&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:resampled_responses&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:variance&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Confidence Interval subsystem definition</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span>
+        <span class="s1">&#39;CI&#39;</span><span class="p">,</span> <span class="n">WidthCI</span><span class="p">(),</span> 
+        <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x_out:ci_lower&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:ci_upper&#39;</span><span class="p">],</span>
+        <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Objective subsystem definition</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span>
+        <span class="s1">&#39;Objective&#39;</span><span class="p">,</span> <span class="n">Obj</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="n">resp_cnt</span><span class="p">),</span>
+        <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x_out:mean&#39;</span><span class="p">,</span> <span class="s1">&#39;x_out:variance&#39;</span><span class="p">],</span>
+        <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;obj&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Optimizer definition</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">ScipyOptimizeDriver</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;SLSQP&#39;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    
+    <span class="c1"># Add design variables</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_design_var</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_design_var</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># Add objective and constraints</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s1">&#39;cost&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s1">&#39;ymux.y_max&#39;</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_objective</span><span class="p">(</span><span class="s1">&#39;obj&#39;</span><span class="p">)</span>
+    
+    <span class="n">prob</span><span class="o">.</span><span class="n">set_solver_print</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+
+
+    <span class="n">th_mat</span> <span class="o">=</span> <span class="n">run_matrix</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">set_val</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">th_mat</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+
+    <span class="n">ranges</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;t_init&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;t_dur&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;x_init&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;x_dur&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">&#39;y_init&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;y_dur&#39;</span><span class="p">:</span> <span class="mi">50</span>
+    <span class="p">}</span>
+
+    <span class="c1"># State initialization for each trajectory/phase</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">resp_cnt</span><span class="p">):</span>
+        <span class="n">phase_setup</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> 
+
+    <span class="c1"># Initialize system input variables</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">set_val</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">set_val</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+    <span class="c1"># Optimize problem and plot trajectories #</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">run_driver</span><span class="p">()</span>
+
+    <span class="c1"># Plot trajectories</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">resp_cnt</span><span class="p">))</span>
+    <span class="n">cd_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">run_matrix</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;x_out&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+    <span class="n">x_ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">+</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">resp_cnt</span><span class="p">):</span>
+        <span class="n">n_traj</span> <span class="o">=</span> <span class="s1">&#39;traj&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+        <span class="n">xval</span> <span class="o">=</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="s1">&#39;descent.timeseries.x&#39;</span>
+        <span class="n">yval</span> <span class="o">=</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="s1">&#39;descent.timeseries.y&#39;</span>
+        <span class="n">color_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cd_sort</span> <span class="o">==</span> <span class="n">run_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">parallel</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">xval</span><span class="p">),</span> <span class="n">parallel</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">yval</span><span class="p">),</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">color_idx</span><span class="p">])</span>
+        <span class="n">xval</span> <span class="o">=</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="s1">&#39;ascent.timeseries.x&#39;</span>
+        <span class="n">yval</span> <span class="o">=</span> <span class="n">n_traj</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="s1">&#39;ascent.timeseries.y&#39;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">parallel</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">xval</span><span class="p">),</span> <span class="n">parallel</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">yval</span><span class="p">),</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">color_idx</span><span class="p">])</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x_ticks</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Distance (m)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Altitude (m)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Trajectories&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Upper CI is </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;x_out:ci_upper&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lower CI is </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;x_out:ci_lower&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean is </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;x_out:mean&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variance is </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;x_out:variance&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Design Variable v is </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Design Variable m is </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cost constraint is </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;cost&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum height is </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;ymux.y_max&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">prob</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">run</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Negative mean squared error
+
+Using an alternate equation
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda/envs/test/lib/python3.11/site-packages/openmdao/core/group.py:2971: UnitsWarning:&lt;model&gt; &lt;class Group&gt;: Output &#39;mux.x_out&#39; with units of &#39;m&#39; is connected to input &#39;UQPCE.x_out_coeff_comp.responses&#39; which has no units.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully    (Exit mode 0)
+            Current function value: 4.195750173743767e-15
+            Iterations: 8
+            Function evaluations: 12
+            Gradient evaluations: 8
+Optimization Complete
+-----------------------------------
+Upper CI is [167.93740163]
+Lower CI is [132.54895877]
+Mean is [150.00000006]
+Variance is [62.35886468]
+Design Variable v is [43.04813937]
+Design Variable m is [1.14609763]
+Cost constraint is [1061.94100157]
+Maximum height is 26.77877134284172
+</pre></div>
+</div>
+<img alt="../_images/67b49a94b33ceaee16b14db00c6bb22486e04f7c0244c060875f46507ebaec81.png" src="../_images/67b49a94b33ceaee16b14db00c6bb22486e04f7c0244c060875f46507ebaec81.png" />
+</div>
+</div>
+</section>
+<section id="contour-plots">
+<h2>Contour Plots<a class="headerlink" href="#contour-plots" title="Permalink to this heading">#</a></h2>
+<p>Visualizations showing how x-distance changes as a design variable is scaled, with the other design variable held at a constant, optimal value.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/d152cd95c5f6b093a1fa911bd77e4ece82b3d0ac68e1fc97959321539e3970c4.png" src="../_images/d152cd95c5f6b093a1fa911bd77e4ece82b3d0ac68e1fc97959321539e3970c4.png" />
+<img alt="../_images/b6269e44fd347a307feabd911db0032be8fc0bd85fe90b7e0af640aa293a965c.png" src="../_images/b6269e44fd347a307feabd911db0032be8fc0bd85fe90b7e0af640aa293a965c.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./user-guide"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="running-uqpce.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Running UQPCE</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="variables.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Variables</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indoor-shot-put">Indoor Shot Put</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#this-example-is-a-demonstration-of-a-simple-projectile-motion-problem-design-under-uncertainty">This example is a demonstration of a simple projectile motion problem design under uncertainty.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-composition">Problem Composition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#components">Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-constraint">Cost Constraint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-interval-width">Confidence Interval Width</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#velocity-components">Velocity Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-sectional-area">Cross-sectional Area</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#equations-of-motion">Equations of Motion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-definition">Trajectory Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-definition">Problem Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contour-plots">Contour Plots</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Benjamin Phillips and Joanna Schmidt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

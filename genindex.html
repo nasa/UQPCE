@@ -1,0 +1,1016 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; UQPCE Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/UQPCE_logo.png" class="logo__image only-light" alt="UQPCE Documentation - Home"/>
+    <script>document.write(`<img src="_static/UQPCE_logo.png" class="logo__image only-dark" alt="UQPCE Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to UQPCE
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="user-guide/getting-started.html">Getting Started with UQPCE</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="user-guide/running-uqpce.html">Running UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user-guide/multiphase_projectile_example.html">Building Multi-Phase Trajectory with UQPCE and Dymos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide/inputs.html">Input Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide/outputs.html">Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide/analysis.html">Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="theory/theory.html">Theory and Background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory/symbols-and-defs.html">Symbols and Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/pce.html">Polynomial Chaos Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/sampling.html">Sample Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/techniques.html">Techniques</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="theory/openmdao.html">Compatability with OpenMDAO</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory/uqpcegroup-overview.html">UQPCEGroup Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/derivatives.html">Analytic Derivatives</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="verification/verification.html">Verification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="verification/pce.html">UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification/limitations.html">Limitations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/continuous-variables.html">Continuous Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/continuous/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/continuous/normal.html">Normal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/continuous/beta.html">Beta Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/continuous/gamma.html">Gamma Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/continuous/exponential.html">Exponential Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/continuous/lognormal.html">Lognormal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/continuous/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/continuous/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/discrete-variables.html">Discrete Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/discrete/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/discrete/poisson.html">Poisson Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/discrete/hypergeometric.html">Hypergeometric Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/discrete/negative-binomial.html">Negative Binomial Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/discrete/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/discrete/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pce.html">PCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/uqpce-group.html">UQPCEGroup</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE/issues/new?title=Issue%20on%20page%20%2Fgenindex.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#X"><strong>X</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.add_variable">add_variable() (uqpce.pce.pce.PCE method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.backward_elimination">backward_elimination() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable">BetaVariable (class in uqpce.pce.variables.continuous)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.bounds">bounds (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.build_basis">build_basis() (uqpce.pce.pce.PCE method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable.check_distribution">check_distribution() (uqpce.pce.variables.continuous.BetaVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.check_distribution">(uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+</li>
+        <li><a href="reference/continuous/exponential.html#uqpce.pce.variables.continuous.ExponentialVariable.check_distribution">(uqpce.pce.variables.continuous.ExponentialVariable method)</a>
+</li>
+        <li><a href="reference/continuous/gamma.html#uqpce.pce.variables.continuous.GammaVariable.check_distribution">(uqpce.pce.variables.continuous.GammaVariable method)</a>
+</li>
+        <li><a href="reference/continuous/lognormal.html#uqpce.pce.variables.continuous.LognormalVariable.check_distribution">(uqpce.pce.variables.continuous.LognormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.check_distribution">(uqpce.pce.variables.continuous.NormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.check_distribution">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.check_distribution">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+        <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.check_distribution">(uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+</li>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.check_distribution">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.check_distribution">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+        <li><a href="reference/discrete/uniform.html#uqpce.pce.variables.discrete.UniformVariable.check_distribution">(uqpce.pce.variables.discrete.UniformVariable method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.check_fit">check_fit() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable.check_num_string">check_num_string() (uqpce.pce.variables.continuous.BetaVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.check_num_string">(uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+</li>
+        <li><a href="reference/continuous/exponential.html#uqpce.pce.variables.continuous.ExponentialVariable.check_num_string">(uqpce.pce.variables.continuous.ExponentialVariable method)</a>
+</li>
+        <li><a href="reference/continuous/gamma.html#uqpce.pce.variables.continuous.GammaVariable.check_num_string">(uqpce.pce.variables.continuous.GammaVariable method)</a>
+</li>
+        <li><a href="reference/continuous/lognormal.html#uqpce.pce.variables.continuous.LognormalVariable.check_num_string">(uqpce.pce.variables.continuous.LognormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.check_num_string">(uqpce.pce.variables.continuous.NormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.check_num_string">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.check_num_string">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+        <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.check_num_string">(uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+</li>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.check_num_string">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.check_num_string">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+        <li><a href="reference/discrete/uniform.html#uqpce.pce.variables.discrete.UniformVariable.check_num_string">(uqpce.pce.variables.discrete.UniformVariable method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.check_variables">check_variables() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.confidence_interval">confidence_interval() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable">ContinuousVariable (class in uqpce.pce.variables.continuous)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.create_norm_sq">create_norm_sq() (uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+
+      <ul>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.create_norm_sq">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.cum_dens_func">cum_dens_func (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable">DiscreteVariable (class in uqpce.pce.variables.discrete)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.dist">dist (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.distribution">distribution (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/epistemic.html#uqpce.pce.variables.continuous.EpistemicVariable">EpistemicVariable (class in uqpce.pce.variables.continuous)</a>
+
+      <ul>
+        <li><a href="reference/discrete/epistemic.html#uqpce.pce.variables.discrete.EpistemicVariable">(class in uqpce.pce.variables.discrete)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/exponential.html#uqpce.pce.variables.continuous.ExponentialVariable">ExponentialVariable (class in uqpce.pce.variables.continuous)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.failed">failed (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.find_high_lim">find_high_lim() (uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+
+      <ul>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.find_high_lim">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.find_high_lim">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.fit">fit() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.from_yaml">from_yaml() (uqpce.pce.pce.PCE method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/gamma.html#uqpce.pce.variables.continuous.GammaVariable">GammaVariable (class in uqpce.pce.variables.continuous)</a>
+</li>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable.generate_orthopoly">generate_orthopoly() (uqpce.pce.variables.continuous.BetaVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.generate_orthopoly">(uqpce.pce.variables.continuous.NormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.generate_orthopoly">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.generate_responses">generate_responses() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable.generate_samples">generate_samples() (uqpce.pce.variables.continuous.BetaVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.generate_samples">(uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+</li>
+        <li><a href="reference/continuous/exponential.html#uqpce.pce.variables.continuous.ExponentialVariable.generate_samples">(uqpce.pce.variables.continuous.ExponentialVariable method)</a>
+</li>
+        <li><a href="reference/continuous/gamma.html#uqpce.pce.variables.continuous.GammaVariable.generate_samples">(uqpce.pce.variables.continuous.GammaVariable method)</a>
+</li>
+        <li><a href="reference/continuous/lognormal.html#uqpce.pce.variables.continuous.LognormalVariable.generate_samples">(uqpce.pce.variables.continuous.LognormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.generate_samples">(uqpce.pce.variables.continuous.NormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.generate_samples">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.generate_samples">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+        <li><a href="reference/discrete/epistemic.html#uqpce.pce.variables.discrete.EpistemicVariable.generate_samples">(uqpce.pce.variables.discrete.EpistemicVariable method)</a>
+</li>
+        <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.generate_samples">(uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+</li>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.generate_samples">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.generate_samples">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+        <li><a href="reference/discrete/uniform.html#uqpce.pce.variables.discrete.UniformVariable.generate_samples">(uqpce.pce.variables.discrete.UniformVariable method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable.get_mean">get_mean() (uqpce.pce.variables.continuous.BetaVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.get_mean">(uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+</li>
+        <li><a href="reference/continuous/exponential.html#uqpce.pce.variables.continuous.ExponentialVariable.get_mean">(uqpce.pce.variables.continuous.ExponentialVariable method)</a>
+</li>
+        <li><a href="reference/continuous/gamma.html#uqpce.pce.variables.continuous.GammaVariable.get_mean">(uqpce.pce.variables.continuous.GammaVariable method)</a>
+</li>
+        <li><a href="reference/continuous/lognormal.html#uqpce.pce.variables.continuous.LognormalVariable.get_mean">(uqpce.pce.variables.continuous.LognormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.get_mean">(uqpce.pce.variables.continuous.NormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.get_mean">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.get_mean">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+        <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.get_mean">(uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+</li>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.get_mean">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.get_mean">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+        <li><a href="reference/discrete/uniform.html#uqpce.pce.variables.discrete.UniformVariable.get_mean">(uqpce.pce.variables.discrete.UniformVariable method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.get_norm_sq_val">get_norm_sq_val() (uqpce.pce.variables.continuous.NormalVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.get_norm_sq_val">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.get_probability_density_func">get_probability_density_func() (uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+
+      <ul>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.get_probability_density_func">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+        <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.get_probability_density_func">(uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+</li>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.get_probability_density_func">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.get_probability_density_func">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.get_resamp_vals">get_resamp_vals() (uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.high_approx">high_approx (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable">HypergeometricVariable (class in uqpce.pce.variables.discrete)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/uqpce-group.html#uqpce.mdao.uqpcegroup.UQPCEGroup.initialize">initialize() (uqpce.mdao.uqpcegroup.UQPCEGroup method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.interval_high">interval_high (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.interval_low">interval_low (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.load_matrix_file">load_matrix_file() (uqpce.pce.pce.PCE method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/lognormal.html#uqpce.pce.variables.continuous.LognormalVariable">LognormalVariable (class in uqpce.pce.variables.continuous)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.low_approx">low_approx (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.mean">mean (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.name">name (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable">NegativeBinomialVariable (class in uqpce.pce.variables.discrete)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.norm_sq_vals">norm_sq_vals (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable">NormalVariable (class in uqpce.pce.variables.continuous)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.number">number (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.order">order (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE">PCE (class in uqpce.pce.pce)</a>
+</li>
+      <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable">PoissonVariable (class in uqpce.pce.variables.discrete)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.poly_denom">poly_denom (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.predict">predict() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.print">print() (uqpce.pce.pce.PCE method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.recursive_var_basis">recursive_var_basis() (uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+
+      <ul>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.recursive_var_basis">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.resample">resample() (uqpce.pce.variables.continuous.UniformVariable method)</a>
+
+      <ul>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.resample">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.resample_surrogate">resample_surrogate() (uqpce.pce.pce.PCE method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.sample">sample() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.samples">samples (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.save_model">save_model() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.set_samples">set_samples() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/uqpce-group.html#uqpce.mdao.uqpcegroup.UQPCEGroup.setup">setup() (uqpce.mdao.uqpcegroup.UQPCEGroup method)</a>
+</li>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable.standardize">standardize() (uqpce.pce.variables.continuous.BetaVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.standardize">(uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+</li>
+        <li><a href="reference/continuous/exponential.html#uqpce.pce.variables.continuous.ExponentialVariable.standardize">(uqpce.pce.variables.continuous.ExponentialVariable method)</a>
+</li>
+        <li><a href="reference/continuous/gamma.html#uqpce.pce.variables.continuous.GammaVariable.standardize">(uqpce.pce.variables.continuous.GammaVariable method)</a>
+</li>
+        <li><a href="reference/continuous/lognormal.html#uqpce.pce.variables.continuous.LognormalVariable.standardize">(uqpce.pce.variables.continuous.LognormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.standardize">(uqpce.pce.variables.continuous.NormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.standardize">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.standardize">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+        <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.standardize">(uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+</li>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.standardize">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.standardize">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+        <li><a href="reference/discrete/uniform.html#uqpce.pce.variables.discrete.UniformVariable.standardize">(uqpce.pce.variables.discrete.UniformVariable method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable.standardize_points">standardize_points() (uqpce.pce.variables.continuous.BetaVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.standardize_points">(uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+</li>
+        <li><a href="reference/continuous/exponential.html#uqpce.pce.variables.continuous.ExponentialVariable.standardize_points">(uqpce.pce.variables.continuous.ExponentialVariable method)</a>
+</li>
+        <li><a href="reference/continuous/gamma.html#uqpce.pce.variables.continuous.GammaVariable.standardize_points">(uqpce.pce.variables.continuous.GammaVariable method)</a>
+</li>
+        <li><a href="reference/continuous/lognormal.html#uqpce.pce.variables.continuous.LognormalVariable.standardize_points">(uqpce.pce.variables.continuous.LognormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.standardize_points">(uqpce.pce.variables.continuous.NormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.standardize_points">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.standardize_points">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+        <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.standardize_points">(uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+</li>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.standardize_points">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.standardize_points">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+        <li><a href="reference/discrete/uniform.html#uqpce.pce.variables.discrete.UniformVariable.standardize_points">(uqpce.pce.variables.discrete.UniformVariable method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.std_bounds">std_bounds (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.std_vals">std_vals (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.std_verify_vals">std_verify_vals (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.test_samples">test_samples (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.type">type (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable">UniformVariable (class in uqpce.pce.variables.continuous)</a>
+
+      <ul>
+        <li><a href="reference/discrete/uniform.html#uqpce.pce.variables.discrete.UniformVariable">(class in uqpce.pce.variables.discrete)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/continuous/beta.html#uqpce.pce.variables.continuous.BetaVariable.unstandardize_points">unstandardize_points() (uqpce.pce.variables.continuous.BetaVariable method)</a>
+
+      <ul>
+        <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.unstandardize_points">(uqpce.pce.variables.continuous.ContinuousVariable method)</a>
+</li>
+        <li><a href="reference/continuous/exponential.html#uqpce.pce.variables.continuous.ExponentialVariable.unstandardize_points">(uqpce.pce.variables.continuous.ExponentialVariable method)</a>
+</li>
+        <li><a href="reference/continuous/gamma.html#uqpce.pce.variables.continuous.GammaVariable.unstandardize_points">(uqpce.pce.variables.continuous.GammaVariable method)</a>
+</li>
+        <li><a href="reference/continuous/lognormal.html#uqpce.pce.variables.continuous.LognormalVariable.unstandardize_points">(uqpce.pce.variables.continuous.LognormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/normal.html#uqpce.pce.variables.continuous.NormalVariable.unstandardize_points">(uqpce.pce.variables.continuous.NormalVariable method)</a>
+</li>
+        <li><a href="reference/continuous/uniform.html#uqpce.pce.variables.continuous.UniformVariable.unstandardize_points">(uqpce.pce.variables.continuous.UniformVariable method)</a>
+</li>
+        <li><a href="reference/discrete/user-input.html#uqpce.pce.variables.discrete.DiscreteVariable.unstandardize_points">(uqpce.pce.variables.discrete.DiscreteVariable method)</a>
+</li>
+        <li><a href="reference/discrete/hypergeometric.html#uqpce.pce.variables.discrete.HypergeometricVariable.unstandardize_points">(uqpce.pce.variables.discrete.HypergeometricVariable method)</a>
+</li>
+        <li><a href="reference/discrete/negative-binomial.html#uqpce.pce.variables.discrete.NegativeBinomialVariable.unstandardize_points">(uqpce.pce.variables.discrete.NegativeBinomialVariable method)</a>
+</li>
+        <li><a href="reference/discrete/poisson.html#uqpce.pce.variables.discrete.PoissonVariable.unstandardize_points">(uqpce.pce.variables.discrete.PoissonVariable method)</a>
+</li>
+        <li><a href="reference/discrete/uniform.html#uqpce.pce.variables.discrete.UniformVariable.unstandardize_points">(uqpce.pce.variables.discrete.UniformVariable method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.update_settings">update_settings() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/uqpce-group.html#uqpce.mdao.uqpcegroup.UQPCEGroup">UQPCEGroup (class in uqpce.mdao.uqpcegroup)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.vals">vals (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.var_orthopoly_vect">var_orthopoly_vect (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.var_str">var_str (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.verification">verification() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.verify_sample">verify_sample() (uqpce.pce.pce.PCE method)</a>
+</li>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.verify_vals">verify_vals (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/pce.html#uqpce.pce.pce.PCE.write_outputs">write_outputs() (uqpce.pce.pce.PCE method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/continuous/user-input.html#uqpce.pce.variables.continuous.ContinuousVariable.x">x (uqpce.pce.variables.continuous.ContinuousVariable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Benjamin Phillips and Joanna Schmidt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1123 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Techniques &#8212; UQPCE Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/techniques';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Compatability with OpenMDAO" href="openmdao.html" />
+    <link rel="prev" title="Sample Generation" href="sampling.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/UQPCE_logo.png" class="logo__image only-light" alt="UQPCE Documentation - Home"/>
+    <script>document.write(`<img src="../_static/UQPCE_logo.png" class="logo__image only-dark" alt="UQPCE Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to UQPCE
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user-guide/getting-started.html">Getting Started with UQPCE</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide/running-uqpce.html">Running UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide/multiphase_projectile_example.html">Building Multi-Phase Trajectory with UQPCE and Dymos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/inputs.html">Input Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/outputs.html">Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/analysis.html">Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="theory.html">Theory and Background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="symbols-and-defs.html">Symbols and Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pce.html">Polynomial Chaos Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sampling.html">Sample Generation</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Techniques</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="openmdao.html">Compatability with OpenMDAO</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="uqpcegroup-overview.html">UQPCEGroup Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derivatives.html">Analytic Derivatives</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../verification/verification.html">Verification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../verification/pce.html">UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/limitations.html">Limitations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/continuous-variables.html">Continuous Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/normal.html">Normal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/beta.html">Beta Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/gamma.html">Gamma Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/exponential.html">Exponential Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/lognormal.html">Lognormal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/discrete-variables.html">Discrete Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/poisson.html">Poisson Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/hypergeometric.html">Hypergeometric Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/negative-binomial.html">Negative Binomial Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pce.html">PCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/uqpce-group.html">UQPCEGroup</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE/issues/new?title=Issue%20on%20page%20%2Ftheory/techniques.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/theory/techniques.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Techniques</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistics">Statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-squared">R-Squared</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-squared-adjusted">R-Squared Adjusted</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stepwise-regression">Stepwise Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-elimination">Backward Elimination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#individual-variable-order">Individual Variable Order</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="techniques">
+<h1>Techniques<a class="headerlink" href="#techniques" title="Permalink to this heading">#</a></h1>
+<p>The techniques used by UQPCE are discussed in this section. The additional statistics, confidence intervals on model parameters, and experimental designs will be discussed.</p>
+<section id="statistics">
+<h2>Statistics<a class="headerlink" href="#statistics" title="Permalink to this heading">#</a></h2>
+<p>UQPCE provides several useful model statistics when the <code class="docutils literal notranslate"><span class="pre">--stats</span></code> flag is used. These statistics are discussed below.</p>
+<section id="r-squared">
+<h3>R-Squared<a class="headerlink" href="#r-squared" title="Permalink to this heading">#</a></h3>
+<p>The <span class="math notranslate nohighlight">\(R^2\)</span> statistic is a measure of how well the results are modeled by the surrogate model.</p>
+<p>To calculate the <span class="math notranslate nohighlight">\(R^2\)</span> statistic, the total sum or squares, <span class="math notranslate nohighlight">\(SS_T\)</span>, and the error sum of squares, <span class="math notranslate nohighlight">\(SS_E\)</span> must first be calculated</p>
+<div class="math notranslate nohighlight">
+\[
+	SS_T = y'y - \frac{\big(\sum_{i=1}^{n} y_i\big)^2}{n}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+	SS_E = y'y - \hat{\beta}'X'y
+\]</div>
+<p>From these two statistics, we can calculate <span class="math notranslate nohighlight">\(R^2\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+	R^2 = 1 - \frac{SS_E}{SS_T}
+\]</div>
+<p><span id="id1">[<a class="reference internal" href="../bibliography.html#id3" title="D. C. Montgomery. Design and Analysis of Experiments, 8th Ed. Wiley, 2013.">Mon13</a>]</span></p>
+</section>
+<section id="r-squared-adjusted">
+<h3>R-Squared Adjusted<a class="headerlink" href="#r-squared-adjusted" title="Permalink to this heading">#</a></h3>
+<p>The <span class="math notranslate nohighlight">\(R^2_{adj}\)</span> statistic, much like <span class="math notranslate nohighlight">\(R^2\)</span>, is a measure of how well the results are modeled by the surrogate model. However, this statistic reflects the fit for the number of terms included. If terms that only slightly improve the model are included, <span class="math notranslate nohighlight">\(R^2_{adj}\)</span> is penalized.</p>
+<p>The <span class="math notranslate nohighlight">\(R^2_{adj}\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[
+	R^2_{adj} = 1\ -\ \frac{n - 1}{n - p}\bigg(1\ -\ R^2\bigg)
+\]</div>
+<p><span id="id2">[<a class="reference internal" href="../bibliography.html#id3" title="D. C. Montgomery. Design and Analysis of Experiments, 8th Ed. Wiley, 2013.">Mon13</a>]</span></p>
+<!-- ### Mallow's $C_p$
+
+The Mallow's $C_p$ statistic compares how well a model with fewer terms compares to the full-term model, which is treated as the truth. The $C_p$statistic is given by the equation
+
+$$
+	C_p = \frac{SSE_{k}}{MSE_{full}} + 2 (k + 1) - n
+$$
+
+
+### PRESS Residual
+
+The PRESS residual is the sum of error for all models created with ``n - 1`` results, where ``n`` is the total number of results.
+
+$$
+	PRESS = \sum_{i=1}^{n} e^2_{(i)} = \sum_{i=1}^{n} [y_{i} - \hat{y}_{(i)}]^2
+$$
+
+{cite:ps}`Montgomery2013`
+	
+As shown above, the error is calculated from the actual response and the predicted response from a model that omits point ``i``. The error in the prediction is squared and the sum of all of those ``n`` values is the PRESS residual.
+
+### Mean
+
+The average and variance of the mean are calculated from all models created with ``n - 1`` results, where ``n`` is the total number of results.
+
+The estimate of the mean of a model is given by
+
+$$
+	\mu \cong \sum_{i=0}^{p} \beta_i X_i = \beta_0
+$$
+
+{cite:ps}`Eldred2009`
+
+The average of the mean is given by
+
+$$
+	\mu_{avg} = \frac{\sum_{i=0}^{n} \mu_{i}}{n}
+$$
+	
+While the variance of the mean is given by
+
+$$
+	\mu_{var} = \frac{\sum_{i=0}^{n} \big(\mu_{i} - \mu_{avg}\big)^2}{n}
+$$
+
+### Variance
+
+The average and variance of the variance are calculated from all models created with ``n - 1`` results, where ``n`` is the total number of results.
+	
+The estimate of the variance of a model is given by
+
+$$
+	\sigma^{2} = \sum_{i=1}^{p} \beta^{2}_i \langle\bf{\Psi}^{2}_i\rangle
+$$
+	
+{cite:ps}`Eldred2009`
+	
+The average of the variance is given by
+
+$$
+	\sigma^{2}_{avg} = \frac{\sum_{i=1}^{n} \sigma^{2}_{i}}{n}
+$$
+	
+While the variance of the variance is given by
+
+$$
+	\sigma^{2}_{var} = \frac{\sum_{i=1}^{n} \big(\sigma^{2}_{i} - \sigma^{2}_{avg}\big)^2}{n}
+$$
+
+### Mean Error
+
+The average and variance of the mean error are calculated by creating all models that omit one response value, determining their mean errors, and calculating the average and variance of these values.
+	
+The mean error is the average differential between model predicted response and observed response.
+
+Mean error for a model is calculated with
+
+$$
+	\varepsilon = \frac{\sum_{i=0}^{n} |\hat{y}_i - y_i|}{n}
+$$
+
+The average of the mean error is given by
+
+$$
+	\varepsilon_{avg} = \frac{\sum_{i=0}^{n} \varepsilon_{i}}{n}
+$$
+	
+While the variance of the mean error is given by
+
+$$
+	\varepsilon_{var} = \frac{\sum_{i=0}^{n} \big(\varepsilon_{i} - \varepsilon_{avg}\big)^2}{n}
+$$
+
+
+### Signal-to-Noise Ratio
+
+The signal-to-noise ratio estimates the relative magnitude of the model variance to the model error. This calculation used the model variance, $\sigma^{2}$, and the model mean error, $\varepsilon$.
+
+$$
+    SNR = \frac{\sigma^{2}}{\varepsilon}
+$$
+
+
+### Verification Error
+
+The verification error is a similar metric to the mean error but is calculated using the model verification responses.
+
+$$
+    \varepsilon_v = \frac{\sum_{i=0}^{n_v} |\hat{y}_{v_{i}} - y_{v_{i}}|}{n_v}
+$$
+
+
+## Confidence Intervals
+
+In addition to the mean and variance of the surrogate model, UQPCE provides confidence intervals for Sobols, coefficients, and the mean when the ``--model-conf-int`` flag is used.
+
+### Confidence Interval on the Coefficients
+
+The bounds on the coefficients are solved by finding the uncertainty of the coefficients and then adding and subtracting that from the values.
+
+$$
+	\Delta B_i = t_{\alpha/2, n-p} \sqrt{\hat{\sigma}^2 C_{ii}}
+$$
+
+where
+
+$$
+	C = \bigg( X'X \bigg)^{-1}
+$$
+	
+and 
+
+$$
+	\hat{\sigma}^2 = \frac{SS_E}{n - p}
+$$
+
+Once the uncertainty has been calculated, the bounds can be found by adding and subtracting this value from the original $\beta$.
+
+$$
+	\beta_{L} = \beta - \Delta \beta
+$$
+
+$$
+	\beta_{H} = \beta + \Delta \beta
+$$
+
+{cite:ps}`Montgomery2013`
+
+### Confidence Interval on the Sobols
+
+The bounds of the Sobols are solved by recalculating the Sobols while changing the coefficients of each Sobol to minimize the magnitude of all coefficients except coefficient $\beta_i$, who has its magnitude maximized. The same is done to maximize all the magnitude of all coefficients except $\beta_i$. Doing this makes coefficient $\beta_i$ its most and least influential. With these new coefficients, the Sobols are recalculated.
+
+To calculate the low Sobol bound, the coefficients are altered such that the coefficient of interest has a smaller magnitude and the others have a larger magnitude.
+
+$$
+	\beta_{L_j} = |\beta_j| + \Delta \beta_j \ \ \text{if} \ \ \beta_j \neq \beta_i
+$$
+
+
+$$
+	\beta_{L_j} = \left\{
+	  \begin{array}{lr} 
+	      |\beta_j| - \Delta \beta_j \ , & |\beta_j| > \Delta \beta_j\\
+	      0 \ , & |\beta_j| \leq \Delta \beta_j\\
+	      \end{array}
+	\right\} \ \ \text{if} \ \ \beta_j = \beta_i
+$$
+
+
+To calculate the high Sobol bound, the coefficients are altered such that the coefficient of interest has a larger magnitude and the others have a smaller magnitude
+
+$$
+	\beta_{H_j} = \left\{
+	  \begin{array}{lr} 
+	      |\beta_j| - \Delta \beta_j \ , & |\beta_j| > \Delta \beta_j\\
+	      0 \ , & |\beta_j| \leq \Delta \beta_j\\
+	      \end{array}
+	\right\} \ \ \text{if} \ \ \beta_j \leq \beta_i
+$$
+
+$$
+	\beta_{H_j} = |\beta_j| + \Delta \beta_j \ \ \text{if} \ \ \beta_j = \beta_i
+$$
+
+
+The Sobol bounds are then calculated from the new coefficients using the same equation used to calculate the Sobol values
+
+$$
+	S_{L_i} = \frac{\beta_{L_i}^2 \langle\psi_{i}^{2}\rangle}
+	{\sum_{j=1}^p \langle\psi_{j}^{2}\rangle \beta_{L_j}^2}
+$$
+	
+$$
+	S_{H_i} = \frac{\beta_{H_i}^2 \langle\psi_{i}^{2}\rangle}
+	{\sum_{j=1}^p \langle\psi_{j}^{2}\rangle \beta_{H_j}^2}
+$$
+
+### Confidence Interval on the Variance
+
+The bounds on the variance is calculated from the matrix coefficients and their corresponding uncertainties.
+
+The minimum and maximum matrix coefficients are first calculated using the equations below
+
+$$
+	\beta_{L_j} = \left\{
+	  \begin{array}{lr} 
+	      |\beta_j| - \Delta \beta_j \ , & |\beta_j| > \Delta \beta_j\\
+	      0 \ , & |\beta_j| \leq \Delta \beta_j\\
+	      \end{array}
+	\right\}
+$$
+
+$$
+	\beta_{H_j} = |\beta_j| + \Delta \beta_j
+$$
+
+Using these altered coefficient values, the bounds of the variance are calculated using the below equations
+
+$$
+	\sigma^2_L = \sum_{i=1}^{p} \beta^{2}_{L_i} \langle\bf{\Psi}^{2}_i\rangle
+$$
+
+$$
+	\sigma^2_H = \sum_{i=1}^{p} \beta^{2}_{H_i} \langle\bf{\Psi}^{2}_i\rangle
+$$
+	
+
+### Confidence Interval on the Mean Response
+
+The bounds on the mean response is calculated by finding the uncertainty of the mean of the point, and then adding and subtracting the uncertainty from the mean {cite:ps}`Montgomery2013`. This technique is also used to calculate the confidence intervals on the ProbabilityBox plot curves.
+
+The uncertainty of the mean response can be calculated using equation
+
+$$
+	\Delta \mu = t_{\alpha/2, n-p} \sqrt{\hat{\sigma}^2 x_0'(X'X)^{-1}x_0}
+$$
+
+Where the unbiased estimate of error variance is given by
+
+$$
+	\hat{\sigma}^2 = \frac{SS_E}{n - p}
+$$
+
+Leading to the lower and upper bounds of the mean response, point $x_0$
+
+$$
+	\mu_L = \mu - \Delta \mu
+$$
+	
+$$
+	\mu_H = \mu + \Delta \mu
+$$
+	
+{cite:ps}`Montgomery2013`
+
+
+### Confidence Interval on a Predicted Response
+
+The confidence intervals on the verification points are calculated using the below equation.
+
+The prediction interval is calculated using the equation
+
+$$
+	\Delta \hat{y} = t_{\alpha/2, n-p} \sqrt{\hat{\sigma}^2 (1 + x_0'(X'X)^{-1})x_0}
+$$
+
+Where the unbiased estimate of error variance is given by
+
+$$
+	\hat{\sigma}^2 = \frac{SS_E}{n - p}
+$$
+
+{cite:ps}`Montgomery2013`
+
+Leading to the confidence bounds for point $x_0$
+
+$$
+	\hat{y}_L = \hat{y} - \Delta \hat{y}
+$$
+
+$$
+	\hat{y}_H = \hat{y} + \Delta \hat{y}
+$$
+
+With this applied to each point in each of the curves in the probability box, the confidence interval is calculated using the lower and upper bounds on the resampling points. When the ``--model-conf-int`` flag is used, this is the confidence interval output by UQPCE.
+
+
+## Experimental Design
+
+To select initial variable values and determine significant model terms more intelligently, UQPCE has additional capabilities that will be discussed below. The optimal designs are used to improve the model by more-strategically choosing input points.
+
+### D-Optimal Design
+
+D-optimal design minimizes the value
+	
+$$
+	|(X'X)^{-1}|
+$$
+	
+{cite:ps}`Montgomery2013`
+
+Below is a visualization of how this affects the distribution of finite random variables.
+
+```{figure} ../images/d_optimal_design.png
+---
+height: 400px
+name: d_opt
+---
+Random samples versus D-optimal samples for a 2-dimensional design space with uniform variables. The boundaries of the variables are shown in black.
+```
+
+
+In this figure, we can see that both variables follow a uniform distribution. However, the D-optimal samples are spaced such that covariance of the sample space is minimized.
+
+
+### A-Optimal Design
+
+A-optimal design minimizes the value
+
+$$
+	tr((X'X)^{-1})
+$$
+
+Where $tr(\ )$ is the trace of the matrix.
+
+{cite:ps}`Montgomery2013`
+
+Below is a visualization of how this affects the distribution of finite random 
+variables.
+
+```{figure} ../images/a_optimal_design.png
+---
+height: 400px
+name: a_opt
+---
+Random samples versus A-optimal samples for a 2-dimensional design space with uniform variables. The boundaries of the variables are shown in black.
+```
+
+In this figure, we can see that both variables follow a uniform distribution. However, the A-optimal samples are spaced such that average variance of the matrix coefficients are minimized.
+
+<!-- ### S-Optimal Design
+
+S-optimal design is a Sobol-weighted design that minimizes
+
+$$
+	tr\Big(\Big(\frac{1}{1-S}\Big) (X'X)^{-1}\Big)
+$$
+
+Where $S$ is the Sobol vector, $S_0 = 0$, and $tr(\ )$ is the trace of the matrix.
+
+```{figure} ../images/s_optimal_design.png
+---
+height: 400px
+name: s_opt
+---
+Random samples versus S-optimal samples for a 2-dimensional design space with uniform variables. The boundaries of the variables are shown in black.
+```
+
+In this figure, we can see that both variables follow a uniform distribution. However, the S-optimal samples are spaced such that Sobol-weighted average variance of the matrix coefficients are minimized. -->
+</section>
+</section>
+<section id="stepwise-regression">
+<h2>Stepwise Regression<a class="headerlink" href="#stepwise-regression" title="Permalink to this heading">#</a></h2>
+<p>Stepwise regression is used to intelligently build the surrogate model. Below, the equations used in stepwise regression will be discussed.</p>
+<p>Stepwise regression uses an <em>f</em>-distributed variable to determine whether or not a term will be added to the model. The <em>f</em>-distribution used by UQPCE is shown below</p>
+<div class="math notranslate nohighlight">
+\[
+	F_{in} = F_{\alpha_{in}}(df_1 = 1, df_2 = n_{iter}-p_{iter})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+	F_{out} = F_{\alpha_{out}}(df_1 = 1, df_2 = n_{iter}-p_{iter})
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha_{in}\)</span> and <span class="math notranslate nohighlight">\(\alpha_{out}\)</span> are sensitivities to add and remove terms and <span class="math notranslate nohighlight">\(f_{in} \geq f_{out}\)</span>.</p>
+<p>The difference in the sum of squares, <span class="math notranslate nohighlight">\(SS_R\)</span>, due to one model term is calculated for the model that includes the most terms and the model that omits term <code class="docutils literal notranslate"><span class="pre">j</span></code>.</p>
+<div class="math notranslate nohighlight">
+\[
+	SS_R(\beta_j|\beta_i,\beta_0) = SS_R(\beta_i,\beta_j|\beta_0) - SS_R(\beta_i|\beta_0)
+\]</div>
+<p>The mean squared error, <span class="math notranslate nohighlight">\(MS_E\)</span>, is for the model that includes the most
+terms</p>
+<div class="math notranslate nohighlight">
+\[
+	MS_E(x_j, x_i) = \frac{y'y - \hat{\beta}X'y}{n_{iter}-p_{iter}}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+	f_j = \frac{SS_R(\beta_j|\beta_i,\beta_0)}{MS_{E_{full}}}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\beta_0\)</span> is the intercept term, <span class="math notranslate nohighlight">\(\beta_i\)</span> is the most correlated term, and <span class="math notranslate nohighlight">\(\beta_j\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> remaining term.</p>
+<p>Stepwise regression follows the following steps:</p>
+<ol class="arabic simple">
+<li><p>Build a model consisting of the intercept and the most-correlated term.</p></li>
+<li><p>Calculate the partial <em>F</em>-statistic for the remaining terms.</p></li>
+<li><p>Add the term that, when added, results in the largest partial <em>F</em>-statistic if <span class="math notranslate nohighlight">\(F_j &gt; F_{in}\)</span>.</p></li>
+<li><p>Calculate the partial <em>F</em>-statistic for removing each of the terms in the current model.</p></li>
+<li><p>Remove the term with the smallest partial <em>F</em>-statistic if <span class="math notranslate nohighlight">\(F_j &lt; F_{out}\)</span>.</p></li>
+</ol>
+<p><span id="id3">[<a class="reference internal" href="../bibliography.html#id4" title="D. C. Montgomery. Applied Statistics and Probability for Engineers, 4th Ed. Wiley, 2007.">Mon07</a>]</span></p>
+</section>
+<section id="backward-elimination">
+<h2>Backward Elimination<a class="headerlink" href="#backward-elimination" title="Permalink to this heading">#</a></h2>
+<p>Backward elimination is the process of removing model terms within some threshold, <span class="math notranslate nohighlight">\(\alpha_{out}\)</span>, to reduce model overfitting. This method begins by building a full PCE model, deleting the least significant term at each iteration until a stopping condition is satisfied. To do this, a partial <span class="math notranslate nohighlight">\(F\)</span>-distributed variable shown in Equation <a class="reference internal" href="#equation-fdist">(12)</a> determines the significance of each term</p>
+<div class="math notranslate nohighlight" id="equation-fdist">
+<span class="eqno">(12)<a class="headerlink" href="#equation-fdist" title="Permalink to this equation">#</a></span>\[
+	F_{out} = F_{\alpha_{out}}(df_1 = 1, df_2 = n_{iter}-p_{iter})
+\]</div>
+<p>The difference in the sum of squares, <span class="math notranslate nohighlight">\(SS_R\)</span>, due to one model term is calculated for the model that includes the most terms and the model that omits term <code class="docutils literal notranslate"><span class="pre">j</span></code>.</p>
+<div class="math notranslate nohighlight">
+\[
+	SS_R(\beta_j|\beta_i,\beta_0) = SS_R(\beta_i,\beta_j|\beta_0) - SS_R(\beta_i|\beta_0)
+\]</div>
+<p>The mean squared error, <span class="math notranslate nohighlight">\(MS_E\)</span>, is for the model that includes the most terms</p>
+<div class="math notranslate nohighlight">
+\[
+	MS_E(x_j, x_i) = \frac{y'y - \hat{\beta}X'y}{n_{iter}-p_{iter}}
+\]</div>
+<p>Eq. <a class="reference internal" href="#equation-fj">(13)</a> shows a ratio of the <span class="math notranslate nohighlight">\(SS_R\)</span> of the model with term <span class="math notranslate nohighlight">\(j\)</span> deleted and the <span class="math notranslate nohighlight">\(MS_E\)</span> for the model that includes term <span class="math notranslate nohighlight">\(j\)</span> is calculated to determine the effect of a term on the model. In the equation, <span class="math notranslate nohighlight">\(\beta_0\)</span> is the intercept term and <span class="math notranslate nohighlight">\(\beta_j\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> term.</p>
+<div class="math notranslate nohighlight" id="equation-fj">
+<span class="eqno">(13)<a class="headerlink" href="#equation-fj" title="Permalink to this equation">#</a></span>\[
+	F_j = \frac{SS_R(\beta_j|\beta_{0...p})}{MS_{E_{full}}}
+\]</div>
+<p>The following steps are followed to complete the backwards elimination process:</p>
+<ol class="arabic simple">
+<li><p>Build the full polynomial chaos expansion model.</p></li>
+<li><p>Calculate the partial <em>F</em>-statistic for all terms.</p></li>
+<li><p>Remove the term that, when removed, results in the smallest partial <em>F</em>-statistic if <span class="math notranslate nohighlight">\(F_j &lt; F_{out}\)</span>.</p></li>
+<li><p>Repeat this until <span class="math notranslate nohighlight">\(F_j &gt;= F_{out}\)</span>.</p></li>
+</ol>
+<p><span id="id4">[<a class="reference internal" href="../bibliography.html#id4" title="D. C. Montgomery. Applied Statistics and Probability for Engineers, 4th Ed. Wiley, 2007.">Mon07</a>]</span></p>
+</section>
+<section id="individual-variable-order">
+<h2>Individual Variable Order<a class="headerlink" href="#individual-variable-order" title="Permalink to this heading">#</a></h2>
+<p>Individual variable order allows for one or more variables to have a different order than the other variables. Allowing for a higher order input for specified variables is intended for users that know which variables have a higher order in their model.</p>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<p>To use this option, include <code class="docutils literal notranslate"><span class="pre">order</span></code> for the desired variables as shown below, where you can see that <code class="docutils literal notranslate"><span class="pre">Variable</span> <span class="pre">4</span></code> has <code class="docutils literal notranslate"><span class="pre">order:</span> <span class="pre">2</span></code> while the model order is <code class="docutils literal notranslate"><span class="pre">order:</span> <span class="pre">1</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Variable</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">distribution</span><span class="p">:</span> <span class="n">normal</span>
+    <span class="n">mean</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="n">stdev</span><span class="p">:</span> <span class="mf">0.5</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">aleatory</span>
+<span class="n">Variable</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">distribution</span><span class="p">:</span> <span class="n">uniform</span>
+    <span class="n">interval_low</span><span class="p">:</span> <span class="mf">1.75</span>
+    <span class="n">interval_high</span><span class="p">:</span> <span class="mf">2.25</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">aleatory</span>
+<span class="n">Variable</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">distribution</span><span class="p">:</span> <span class="n">exponential</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">aleatory</span>
+<span class="n">Variable</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">distribution</span><span class="p">:</span> <span class="n">beta</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="mf">0.5</span>
+    <span class="n">beta</span><span class="p">:</span> <span class="mf">2.0</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">aleatory</span>
+<span class="n">Variable</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="n">distribution</span><span class="p">:</span> <span class="n">gamma</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="mf">1.0</span>
+    <span class="n">theta</span><span class="p">:</span> <span class="mf">0.5</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">aleatory</span>
+    <span class="n">order</span><span class="p">:</span> <span class="mi">2</span>
+    
+<span class="n">Settings</span><span class="p">:</span>
+    <span class="n">order</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="n">version</span><span class="p">:</span> <span class="n">true</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="n">true</span>
+    <span class="n">plot</span><span class="p">:</span> <span class="n">true</span>
+    <span class="n">plot_stand</span><span class="p">:</span> <span class="n">true</span>
+    <span class="n">model_conf_int</span><span class="p">:</span> <span class="n">true</span>
+    <span class="n">stats</span><span class="p">:</span> <span class="n">true</span>
+    <span class="n">verify</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+<p>This results in a model that includes terms 1st order terms for all variables and 2nd order terms for only variable <code class="docutils literal notranslate"><span class="pre">x4</span></code> as shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">intercept</span>
+<span class="n">x0</span>
+<span class="n">x1</span>
+<span class="n">x2</span>
+<span class="n">x3</span>
+<span class="n">x4</span>
+<span class="n">x0</span><span class="o">*</span><span class="n">x4</span>
+<span class="n">x1</span><span class="o">*</span><span class="n">x4</span>
+<span class="n">x2</span><span class="o">*</span><span class="n">x4</span>
+<span class="n">x3</span><span class="o">*</span><span class="n">x4</span>
+<span class="n">x4</span><span class="o">^</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This option requires the user to know their data and analytical tool <strong>well</strong>. Do not use this option if you’re unsure of which, if any, variables have a higher order term.</p>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./theory"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sampling.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Sample Generation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="openmdao.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Compatability with OpenMDAO</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistics">Statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-squared">R-Squared</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-squared-adjusted">R-Squared Adjusted</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stepwise-regression">Stepwise Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-elimination">Backward Elimination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#individual-variable-order">Individual Variable Order</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Benjamin Phillips and Joanna Schmidt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

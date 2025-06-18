@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Analysis &#8212; UQPCE Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user-guide/analysis';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Theory and Background" href="../theory/theory.html" />
+    <link rel="prev" title="Outputs" href="outputs.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/UQPCE_logo.png" class="logo__image only-light" alt="UQPCE Documentation - Home"/>
+    <script>document.write(`<img src="../_static/UQPCE_logo.png" class="logo__image only-dark" alt="UQPCE Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to UQPCE
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="getting-started.html">Getting Started with UQPCE</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="running-uqpce.html">Running UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiphase_projectile_example.html">Building Multi-Phase Trajectory with UQPCE and Dymos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputs.html">Input Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Outputs</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/theory.html">Theory and Background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory/symbols-and-defs.html">Symbols and Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/pce.html">Polynomial Chaos Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/sampling.html">Sample Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/techniques.html">Techniques</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/openmdao.html">Compatability with OpenMDAO</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory/uqpcegroup-overview.html">UQPCEGroup Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/derivatives.html">Analytic Derivatives</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../verification/verification.html">Verification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../verification/pce.html">UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/limitations.html">Limitations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/continuous-variables.html">Continuous Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/normal.html">Normal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/beta.html">Beta Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/gamma.html">Gamma Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/exponential.html">Exponential Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/lognormal.html">Lognormal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/discrete-variables.html">Discrete Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/poisson.html">Poisson Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/hypergeometric.html">Hypergeometric Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/negative-binomial.html">Negative Binomial Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pce.html">PCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/uqpce-group.html">UQPCEGroup</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE/issues/new?title=Issue%20on%20page%20%2Fuser-guide/analysis.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/user-guide/analysis.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots">Diagnostic Plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-box">Probability Box</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-polynomials">High-Order Polynomials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-probability-plot">Normal Probability Plot</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analysis">
+<span id="id1"></span><h1>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">#</a></h1>
+<p>The following section will provide information on determining if the information provided by UQPCE indicates if the surrogate model is a good fit for the data or not.</p>
+<section id="diagnostic-plots">
+<span id="id2"></span><h2>Diagnostic Plots<a class="headerlink" href="#diagnostic-plots" title="Permalink to this heading">#</a></h2>
+<p>This section will cover the diagnostic plots that are generated when the <code class="docutils literal notranslate"><span class="pre">--plot</span></code> flag is used. These can be helpful for determining if the surrogate model accurately represents the underlying response.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Every data set is different and there are multiple diagnostic criteria and associated best practices for surrogate model adequacy checking. Ultimately, it is up to the subject matter expert to determine the suitability of the surrogate model. When in doubt, consult reference material or uncertainty quantification subject matter experts.</p>
+</div>
+<p>The <a class="reference internal" href="../verification/pce.html#naca-airfoil"><span class="std std-ref">NACA 0012</span></a> airfoil case with using <code class="docutils literal notranslate"><span class="pre">order</span> <span class="pre">=</span> <span class="pre">1</span></code> will be discussed. Using <code class="docutils literal notranslate"><span class="pre">order</span> <span class="pre">=</span> <span class="pre">1</span></code>, the model has a mean of <code class="docutils literal notranslate"><span class="pre">0.21876</span></code>, variance of <code class="docutils literal notranslate"><span class="pre">1.4897e-4</span></code>, and confidence interval of <code class="docutils literal notranslate"><span class="pre">[0.18703,</span> <span class="pre">0.2493]</span></code>. These are consistent with the expected output for this case. Using the <code class="docutils literal notranslate"><span class="pre">--plot</span></code> flag, diagnostic plots for the model are generated and shown below.</p>
+<figure class="align-default" id="error-dist">
+<a class="reference internal image-reference" href="../_images/error_distribution.png"><img alt="../_images/error_distribution.png" src="../_images/error_distribution.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">A histogram of the error values from the model.</span><a class="headerlink" href="#error-dist" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This plot shows the error trending to the positive x-axis more than the negative. A normal distribution is expected for the error, and the distribution shown in the above figure suggests that the model does not accurately represent the underlying response.</p>
+<figure class="align-default" id="sigma">
+<a class="reference internal image-reference" href="../_images/error_vs_sigma.png"><img alt="../_images/error_vs_sigma.png" src="../_images/error_vs_sigma.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">The error versus sigma plot.</span><a class="headerlink" href="#sigma" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="vonkarman">
+<a class="reference internal image-reference" href="../_images/error_vs_vonkarman.png"><img alt="../_images/error_vs_vonkarman.png" src="../_images/error_vs_vonkarman.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">The error versus von Karman plot.</span><a class="headerlink" href="#vonkarman" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Next are the plots of error versus the variable values.</p>
+<p>The von Karman constant doesn’t appear to have any correlation with error. However, the error versus sigma plot has a strong trend. This suggests that the model does not accurately represent the underlying response.</p>
+<figure class="align-default" id="error-vs-pred">
+<a class="reference internal image-reference" href="../_images/error_vs_predicted.png"><img alt="../_images/error_vs_predicted.png" src="../_images/error_vs_predicted.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">The error versus the values predicted by the surrogate model.</span><a class="headerlink" href="#error-vs-pred" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>There is a similar trend in the error versus predicted values.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The lowest order expansion that accurately models the underlying response should be used. Although higher order expansions can appear to result in better model fit, they can add spurious high frequency content.</p>
+</div>
+</section>
+<section id="probability-box">
+<h2>Probability Box<a class="headerlink" href="#probability-box" title="Permalink to this heading">#</a></h2>
+<p>The probability box represents the generated results from the model during the resampling of the surrogate model. The results generated from the model for a set of random inputs is sorted to form a curve (or curves). The curves are interpolated to find the values that correspond to the significance (default : <code class="docutils literal notranslate"><span class="pre">0.05</span></code>) of the confidence interval. If more than one curve is present, the lowest low confidence interval and highest high confidence interval are taken to be the overall confidence interval of the system.</p>
+<figure class="align-default" id="pbox-ex">
+<a class="reference internal image-reference" href="../_images/pbox_ex.png"><img alt="../_images/pbox_ex.png" src="../_images/pbox_ex.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">An example of the 95% confidence interval on a probability box plot</span><a class="headerlink" href="#pbox-ex" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In the above figure, the dashed red lines represent where on the curve the values are taken to be used at the 95% confidence interval for this probability box.</p>
+</section>
+<section id="confidence-intervals">
+<h2>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Permalink to this heading">#</a></h2>
+<p>In the case of a response that is strongly dependent on a gamma variable, the confidence interval may be less accurate due to rapid increase in the responses at the tail end. This is not a problem with the method. If the user notices this, they may want to increase both the number of the sample sizes and corresponding sub-sample sizes and/or reduce the convergence threshold percent. An example of a response that does this is shown below.</p>
+<figure class="align-default" id="gamma-resp">
+<a class="reference internal image-reference" href="../_images/gamma_dependent_response.png"><img alt="../_images/gamma_dependent_response.png" src="../_images/gamma_dependent_response.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">A probability box for a gamma-heavy response.</span><a class="headerlink" href="#gamma-resp" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="high-order-polynomials">
+<h2>High-Order Polynomials<a class="headerlink" href="#high-order-polynomials" title="Permalink to this heading">#</a></h2>
+<p>For the purposes of this code, 5th order and higher is considered high-order. UQPCE has been tested up to 5th order, and it is not advised to use it for an order higher than this.</p>
+<p>Introducing high-order terms can lead to overfitting the model. Even in instances where there are high-order interactions present, the statistics can be inaccurate if a majority of a 5th order interaction is captured by 1st, 2nd, 3rd, and 4th order terms. This makes it essential to look over the diagnostic plots, error distribution plots, and error statistics.</p>
+<p>Below is an example of how this happens in a UQPCE model. The figure below shows a 5th order response using the equation <span class="math notranslate nohighlight">\(((0.1)\ \frac{1}{4}e^{-\frac{(x-3)}{4}})^5\)</span>.</p>
+<figure class="align-default" id="exp-resp-5th">
+<a class="reference internal image-reference" href="../_images/exp_resp_5th.png"><img alt="../_images/exp_resp_5th.png" src="../_images/exp_resp_5th.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">The response for the given 5th order interaction.</span><a class="headerlink" href="#exp-resp-5th" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Below shows how UQPCE approximates this in the model. Most of this response will be attributed to the lower-order polynomials.</p>
+<figure class="align-default" id="exp-ortho-poly">
+<a class="reference internal image-reference" href="../_images/exp_ortho_poly.png"><img alt="../_images/exp_ortho_poly.png" src="../_images/exp_ortho_poly.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">The UQPCE surrogate model representation of the response.</span><a class="headerlink" href="#exp-ortho-poly" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The orthogonal polynomials with the <span class="math notranslate nohighlight">\(x_0\)</span> values plugged in and multiplied by the matrix coefficients. The various dashed lines represent the orthogonal polynomials for orders 1 to 5, and the solid black line represents the sum of all of the dashed lines.</p>
+<p>As shown in the images above, the sum of the lower terms in addition to the higher order terms is a convincing representation of the response. With that said, the coefficients and Sobol indices will suggest that <span class="math notranslate nohighlight">\(x_0\)</span>, <span class="math notranslate nohighlight">\(x_0^2\)</span>, <span class="math notranslate nohighlight">\(x_0^3\)</span>, and <span class="math notranslate nohighlight">\(x_0^4\)</span> have a stronger influence on the response than <span class="math notranslate nohighlight">\(x_0^5\)</span>. Note that the polynomial for <span class="math notranslate nohighlight">\(x_0^5\)</span>, represented by the loosely dashed purple line, has a small magnitude overall.</p>
+<p>In this particular example, the model statistics are adequate compared to the Monte Carlo method; however, this is not always the case. Refer to the <a class="reference internal" href="#diagnostic-plots"><span class="std std-ref">diagnostic plots</span></a> section for additional guidance. This is why using a lower-order model is preferable and referring to the included statistics and plots is recommended.</p>
+</section>
+<section id="normal-probability-plot">
+<h2>Normal Probability Plot<a class="headerlink" href="#normal-probability-plot" title="Permalink to this heading">#</a></h2>
+<p>The normal probability plot is another technique to determine if the model error is normally distributed. Also known as the “fat pencil test,” the normal probability plot should have the blue data points laying closely to the red line, such that all points would be covered if the red line were traced with a “fat pencil.”</p>
+<figure class="align-default" id="normal-prob">
+<a class="reference internal image-reference" href="../_images/normal_prob.png"><img alt="../_images/normal_prob.png" src="../_images/normal_prob.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">A normal probability plot.</span><a class="headerlink" href="#normal-prob" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In the image above, most of the points fall along the red line. However, the points on the right-most side of the figure stray far from the red line. This is an indication that the model may not be adequate for the data.</p>
+<!-- ### Guidelines
+
+This section will discuss what to look for when determining if a model is adequately modeling a responses. These are not hard rules, and if only a few of these are not meeting the guidelines, the model can still be a good representation of the data. Refer to the [symbols](symbols) used in the [](../file-types/myst-notebooks.md) section. As previously mentioned, there are multiple diagnostic criteria and associated best practices for surrogate model adequacy checking. Ultimately, it is up to the subject matter expert to determine the suitability of the surrogate model.
+
+* signal-to-noise ratio
+    A signal-to-noise ratio greater than 10 is a sign that the model may be representing the data adequately.
+
+* model and verification error
+    The mean error of the surrogate model and mean verification error having the same order of magnitude suggests that the model may be representing the data adequately.
+
+* error trends
+    Error trends in the verification data and input data should not exist. 
+    
+..
+    If they exist and have values less than (0.05)(:math:`\mu`), the model 
+    may be adequately representing the data.
+
+    * PRESS Residual
+        A PRESS residual less than (0.01)(:math:`\mu`)(:math:`n`) suggests 
+        that the model may be adequately representing the data.
+
+    * mean error of the surrogate model
+        If this value is less than (0.01)(:math:`\mu`), the model may be 
+        adequately representing the data. 
+
+* error distribution
+    If the error is approximately normally distributed and does not have large outliers, then the model may be adequately representing the data. 
+
+* Shapiro-Wilks P-value
+    If the Shapiro-Wilks P-value is greater than 0.05, then the model may be adequately representing the data.  --></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./user-guide"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="outputs.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Outputs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../theory/theory.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Theory and Background</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots">Diagnostic Plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-box">Probability Box</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#high-order-polynomials">High-Order Polynomials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-probability-plot">Normal Probability Plot</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Benjamin Phillips and Joanna Schmidt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

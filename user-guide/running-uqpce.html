@@ -1,0 +1,858 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Running UQPCE &#8212; UQPCE Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user-guide/running-uqpce';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Building Multi-Phase Trajectory with UQPCE and Dymos" href="multiphase_projectile_example.html" />
+    <link rel="prev" title="Getting Started with UQPCE" href="getting-started.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/UQPCE_logo.png" class="logo__image only-light" alt="UQPCE Documentation - Home"/>
+    <script>document.write(`<img src="../_static/UQPCE_logo.png" class="logo__image only-dark" alt="UQPCE Documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to UQPCE
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="getting-started.html">Getting Started with UQPCE</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Running UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiphase_projectile_example.html">Building Multi-Phase Trajectory with UQPCE and Dymos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputs.html">Input Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/theory.html">Theory and Background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory/symbols-and-defs.html">Symbols and Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/pce.html">Polynomial Chaos Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/sampling.html">Sample Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/techniques.html">Techniques</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/openmdao.html">Compatability with OpenMDAO</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory/uqpcegroup-overview.html">UQPCEGroup Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/derivatives.html">Analytic Derivatives</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../verification/verification.html">Verification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../verification/pce.html">UQPCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/confidence-interval.html">Confidence Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/limitations.html">Limitations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/reference.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/continuous-variables.html">Continuous Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/normal.html">Normal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/beta.html">Beta Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/gamma.html">Gamma Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/exponential.html">Exponential Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/lognormal.html">Lognormal Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/continuous/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/discrete-variables.html">Discrete Variables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/uniform.html">Uniform Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/poisson.html">Poisson Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/hypergeometric.html">Hypergeometric Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/negative-binomial.html">Negative Binomial Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/user-input.html">User-Input Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/discrete/epistemic.html">Epistemic Variable</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pce.html">PCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/uqpce-group.html">UQPCEGroup</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/nasa/UQPCE/issues/new?title=Issue%20on%20page%20%2Fuser-guide/running-uqpce.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/user-guide/running-uqpce.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Running UQPCE</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-uqpce-script">Sample UQPCE Script</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-robust-design">Sample Robust Design</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="running-uqpce">
+<h1>Running UQPCE<a class="headerlink" href="#running-uqpce" title="Permalink to this heading">#</a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<p>To install the UQPCE package and its prerequisites, run the below line in your command line in the cloned repository.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install -e .
+</pre></div>
+</div>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">#</a></h2>
+<p>The software license is available <a class="reference external" href="https://github.com/nasa/UQPCE/blob/main/LICENSE">here</a>.</p>
+</section>
+<section id="sample-uqpce-script">
+<h2>Sample UQPCE Script<a class="headerlink" href="#sample-uqpce-script" title="Permalink to this heading">#</a></h2>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-stdout
+<span class="kn">from</span><span class="w"> </span><span class="nn">uqpce</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCE</span>
+
+<span class="n">samp_count</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">aleat_cnt</span> <span class="o">=</span> <span class="mi">500000</span>
+<span class="n">epist_cnt</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">pce</span> <span class="o">=</span> <span class="n">PCE</span><span class="p">(</span>
+    <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">aleat_samp_size</span><span class="o">=</span><span class="n">aleat_cnt</span><span class="p">,</span> 
+    <span class="n">epist_samp_size</span><span class="o">=</span><span class="n">epist_cnt</span>
+<span class="p">)</span>
+
+<span class="c1"># Add two normal variables</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;uncerta&#39;</span><span class="p">)</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;uncertb&#39;</span><span class="p">)</span>
+
+<span class="c1"># Generate samples that correspond to the input variables</span>
+<span class="n">Xt</span> <span class="o">=</span> <span class="n">pce</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">samp_count</span><span class="p">)</span>
+
+<span class="c1"># Generate responses from equation; the user&#39;s analytical tool will replace this</span>
+<span class="n">eq</span> <span class="o">=</span> <span class="s1">&#39;x0**2 + x0*x1 - x1&#39;</span>
+<span class="n">yt</span> <span class="o">=</span> <span class="n">pce</span><span class="o">.</span><span class="n">generate_responses</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">equation</span><span class="o">=</span><span class="n">eq</span><span class="p">)</span>
+
+<span class="n">pce</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span><span class="p">)</span> <span class="c1"># Fit the PCE model</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">check_variables</span><span class="p">(</span><span class="n">Xt</span><span class="p">)</span> <span class="c1"># Check if the samples correspond to the distributions</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">sobols</span><span class="p">()</span> <span class="c1"># Calculate the Sobol indices</span>
+<span class="n">cil</span><span class="p">,</span> <span class="n">cih</span> <span class="o">=</span> <span class="n">pce</span><span class="o">.</span><span class="n">confidence_interval</span><span class="p">()</span> <span class="c1"># Calculate the confidence interval</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[fv-az881-322:02548] mca_base_component_repository_open: unable to open mca_btl_openib: librdmacm.so.1: cannot open shared object file: No such file or directory (ignored)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Adding variable number 1
+
+Adding variable number 2
+
+Generating the results from function x0**2 + x0*x1 - x1
+
+Constructing surrogate model
+
+Building norm-squared matrix
+
+Assembling psi matrix
+
+17% Complete
+
+33% Complete
+
+50% Complete
+
+67% Complete
+
+83% Complete
+
+100% Complete
+
+Psi matrix assembled
+
+Evaluating psi matrix
+
+Surrogate model construction complete
+
+Generating aleatory resampling values
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sample-robust-design">
+<h2>Sample Robust Design<a class="headerlink" href="#sample-robust-design" title="Permalink to this heading">#</a></h2>
+<p>For an example of robust design using UQPCE and OpenMDAO, we will walk through an example that is based on the <a class="reference external" href="https://openmdao.org/newdocs/versions/latest/basic_user_guide/single_disciplinary_optimization/first_analysis.html">OpenMDAO paraboloid example</a></p>
+<p>To start, we will define a <code class="docutils literal notranslate"><span class="pre">Paraboloid</span></code> class that looks similar to the OpenMDAO example but includes vectorized inputs for the two uncertain inputs, <code class="docutils literal notranslate"><span class="pre">uncerta</span></code> and <code class="docutils literal notranslate"><span class="pre">uncertb</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openmdao.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">om</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Paraboloid</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">ExplicitComponent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluates the equation f(a,b,x,y) = (a*x-3)**2 + a*b*x*y + (b*y+4)**2 - 3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="s1">&#39;vec_size&#39;</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;vec_size&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Add two uncertain variables of length n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;uncerta&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;uncertb&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,))</span>
+
+        <span class="c1"># Add two design variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;desx&#39;</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="s1">&#39;desy&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Add output of length n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,))</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;vec_size&#39;</span><span class="p">]</span>
+        <span class="n">incr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span><span class="n">of</span><span class="o">=</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;desx&#39;</span><span class="p">,</span> <span class="s1">&#39;desy&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_partials</span><span class="p">(</span>
+            <span class="n">of</span><span class="o">=</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;uncerta&#39;</span><span class="p">,</span> <span class="s1">&#39;uncertb&#39;</span><span class="p">],</span> <span class="n">rows</span><span class="o">=</span><span class="n">incr</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="n">incr</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_partials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">partials</span><span class="p">,</span> <span class="n">discrete_inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;uncerta&#39;</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;uncertb&#39;</span><span class="p">]</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;desx&#39;</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;desy&#39;</span><span class="p">]</span>
+
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">,</span> <span class="s1">&#39;desx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">,</span> <span class="s1">&#39;desy&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="mi">8</span><span class="o">*</span><span class="n">b</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">y</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">,</span> <span class="s1">&#39;uncerta&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span>
+        <span class="n">partials</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">,</span> <span class="s1">&#39;uncertb&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="mi">8</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;uncerta&#39;</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;uncertb&#39;</span><span class="p">]</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;desx&#39;</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;desy&#39;</span><span class="p">]</span>
+
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="n">y</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we will create an OpenMDAO problem with the <code class="docutils literal notranslate"><span class="pre">UQPCEGroup</span></code> as a subsystem. As show below, the <code class="docutils literal notranslate"><span class="pre">Paraboloid</span></code> class and <code class="docutils literal notranslate"><span class="pre">UQPCEGroup</span></code> class are both instantiated as subsystems. The <code class="docutils literal notranslate"><span class="pre">Paraboloid</span></code> class creates a vector of responses of the required length from the PCE samples, and the <code class="docutils literal notranslate"><span class="pre">Paraboloid</span></code> output is taken into the <code class="docutils literal notranslate"><span class="pre">UQPCEGroup</span></code>.</p>
+<p>The input <em>uncert_list</em> is a list of the string names of all of the uncertain outputs for which the user wants to build PCE models.</p>
+<p>All of the <code class="docutils literal notranslate"><span class="pre">UQPCEGroup</span></code> inputs come from the PCE model, except for the <em>uncert_list</em> and <em>tanh_omega</em> parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">uqpce</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCE</span><span class="p">,</span> <span class="n">UQPCEGroup</span><span class="p">,</span> <span class="n">interface</span>
+
+
+<span class="n">samp_count</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">aleat_cnt</span> <span class="o">=</span> <span class="mi">500000</span>
+<span class="n">epist_cnt</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">pce</span> <span class="o">=</span> <span class="n">PCE</span><span class="p">(</span>
+    <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">aleat_samp_size</span><span class="o">=</span><span class="n">aleat_cnt</span><span class="p">,</span> 
+    <span class="n">epist_samp_size</span><span class="o">=</span><span class="n">epist_cnt</span>
+<span class="p">)</span>
+
+<span class="c1"># Add two normal variables</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;uncerta&#39;</span><span class="p">)</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;uncertb&#39;</span><span class="p">)</span>
+
+<span class="c1"># Generate samples that correspond to the input variables</span>
+<span class="n">Xt</span> <span class="o">=</span> <span class="n">pce</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">samp_count</span><span class="p">)</span>
+
+<span class="n">pce</span><span class="o">.</span><span class="n">set_samples</span><span class="p">(</span><span class="n">Xt</span><span class="p">)</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">build_basis</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pce</span><span class="o">.</span><span class="n">resample_surrogate</span><span class="p">()</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">Problem</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span>
+    <span class="s1">&#39;parab&#39;</span><span class="p">,</span> 
+    <span class="n">Paraboloid</span><span class="p">(</span><span class="n">vec_size</span><span class="o">=</span><span class="n">samp_count</span><span class="p">),</span> 
+    <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;uncerta&#39;</span><span class="p">,</span> <span class="s1">&#39;uncertb&#39;</span><span class="p">,</span> <span class="s1">&#39;desx&#39;</span><span class="p">,</span> <span class="s1">&#39;desy&#39;</span><span class="p">],</span> 
+    <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_subsystem</span><span class="p">(</span>
+    <span class="s1">&#39;uq&#39;</span><span class="p">,</span>
+    <span class="n">UQPCEGroup</span><span class="p">(</span>
+        <span class="n">significance</span><span class="o">=</span><span class="n">pce</span><span class="o">.</span><span class="n">significance</span><span class="p">,</span> <span class="n">var_basis</span><span class="o">=</span><span class="n">pce</span><span class="o">.</span><span class="n">var_basis</span><span class="p">,</span> 
+        <span class="n">norm_sq</span><span class="o">=</span><span class="n">pce</span><span class="o">.</span><span class="n">norm_sq</span><span class="p">,</span> <span class="n">resampled_var_basis</span><span class="o">=</span><span class="n">pce</span><span class="o">.</span><span class="n">resampled_var_basis</span><span class="p">,</span> 
+        <span class="n">tail</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">epistemic_cnt</span><span class="o">=</span><span class="n">epist_cnt</span><span class="p">,</span> <span class="n">aleatory_cnt</span><span class="o">=</span><span class="n">aleat_cnt</span><span class="p">,</span>
+        <span class="n">uncert_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">],</span> <span class="n">tanh_omega</span><span class="o">=</span><span class="mf">0.01</span>
+    <span class="p">),</span>
+    <span class="n">promotes_inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_abxy&#39;</span><span class="p">],</span> 
+    <span class="n">promotes_outputs</span><span class="o">=</span><span class="p">[</span>
+        <span class="s1">&#39;f_abxy:ci_lower&#39;</span><span class="p">,</span> <span class="s1">&#39;f_abxy:ci_upper&#39;</span><span class="p">,</span> <span class="s1">&#39;f_abxy:variance&#39;</span><span class="p">,</span> <span class="s1">&#39;f_abxy:mean&#39;</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Set up the optimization</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">ScipyOptimizeDriver</span><span class="p">()</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;optimizer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;SLSQP&#39;</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_design_var</span><span class="p">(</span><span class="s1">&#39;desx&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_design_var</span><span class="p">(</span><span class="s1">&#39;desy&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_objective</span><span class="p">(</span><span class="s1">&#39;f_abxy:ci_upper&#39;</span><span class="p">)</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">set_val</span><span class="p">(</span><span class="s1">&#39;desx&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">set_val</span><span class="p">(</span><span class="s1">&#39;desy&#39;</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+
+<span class="n">interface</span><span class="o">.</span><span class="n">set_vals</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="n">pce</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="n">Xt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Adding variable number 1
+
+Adding variable number 2
+
+Constructing surrogate model
+
+Building norm-squared matrix
+
+Assembling psi matrix
+
+17% Complete
+
+33% Complete
+
+50% Complete
+
+67% Complete
+
+83% Complete
+
+100% Complete
+
+Psi matrix assembled
+
+Evaluating psi matrix
+
+Generating aleatory resampling values
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">run_driver</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design variable `desx` is: &#39;</span><span class="p">,</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;desx&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design variable `desy` is: &#39;</span><span class="p">,</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="s1">&#39;desy&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design variable `desx` is:  9.448241806106937e-05
+Design variable `desy` is:  -1.339240962586235e-05
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>More variables, the presence of epistemic variables, and a higher order all increase the time required by UQPCE.</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./user-guide"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="getting-started.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting Started with UQPCE</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="multiphase_projectile_example.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Building Multi-Phase Trajectory with UQPCE and Dymos</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-uqpce-script">Sample UQPCE Script</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-robust-design">Sample Robust Design</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Benjamin Phillips and Joanna Schmidt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
