@@ -48,7 +48,7 @@ def calc_R_sq(var_basis, matrix_coeffs, responses):
         )
     R_sq = np.clip(R_sq, None, 1.0)
     if R_sq.size == 1:
-        R_sq = float(R_sq)
+        R_sq = float(R_sq[0])
 
     return R_sq
 
@@ -137,6 +137,10 @@ def calc_pred_conf_int(var_basis, matrix_coeffs, responses, signif, var_basis_ve
     resp_count, term_count = var_basis.shape
     deg_of_free = resp_count - term_count
 
+    responses = responses.reshape(resp_count, -1)
+    matrix_coeffs = matrix_coeffs.reshape(term_count, -1)
+    num_diff_resps = responses.shape[1]
+
     err_var = calc_error_variance(var_basis, matrix_coeffs, responses)
 
     basis_mat = np.matmul(var_basis.T, var_basis)  # X'X
@@ -146,15 +150,15 @@ def calc_pred_conf_int(var_basis, matrix_coeffs, responses, signif, var_basis_ve
     t_val = t_stat(deg_of_free).ppf(1 - signif / 2)  # high CI bound
 
     resamp_size = len(var_basis_ver)
-    approx_conf = np.zeros(resamp_size)
-    conf_uncert = np.zeros(resamp_size)
+    approx_conf = np.zeros([resamp_size, num_diff_resps])
+    conf_uncert = np.zeros([resamp_size, num_diff_resps])
 
     for i in range(resamp_size):
         x_i = var_basis_ver[i]
         mult_matrices = np.matmul(np.matmul(x_i.T, inverse_mat), x_i)
 
-        approx_conf[i] = np.matmul(x_i, matrix_coeffs)  # y_hat(x)
-        conf_uncert[i] = t_val * np.sqrt(err_var * (const + mult_matrices))
+        approx_conf[i, :] = np.matmul(x_i, matrix_coeffs)  # y_hat(x)
+        conf_uncert[i, :] = t_val * np.sqrt(err_var * (const + mult_matrices))
 
     return approx_conf, conf_uncert
 
@@ -177,6 +181,10 @@ def calc_mean_conf_int(var_basis, matrix_coeffs, responses, signif, var_basis_ve
     resp_count, term_count = var_basis.shape
     deg_of_free = resp_count - term_count
 
+    responses = responses.reshape(resp_count, -1)
+    matrix_coeffs = matrix_coeffs.reshape(term_count, -1)
+    num_diff_resps = matrix_coeffs.shape[1]
+
     err_var = calc_error_variance(var_basis, matrix_coeffs, responses)
 
     basis_mat = np.matmul(var_basis.T, var_basis)  # X'X
@@ -186,15 +194,15 @@ def calc_mean_conf_int(var_basis, matrix_coeffs, responses, signif, var_basis_ve
     t_val = t_stat(deg_of_free).ppf(1 - signif / 2)  # high CI bound
 
     resamp_size = len(var_basis_ver)
-    approx_mean = np.zeros([resamp_size, 1])
-    pred_uncert = np.zeros([resamp_size, 1])
+    approx_mean = np.zeros([resamp_size, num_diff_resps])
+    pred_uncert = np.zeros([resamp_size, num_diff_resps])
 
     for i in range(resamp_size):
         x_i = var_basis_ver[i]
         mult_matrices = np.matmul(np.matmul(x_i.T, inverse_mat), x_i)
 
-        approx_mean[i] = np.matmul(x_i, matrix_coeffs)  # y_hat(x)
-        pred_uncert[i] = t_val * np.sqrt(err_var * mult_matrices)
+        approx_mean[i, :] = np.matmul(x_i, matrix_coeffs)  # y_hat(x)
+        pred_uncert[i, :] = t_val * np.sqrt(err_var * mult_matrices)
 
     return approx_mean, pred_uncert
 
@@ -210,9 +218,12 @@ def calc_coeff_conf_int(var_basis, matrix_coeffs, responses, signif):
     """
     resp_count, term_count = var_basis.shape
 
+    responses = responses.reshape(resp_count, -1)
+    matrix_coeffs = matrix_coeffs.reshape(term_count, -1)
+
     deg_of_free = resp_count - term_count
 
-    coeff_uncert = np.zeros(matrix_coeffs.shape)
+    coeff_uncert = np.zeros_like(matrix_coeffs)
 
     err_var = calc_error_variance(var_basis, matrix_coeffs, responses)
 
@@ -223,7 +234,7 @@ def calc_coeff_conf_int(var_basis, matrix_coeffs, responses, signif):
     t_val = t_stat(deg_of_free).ppf(1 - signif / 2)  # high CI bound
 
     for i in range(term_count):
-        coeff_uncert[i] = t_val * np.sqrt(err_var * inverse_mat[i, i])
+        coeff_uncert[i, :] = t_val * np.sqrt(err_var * inverse_mat[i, i])
 
     return coeff_uncert
 
@@ -409,13 +420,15 @@ def calc_error_variance(var_basis, matrix_coeffs, responses):
     err_sum_sq = calc_error_sum_of_sq(var_basis, matrix_coeffs, responses)
     err_var = err_sum_sq / (resp_count - term_count)
 
-    if err_var < 0:
+    bad_idx = (err_var < 0)
+
+    if (bad_idx).any():
         if err_var >= high_err_thresh:
             warn(
                 'Error variance is small and negative. Taking the absolute '
                 'value for use in calculations.'
             )
-            err_var = np.abs(err_var)
+            err_var[bad_idx] = np.abs(err_var[bad_idx])
         else:
             raise ValueError(
                 f'The error variance for this model is {err_var} and should be '
@@ -435,8 +448,16 @@ def calc_error_sum_of_sq(var_basis, matrix_coeffs, responses):
 
     Design and Analysis of Experiments (8th) by Douglas Montgomery (pg. 453)
     """
-    residuals = responses - np.matmul(var_basis, matrix_coeffs)
-    return np.sum(residuals ** 2, axis=0)
+    resp_cnt, coeff_cnt = var_basis.shape
+    responses = responses.reshape(resp_cnt, -1)
+    matrix_coeffs = matrix_coeffs.reshape(coeff_cnt, -1)
+
+    resp_mat = np.matmul(responses.T, responses)
+    coeff_dot_basis = np.matmul(matrix_coeffs.T, var_basis.T)
+
+    err_sum_sq = resp_mat - np.matmul(coeff_dot_basis, responses)
+
+    return err_sum_sq.ravel()
 
 
 def calc_total_sum_of_sq(var_basis, responses):
@@ -448,7 +469,13 @@ def calc_total_sum_of_sq(var_basis, responses):
 
     Design and Analysis of Experiments (8th) by Douglas Montgomery (pg. 463)
     """
-    return np.sum((responses - np.mean(responses, axis=0)) ** 2, axis=0)
+    act_model_size = var_basis.shape[0]
+    responses = responses.reshape(act_model_size, -1)
+    resp_mat = np.matmul(responses.T, responses)
+
+    tot_sum_sq = resp_mat - (np.sum(responses) ** 2 / act_model_size)
+
+    return tot_sum_sq.ravel()
 
 
 def calc_sum_sq_regr(matrix_coeffs, responses, var_basis):
