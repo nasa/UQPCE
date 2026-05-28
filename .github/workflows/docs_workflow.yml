@@ -73,7 +73,7 @@ jobs:
 
       - name: Upgrade pip, setuptools, and packaging
         shell: bash -l {0}
-        run: pip install --upgrade pip setuptools "packaging>=24.2"
+        run: conda upgrade pip setuptools packaging
 
       - name: Install Numpy/Scipy
         shell: bash -l {0}
