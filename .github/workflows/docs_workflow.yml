@@ -72,6 +72,7 @@ jobs:
           conda-remove-defaults: true
 
       - name: Upgrade pip, setuptools, and packaging
+        shell: bash -l {0}
         run: pip install --upgrade pip setuptools "packaging>=24.2"
 
       - name: Install Numpy/Scipy

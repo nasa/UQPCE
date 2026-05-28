@@ -70,6 +70,7 @@ jobs:
           conda-remove-defaults: true
 
       - name: Upgrade pip, setuptools, and packaging
+        shell: bash -l {0}
         run: pip install --upgrade pip setuptools "packaging>=24.2"
 
       - name: Install Numpy/Scipy
@@ -149,7 +150,7 @@ jobs:
           echo "============================================================="
           echo "Install UQPCE"
           echo "============================================================="
-          pip install .${{ matrix.OPTIONAL }}
+          pip install .
 
       - name: Display environment info
         id: env_info
