@@ -43,7 +43,7 @@ jobs:
             NUMPY: '2.4'
             SCIPY: '1.17'
             PYYAML: '6.0.3'
-            JAX: '0.9'
+            JAX: 'latest'
             OPENMDAO: 'latest'
             DYMOS: 'latest'
             MPI4PY: '4.1'
@@ -125,7 +125,13 @@ jobs:
           echo "============================================================="
           echo "Install JAX"
           echo "============================================================="
-          pip install jax==${{ matrix.JAX }}
+          if [[ "${{ matrix.JAX }}" == "dev" ]]; then
+            pip install git+https://github.com/jax-ml/jax
+          elif [[ "${{ matrix.JAX }}" == "latest" ]]; then
+            pip install jax
+          else
+            pip install jax==${{ matrix.JAX }}
+          fi
 
       - name: Install mpi4py
         if: matrix.MPI4PY
