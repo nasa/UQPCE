@@ -68,6 +68,7 @@ jobs:
           python-version: ${{ matrix.PY }}
           channels: conda-forge
           conda-remove-defaults: true
+          activate-environment: test
 
       - name: Install Numpy/Scipy
         shell: bash -l {0}
@@ -140,7 +141,6 @@ jobs:
           echo "============================================================="
           echo "Install UQPCE"
           echo "============================================================="
-          cd $HOME/work/UQPCE/UQPCE
           pip install .${{ matrix.OPTIONAL }}
 
       - name: Display environment info
