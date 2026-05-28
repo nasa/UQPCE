@@ -1,17 +1,29 @@
 import unittest
 
 import numpy as np
-from sympy import symbols, Matrix, lambdify
+from sympy import Matrix, lambdify, symbols
 
-from uqpce.pce.stats.statistics import (
-    calc_error_variance, calc_coeff_conf_int, calc_pred_conf_int,
-    calc_R_sq_adj, calc_R_sq, calc_mean_conf_int, calc_term_count,
-    calc_min_responses, calc_partial_F, calc_mean_sq_err, calc_sum_sq_regr,
-    calc_error_sum_of_sq, calc_total_sum_of_sq, calc_PRESS_res,
-    calc_hat_matrix, get_sobol_bounds, calc_var_conf_int
-)
+from uqpce.pce._helpers import evaluate_points, solve_coeffs
 from uqpce.pce.model import SurrogateModel
-from uqpce.pce._helpers import solve_coeffs, evaluate_points
+from uqpce.pce.stats.statistics import (
+    calc_coeff_conf_int,
+    calc_error_sum_of_sq,
+    calc_error_variance,
+    calc_hat_matrix,
+    calc_mean_conf_int,
+    calc_mean_sq_err,
+    calc_min_responses,
+    calc_partial_F,
+    calc_pred_conf_int,
+    calc_PRESS_res,
+    calc_R_sq,
+    calc_R_sq_adj,
+    calc_sum_sq_regr,
+    calc_term_count,
+    calc_total_sum_of_sq,
+    calc_var_conf_int,
+    get_sobol_bounds,
+)
 from uqpce.pce.variables.continuous import UniformVariable
 
 
@@ -56,7 +68,16 @@ class TestStatistics(unittest.TestCase):
 
         self.assertTrue(
             np.isclose(R_sq_calc, R_sq_act, rtol=0, atol=tol),
-            msg='calc_R_sq is not correct'
+            msg='calc_R_sq is not correct for 1D cases'
+        )
+
+        R_sq_calc_2D = calc_R_sq(
+            var_basis, np.vstack([matrix_coeffs, matrix_coeffs]),
+            np.vstack([responses, responses])
+        )
+        self.assertTrue(
+            np.isclose(R_sq_calc_2D, R_sq_act, rtol=0, atol=tol).all(),
+            msg='calc_R_sq is not correct for 2D cases'
         )
 
     def test_calc_R_sq_adj(self):
@@ -98,7 +119,16 @@ class TestStatistics(unittest.TestCase):
 
         self.assertTrue(
             np.isclose(R_sq_adj_calc, R_sq_adj_act, rtol=0, atol=tol),
-            msg='statistics function calc_R_sq_adj is not correct'
+            msg='statistics function calc_R_sq_adj is not correct for 1D cases'
+        )
+
+        R_sq_calc_2D = calc_R_sq_adj(
+            var_basis, np.vstack([matrix_coeffs, matrix_coeffs]),
+            np.vstack([responses, responses])
+        )
+        self.assertTrue(
+            np.isclose(R_sq_calc_2D, R_sq_adj_act, rtol=0, atol=tol).all(),
+            msg='statistics function calc_R_sq_adj is not correct for 2D cases'
         )
 
     def test_calc_PRESS_res(self):
@@ -149,7 +179,14 @@ class TestStatistics(unittest.TestCase):
 
         self.assertAlmostEqual(
             true_press, press, delta=1e-1,
-            msg='statistics function calc_PRESS_res is not correct'
+            msg='statistics function calc_PRESS_res is not correct for 1D cases'
+        )
+
+        press_2D = calc_PRESS_res(new_basis, np.vstack([new_resps, new_resps]))
+
+        self.assertTrue(
+            np.isclose(true_press, press_2D, rtol=1e-4, atol=1e-4).all(),
+            msg='statistics function calc_PRESS_res is not correct for 2D cases'
         )
 
     def test_calc_pred_conf_int(self):
@@ -197,7 +234,7 @@ class TestStatistics(unittest.TestCase):
 
     def test_calc_mean_conf_int(self):
         """
-        Applied Statistics and Probability for Engineers 4th Ed. (2007), 
+        Applied Statistics and Probability for Engineers 4th Ed. (2007),
         (pg. 13, 440, 467)
         Douglas C. Montgomery & George C. Runger
         """
@@ -374,12 +411,12 @@ class TestStatistics(unittest.TestCase):
         First Tests:
         Design and Analysis of Experiments, 8th Ed. (pg 468)
         Douglas Montgomery
-        
+
         Values compared to hand-calculated values from this data.
-        
+
         Second Tests:
-        Calculates the smallest and largest of all possible Sobols- ensures 
-        that the lowest corresponds to the low and the highest corresponds to 
+        Calculates the smallest and largest of all possible Sobols- ensures
+        that the lowest corresponds to the low and the highest corresponds to
         the high.
         """
         # Design and Analysis of Experiments 8th ed, pg 468
@@ -574,15 +611,20 @@ class TestStatistics(unittest.TestCase):
         ])
 
         SS_T_calc = calc_total_sum_of_sq(var_basis, responses)
-
         self.assertAlmostEqual(
             SS_T_act, SS_T_calc, delta=tol,
-            msg='calc_total_sum_of_sq is not working correctly.'
+            msg='calc_total_sum_of_sq is not working correctly for the 1D case.'
+        )
+
+        SS_T_calc_2D = calc_total_sum_of_sq(var_basis, np.vstack([responses, responses]))
+        self.assertTrue(
+            np.isclose(SS_T_act, SS_T_calc_2D, rtol=tol, atol=tol).all(),
+            msg='calc_total_sum_of_sq is not working correctly for the 2D case.'
         )
 
     def test_calc_sum_sq_regr(self):
         """
-        Applied Statistics and Probability for Engineers 4th Ed. (2007), 
+        Applied Statistics and Probability for Engineers 4th Ed. (2007),
         (pg. 462) Douglas C. Montgomery & George C. Runger
         """
         SS_R_act = 5990.7712
@@ -627,7 +669,17 @@ class TestStatistics(unittest.TestCase):
 
         self.assertAlmostEqual(
             SS_R_act, SS_R_calc, delta=tol,
-            msg='calc_sum_sq_regr is not working correctly.'
+            msg='calc_sum_sq_regr is not working correctly for 1D cases.'
+        )
+
+        SS_R_calc_2D = calc_sum_sq_regr(
+            np.vstack([matrix_coeffs, matrix_coeffs]),
+            np.vstack([responses]), var_basis
+        )
+
+        self.assertTrue(
+            np.isclose(SS_R_act, SS_R_calc_2D, atol=tol, rtol=tol).all(),
+            msg='calc_sum_sq_regr is not working correctly for 2D cases.'
         )
 
     def test_calc_mean_sq_err(self):
