@@ -3,13 +3,10 @@
 name: UQPCE Tests
 
 on:
-  # Trigger on push, pull request
   push:
     branches: [ main ]
   pull_request:
     branches: [ main, develop ]
-
-  # Trigger via workflow_dispatch event
   workflow_dispatch:
 
 jobs:
@@ -23,8 +20,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # baseline versions except with pyoptsparse but no SNOPT
-          # build docs to verify those that use pyoptsparse do not use SNOPT
           - NAME: baseline
             PY: '3.11'
             NUMPY: '2.0'
@@ -36,7 +31,6 @@ jobs:
             MPI4PY: '3.1.4'
             OPTIONAL: '[docs]'
 
-          # make sure the latest versions of things don't break the docs
           - NAME: latest
             PY: '3.14'
             NUMPY: '2.4'
@@ -69,14 +63,6 @@ jobs:
           channels: conda-forge
           conda-remove-defaults: true
           activate-environment: test
-
-      - name: Install UQPCE
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install UQPCE"
-          echo "============================================================="
-          conda run -n test pip install .
 
       - name: Install Numpy/Scipy
         shell: bash -l {0}
@@ -141,32 +127,49 @@ jobs:
           echo "============================================================="
           echo "Install mpi4py"
           echo "============================================================="
-          conda run -n test conda install mpi4py==${{ matrix.MPI4PY }} -q -y
+          conda install -n test mpi4py=${{ matrix.MPI4PY }} -q -y
+
+      - name: Install sympy and matplotlib
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install sympy and matplotlib"
+          echo "============================================================="
+          conda run -n test pip install sympy matplotlib
+
+      - name: Install UQPCE
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install UQPCE"
+          echo "============================================================="
+          conda run -n test pip install .${{ matrix.OPTIONAL }}
 
       - name: Display environment info
         id: env_info
         shell: bash -l {0}
         run: |
           conda info
-          conda list
+          conda list -n test
 
           echo "============================================================="
           echo "Check installed versions of Python, Numpy and Scipy"
           echo "============================================================="
-          python -c "import sys; assert str(sys.version).startswith(str(${{ matrix.PY }})), \
+          conda run -n test python -c "import sys; assert str(sys.version).startswith(str(${{ matrix.PY }})), \
                     f'Python version {sys.version} is not the requested version (${{ matrix.PY }})'"
 
-          python -c "import numpy; assert str(numpy.__version__).startswith(str(${{ matrix.NUMPY }})), \
+          conda run -n test python -c "import numpy; assert str(numpy.__version__).startswith(str(${{ matrix.NUMPY }})), \
                     f'Numpy version {numpy.__version__} is not the requested version (${{ matrix.NUMPY }})'"
 
-          python -c "import scipy; assert str(scipy.__version__).startswith(str(${{ matrix.SCIPY }})), \
+          conda run -n test python -c "import scipy; assert str(scipy.__version__).startswith(str(${{ matrix.SCIPY }})), \
                     f'Scipy version {scipy.__version__} is not the requested version (${{ matrix.SCIPY }})'"
 
       - name: Display dependency tree
         if: failure() && steps.env_info.outcome == 'failure'
+        shell: bash -l {0}
         run: |
           conda run -n test pip install pipdeptree
-          pipdeptree
+          conda run -n test pipdeptree
 
       - name: Run tests
         shell: bash -l {0}
