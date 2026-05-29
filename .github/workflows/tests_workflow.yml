@@ -76,7 +76,7 @@ jobs:
           echo "============================================================="
           echo "Install UQPCE"
           echo "============================================================="
-          pip install .${{ matrix.OPTIONAL }}
+          pip install .
 
       - name: Install Numpy/Scipy
         shell: bash -l {0}
