@@ -70,6 +70,14 @@ jobs:
           conda-remove-defaults: true
           activate-environment: test
 
+      - name: Install UQPCE
+        shell: bash -l {0}
+        run: |
+          echo "============================================================="
+          echo "Install UQPCE"
+          echo "============================================================="
+          pip install .${{ matrix.OPTIONAL }}
+
       - name: Install Numpy/Scipy
         shell: bash -l {0}
         run: |
@@ -134,14 +142,6 @@ jobs:
           echo "Install mpi4py"
           echo "============================================================="
           conda install mpi4py==${{ matrix.MPI4PY }} -q -y
-
-      - name: Install UQPCE
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install UQPCE"
-          echo "============================================================="
-          pip install .${{ matrix.OPTIONAL }}
 
       - name: Display environment info
         id: env_info
