@@ -76,7 +76,7 @@ jobs:
           echo "============================================================="
           echo "Install UQPCE"
           echo "============================================================="
-          pip install .
+          conda run -n test pip install .
 
       - name: Install Numpy/Scipy
         shell: bash -l {0}
@@ -84,7 +84,7 @@ jobs:
           echo "============================================================="
           echo "Install Numpy/Scipy"
           echo "============================================================="
-          conda install numpy=${{ matrix.NUMPY }} scipy=${{ matrix.SCIPY }} -q -y
+          conda install -n test numpy=${{ matrix.NUMPY }} scipy=${{ matrix.SCIPY }} -q -y
 
       - name: Install OpenMDAO
         if: matrix.OPENMDAO
@@ -94,11 +94,11 @@ jobs:
           echo "Install OpenMDAO"
           echo "============================================================="
           if [[ "${{ matrix.OPENMDAO }}" == "dev" ]]; then
-            pip install git+https://github.com/OpenMDAO/OpenMDAO
+            conda run -n test pip install git+https://github.com/OpenMDAO/OpenMDAO
           elif [[ "${{ matrix.OPENMDAO }}" == "latest" ]]; then
-            pip install openmdao
+            conda run -n test pip install openmdao
           else
-            pip install openmdao==${{ matrix.OPENMDAO }}
+            conda run -n test pip install openmdao==${{ matrix.OPENMDAO }}
           fi
 
       - name: Install Dymos
@@ -109,11 +109,11 @@ jobs:
           echo "Install Dymos"
           echo "============================================================="
           if [[ "${{ matrix.DYMOS }}" == "dev" ]]; then
-            pip install git+https://github.com/OpenMDAO/dymos
+            conda run -n test pip install git+https://github.com/OpenMDAO/dymos
           elif [[ "${{ matrix.DYMOS }}" == "latest" ]]; then
-            pip install dymos
+            conda run -n test pip install dymos
           else
-            pip install dymos==${{ matrix.DYMOS }}
+            conda run -n test pip install dymos==${{ matrix.DYMOS }}
           fi
 
       - name: Install PyYAML
@@ -123,7 +123,7 @@ jobs:
           echo "============================================================="
           echo "Install PyYAML"
           echo "============================================================="
-          pip install PyYAML==${{ matrix.PYYAML }}
+          conda run -n test pip install PyYAML==${{ matrix.PYYAML }}
 
       - name: Install JAX
         if: matrix.JAX
@@ -132,7 +132,7 @@ jobs:
           echo "============================================================="
           echo "Install JAX"
           echo "============================================================="
-          pip install jax==${{ matrix.JAX }}
+          conda run -n test pip install jax==${{ matrix.JAX }}
 
       - name: Install mpi4py
         if: matrix.MPI4PY
@@ -141,7 +141,7 @@ jobs:
           echo "============================================================="
           echo "Install mpi4py"
           echo "============================================================="
-          conda install mpi4py==${{ matrix.MPI4PY }} -q -y
+          conda run -n test conda install mpi4py==${{ matrix.MPI4PY }} -q -y
 
       - name: Display environment info
         id: env_info
@@ -165,7 +165,7 @@ jobs:
       - name: Display dependency tree
         if: failure() && steps.env_info.outcome == 'failure'
         run: |
-          pip install pipdeptree
+          conda run -n test pip install pipdeptree
           pipdeptree
 
       - name: Run tests
