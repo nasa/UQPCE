@@ -111,15 +111,6 @@ jobs:
           echo "============================================================="
           conda run -n test pip install PyYAML==${{ matrix.PYYAML }}
 
-      - name: Install JAX
-        if: matrix.JAX
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install JAX"
-          echo "============================================================="
-          conda run -n test pip install jax==${{ matrix.JAX }}
-
       - name: Install mpi4py
         if: matrix.MPI4PY
         shell: bash -l {0}
@@ -135,7 +126,7 @@ jobs:
           echo "============================================================="
           echo "Install sympy and matplotlib"
           echo "============================================================="
-          conda run -n test pip install sympy matplotlib
+          conda install -n test sympy matplotlib
 
       - name: Install UQPCE
         shell: bash -l {0}
