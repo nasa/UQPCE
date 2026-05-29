@@ -175,4 +175,4 @@ jobs:
           echo "Run Tests"
           echo "============================================================="
           cd $HOME/work/UQPCE/UQPCE
-          python -m unittest discover uqpce "test*.py"
+          $CONDA_PREFIX/bin/python -m unittest discover uqpce "test*.py"
