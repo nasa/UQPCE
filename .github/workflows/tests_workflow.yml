@@ -117,10 +117,37 @@ jobs:
           - pixi-env: default
             runs-on: windows-latest
             EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
-          # remaining envs on Linux only
-          - pixi-env: oldest
-            runs-on: ubuntu-latest
-            EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
-          - pixi-env: dev
-            runs-on: ubuntu-latest
-            EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
+          # # remaining envs on Linux only
+          # - pixi-env: oldest
+          #   runs-on: ubuntu-latest
+          #   EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
+          # - pixi-env: dev
+          #   runs-on: ubuntu-latest
+          #   EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
+
+    steps:
+      - name: Checkout code
+        if: ${{ ! matrix.EXCLUDE }}
+        uses: actions/checkout@v4
+
+      - name: Install Pixi
+        if: ${{ ! matrix.EXCLUDE }}
+        uses: prefix-dev/setup-pixi@v0.8.1
+        with:
+          pixi-version: v0.40.3
+          environments: ${{ matrix.pixi-env }}
+
+      - name: Display run details
+        if: ${{ ! matrix.EXCLUDE }}
+        run: |
+          echo "============================================================="
+          echo "Run #${GITHUB_RUN_NUMBER}"
+          echo "Testing: ${GITHUB_REPOSITORY}"
+          echo "Pixi environment: ${{ matrix.pixi-env }}"
+          echo "OS: ${{ matrix.runs-on }}"
+          echo "============================================================="
+
+      - name: Run tests
+        if: ${{ ! matrix.EXCLUDE }}
+        run: |
+          pixi run -e ${{ matrix.pixi-env }} python -m unittest discover uqpce "test*.py"
