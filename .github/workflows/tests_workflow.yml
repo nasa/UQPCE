@@ -7,49 +7,120 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main, develop ]
+
   workflow_dispatch:
 
+    inputs:
+
+      uqpce_pixi:
+        type: boolean
+        description: "Include tests of uqpce's local pixi environment job"
+        required: false
+        default: true
+
+###################################################################
+
 jobs:
-  test:
-    name: Test (${{ matrix.os }}, ${{ matrix.environment }})
-    runs-on: ${{ matrix.os }}
+
+  test_ubuntu:
+    runs-on: ubuntu-22.04
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    timeout-minutes: 90
+
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        environment: [default]
         include:
-          - os: ubuntu-latest
-            environment: py311
-          - os: ubuntu-latest
-            environment: py312
-          - os: ubuntu-latest
-            environment: py313
-          - os: ubuntu-latest
-            environment: py314
+          # baseline versions
+          - NAME: baseline
+            UQPCE_PIXI_ENVIRONMENT: 'default'
+            OPENMDAO: ''
+            EXCLUDE: ${{ github.event_name == 'workflow_dispatch'  && ! inputs.baseline }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Display run details
+        run: |
+          eval "$(pixi shell-hook -e ${{ matrix.UQPCE_PIXI_ENVIRONMENT }} --manifest-path=${{ env.PIXI_MANIFEST }})"
+          echo "============================================================="
+          echo "Run #${GITHUB_RUN_NUMBER}"
+          echo "Run ID: ${GITHUB_RUN_ID}"
+          echo "Testing: ${GITHUB_REPOSITORY}"
+          echo "Triggered by: ${GITHUB_EVENT_NAME}"
+          echo "Initiated by: ${GITHUB_ACTOR}"
+          echo "============================================================="
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            if [[ "${{ matrix.EXCLUDE }}" == "false" ]]; then
+              echo "Triggered by 'workflow_dispatch', '${{ matrix.NAME }}' build was selected and will run."
+            else
+              echo "Triggered by 'workflow_dispatch', '${{ matrix.NAME }}' build not selected and will not run."
+            fi
+          fi
 
-      - name: Set up pixi
-        uses: prefix-dev/setup-pixi@v0.8.1
-        with:
-          pixi-version: v0.39.0
-          cache: true
-          environments: ${{ matrix.environment }}
-          locked: true  # Enforce use of lock file for reproducibility
+      - name: Install UQPCE
+        if: ${{ ! matrix.EXCLUDE }}
+        run: |
+          eval "$(pixi shell-hook -e ${{ matrix.UQPCE_PIXI_ENVIRONMENT }} --manifest-path=${{ env.PIXI_MANIFEST }})"
+          echo "============================================================="
+          echo "Install UQPCE"
+          echo "============================================================="
+          echo "Installing as editable install for coverage support"
+          echo "-----------------------------------------------------------"
+          python -m pip install -e . --no-deps
 
-      # - name: Run linting
-      #   run: pixi run -e ${{ matrix.environment }} lint
+      # - name: Perform linting with Ruff
+      #   if: ${{ ! matrix.EXCLUDE && matrix.NAME == 'baseline' }}
+      #   run: |
+      #     eval "$(pixi shell-hook -e ${{ matrix.UQPCE_PIXI_ENVIRONMENT }} --manifest-path=${{ env.PIXI_MANIFEST }})"
+      #     echo "============================================================="
+      #     echo "Lint Dymos code per settings in pyproject.toml"
+      #     echo "============================================================="
+      #     ruff check . --config pyproject.toml
 
-      # - name: Run tests
-      #   run: pixi run -e ${{ matrix.environment }} test
+      - name: Run tests
+        id: run_tests
+        if: ${{ ! matrix.EXCLUDE }}
+        env:
+          OPENMDAO_CHECK_ALL_PARTIALS: True
+        continue-on-error: true
+        run: |
+          eval "$(pixi shell-hook -e ${{ matrix.UQPCE_PIXI_ENVIRONMENT }} --manifest-path=${{ env.PIXI_MANIFEST }})"
+          echo "============================================================="
+          echo "Run Tests"
+          cd $HOME/work/UQPCE/UQPCE
+          python -m unittest discover uqpce "test*.py"
 
-      # - name: Upload coverage report
-      #   if: matrix.os == 'ubuntu-latest' && matrix.environment == 'default'
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: coverage-report
-      #     path: coverage.xml
-      #     retention-days: 14
+  test_uqpce_pixi:
+    # Test dymos-native pixi environments defined in pixi.toml using the frozen pixi.lock.
+    runs-on: ${{ matrix.runs-on }}
+
+    defaults:
+      run:
+        shell: bash
+
+    timeout-minutes: 90
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # default env on all three platforms
+          - pixi-env: default
+            runs-on: ubuntu-latest
+            EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
+          - pixi-env: default
+            runs-on: macos-latest
+            EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
+          - pixi-env: default
+            runs-on: windows-latest
+            EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
+          # remaining envs on Linux only
+          - pixi-env: oldest
+            runs-on: ubuntu-latest
+            EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
+          - pixi-env: dev
+            runs-on: ubuntu-latest
+            EXCLUDE: ${{ github.event_name == 'workflow_dispatch' && !inputs.uqpce_pixi }}
