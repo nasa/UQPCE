@@ -103,4 +103,6 @@ venv.bak/
 n2.html
 *SNOPT_print.out
 *SNOPT_summary.out
-docs/_autosummary/*
+docs/_autosummary/*# pixi environments
+.pixi/*
+!.pixi/config.toml
