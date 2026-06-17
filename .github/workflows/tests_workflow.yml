@@ -10,163 +10,46 @@ on:
   workflow_dispatch:
 
 jobs:
-
-  test_ubuntu:
-    runs-on: ubuntu-latest
-
-    timeout-minutes: 90
-
+  test:
+    name: Test (${{ matrix.os }}, ${{ matrix.environment }})
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        environment: [default]
         include:
-          - NAME: baseline
-            PY: '3.11'
-            NUMPY: '2.0'
-            SCIPY: '1.13'
-            PYYAML: '6.0.2'
-            JAX: '0.6.1'
-            OPENMDAO: 'latest'
-            DYMOS: 'latest'
-            MPI4PY: '3.1.4'
-            OPTIONAL: '[docs]'
-
-          - NAME: latest
-            PY: '3.14'
-            NUMPY: '2.4'
-            SCIPY: '1.17'
-            PYYAML: '6.0.3'
-            JAX: '0.9.0'
-            OPENMDAO: 'latest'
-            DYMOS: 'latest'
-            MPI4PY: '4.1'
-            OPTIONAL: '[docs]'
+          - os: ubuntu-latest
+            environment: py311
+          - os: ubuntu-latest
+            environment: py312
+          - os: ubuntu-latest
+            environment: py313
+          - os: ubuntu-latest
+            environment: py314
 
     steps:
-      - name: Display run details
-        run: |
-          echo "============================================================="
-          echo "Run #${GITHUB_RUN_NUMBER}"
-          echo "Run ID: ${GITHUB_RUN_ID}"
-          echo "Testing: ${GITHUB_REPOSITORY}"
-          echo "Triggered by: ${GITHUB_EVENT_NAME}"
-          echo "Initiated by: ${GITHUB_ACTOR}"
-          echo "============================================================="
-
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup conda
-        uses: conda-incubator/setup-miniconda@v3
+      - name: Set up pixi
+        uses: prefix-dev/setup-pixi@v0.8.1
         with:
-          python-version: ${{ matrix.PY }}
-          channels: conda-forge
-          conda-remove-defaults: true
-          activate-environment: test
+          pixi-version: v0.39.0
+          cache: true
+          environments: ${{ matrix.environment }}
+          locked: true  # Enforce use of lock file for reproducibility
 
-      - name: Install Numpy/Scipy
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install Numpy/Scipy"
-          echo "============================================================="
-          conda install -n test numpy=${{ matrix.NUMPY }} scipy=${{ matrix.SCIPY }} -q -y
+      # - name: Run linting
+      #   run: pixi run -e ${{ matrix.environment }} lint
 
-      - name: Install OpenMDAO
-        if: matrix.OPENMDAO
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install OpenMDAO"
-          echo "============================================================="
-          if [[ "${{ matrix.OPENMDAO }}" == "dev" ]]; then
-            conda run -n test pip install git+https://github.com/OpenMDAO/OpenMDAO
-          elif [[ "${{ matrix.OPENMDAO }}" == "latest" ]]; then
-            conda run -n test pip install openmdao
-          else
-            conda run -n test pip install openmdao==${{ matrix.OPENMDAO }}
-          fi
+      # - name: Run tests
+      #   run: pixi run -e ${{ matrix.environment }} test
 
-      - name: Install Dymos
-        if: matrix.DYMOS
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install Dymos"
-          echo "============================================================="
-          if [[ "${{ matrix.DYMOS }}" == "dev" ]]; then
-            conda run -n test pip install git+https://github.com/OpenMDAO/dymos
-          elif [[ "${{ matrix.DYMOS }}" == "latest" ]]; then
-            conda run -n test pip install dymos
-          else
-            conda run -n test pip install dymos==${{ matrix.DYMOS }}
-          fi
-
-      - name: Install PyYAML
-        if: matrix.PYYAML
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install PyYAML"
-          echo "============================================================="
-          conda run -n test pip install PyYAML==${{ matrix.PYYAML }}
-
-      - name: Install mpi4py
-        if: matrix.MPI4PY
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install mpi4py"
-          echo "============================================================="
-          conda install -n test mpi4py=${{ matrix.MPI4PY }} -q -y
-
-      - name: Install sympy and matplotlib
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install sympy and matplotlib"
-          echo "============================================================="
-          conda install -n test sympy matplotlib
-
-      - name: Install UQPCE
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Install UQPCE"
-          echo "============================================================="
-          conda run -n test pip install .${{ matrix.OPTIONAL }}
-
-      - name: Display environment info
-        id: env_info
-        shell: bash -l {0}
-        run: |
-          conda info
-          conda list -n test
-
-          echo "============================================================="
-          echo "Check installed versions of Python, Numpy and Scipy"
-          echo "============================================================="
-          conda run -n test python -c "import sys; assert str(sys.version).startswith(str(${{ matrix.PY }})), \
-                    f'Python version {sys.version} is not the requested version (${{ matrix.PY }})'"
-
-          conda run -n test python -c "import numpy; assert str(numpy.__version__).startswith(str(${{ matrix.NUMPY }})), \
-                    f'Numpy version {numpy.__version__} is not the requested version (${{ matrix.NUMPY }})'"
-
-          conda run -n test python -c "import scipy; assert str(scipy.__version__).startswith(str(${{ matrix.SCIPY }})), \
-                    f'Scipy version {scipy.__version__} is not the requested version (${{ matrix.SCIPY }})'"
-
-      - name: Display dependency tree
-        if: failure() && steps.env_info.outcome == 'failure'
-        shell: bash -l {0}
-        run: |
-          conda run -n test pip install pipdeptree
-          conda run -n test pipdeptree
-
-      - name: Run tests
-        shell: bash -l {0}
-        run: |
-          echo "============================================================="
-          echo "Run Tests"
-          echo "============================================================="
-          cd $HOME/work/UQPCE/UQPCE
-          conda run -n test python -m unittest discover uqpce "test*.py"
+      # - name: Upload coverage report
+      #   if: matrix.os == 'ubuntu-latest' && matrix.environment == 'default'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: coverage-report
+      #     path: coverage.xml
+      #     retention-days: 14

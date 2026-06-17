@@ -1,0 +1,148 @@
+# UQPCE Pixi Environment Configuration
+#
+# Pixi provides reproducible development environments with both conda and pip packages.
+#
+# Quick Start:
+#   pixi install --frozen        # Install with exact CI-tested versions
+#   pixi shell                   # Activate the default environment
+#   pip install -e .             # Install UQPCE in development mode
+#
+# Installation:
+#   pixi install --frozen -e <environment>    # Install specific environment
+#   pixi run -e <environment> <command>       # Run command in environment
+#
+# For more information: https://pixi.sh
+
+[workspace]
+name = "uqpce"
+description = "UQPCE workspace"
+authors = ["UQPCE Team <https://github.com/nasa/UQPCE>"]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
+exclude-newer = "14d"
+
+###############################################
+# Base Dependencies
+###############################################
+
+[dependencies]
+python = ">=3.11"
+openmdao = ">=3.40.0"
+numpy = ">=2.0,!=2.4.0"
+scipy = ">=1.13"
+jax = ">=0.4.30"
+sympy = ">=1.14.0"
+PyYAML = "6.0.2"
+networkx = ">=3.3"
+pip = ">=25.3"
+packaging = ">=25.0"
+requests = ">=2.32.5"
+compilers = ">=1.8.0,<2"
+
+###############################################
+# Python version features
+###############################################
+
+[feature.py311.dependencies]
+python = "3.11.*"
+
+[feature.py312.dependencies]
+python = "3.12.*"
+
+[feature.py313.dependencies]
+python = "3.13.*"
+
+[feature.py314.dependencies]
+python = "3.14.*"
+
+##########################################################
+# Optional features
+##########################################################
+
+[feature.docs.dependencies]
+ipyparallel = "*"
+jupyter-book = ">=1.0.3,<2"
+matplotlib = "*"
+numpydoc = "*"
+dymos = "*"
+sphinx-sitemap = "*"
+pydata-sphinx-theme = ">=0.15.0,<0.16.0"
+idna = "*"
+jinja2 = "*"
+tqdm = "*"
+
+# Jax not available for windows on conda-forge
+[feature.jax.pypi-dependencies]
+jax = "*"
+
+# petsc isn't available for windows
+[feature.mpi.target.linux-64.dependencies]
+openmpi = "*"
+mpi4py = "*"
+petsc = "*"
+petsc4py = "*"
+
+[feature.mpi.target.osx-64.dependencies]
+openmpi = "*"
+mpi4py = "*"
+petsc = "*"
+petsc4py = "*"
+
+[feature.mpi.target.osx-arm64.dependencies]
+openmpi = "*"
+mpi4py = "*"
+petsc = "*"
+petsc4py = "*"
+
+[feature.visualization.dependencies]
+matplotlib = "*"
+
+###############################################
+# Oldest supported versions
+###############################################
+
+[feature.deps-oldest.dependencies]
+python = "3.11.*"
+openmdao = "3.40.0"
+numpy = "2.0.*"
+jax = "0.4.30"
+PyYAML = "6.0"
+scipy = "1.13.*"
+networkx = "==3.3"
+
+###############################################
+# Environments
+###############################################
+
+[environments]
+
+# Default - uses whatever Python solver picks
+default = { features = ["py313", "jax", "visualization", "mpi"], solve-group = "default" }
+dev = { features = ["py313", "jax", "visualization", "mpi", "docs"], solve-group = "default" }
+minimal = { features = ["py313"], solve-group = "default" }
+
+# Oldest supported versions
+oldest = { features = ["deps-oldest", "jax", "visualization", "mpi"], solve-group = "oldest" }
+
+# Python version matrix
+py311 = { features = ["py311", "jax", "visualization", "mpi"], solve-group = "py311" }
+py312 = { features = ["py312", "jax", "visualization", "mpi"], solve-group = "py312" }
+py313 = { features = ["py313", "jax", "visualization", "mpi"], solve-group = "default" }
+py314 = { features = ["py314", "jax", "visualization", "mpi"], solve-group = "py314" }
+
+###############################################
+# Tasks
+###############################################
+
+[tasks]
+
+# Development workflow helpers
+clean = "rm -rf packaging dist *.egg-info .pixi"
+
+test = "testflo --skip_dir=.pixi"
+
+# Install UQPCE in development mode and set up pre-commit hooks
+install-uqpce-dev = { cmd = "pip install --no-deps -e . && pre-commit install", description = "Install UQPCE in development mode and set up pre-commit hooks" }
+
+# Install UQPCE from GitHub main branch
+install-uqpce-main = { cmd = "pip install --no-deps git+https://github.com/nasa/UQPCE.git@main", description = "Install UQPCE from GitHub main branch" }
