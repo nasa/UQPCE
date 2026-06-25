@@ -1,15 +1,15 @@
 import copy
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy import stats
-from sympy import symbols, Matrix, factorial
+from sympy import Matrix, factorial, symbols
 from sympy.utilities.lambdify import lambdify
 
 try:
-    from mpi4py.MPI import (
-        DOUBLE as MPI_DOUBLE, COMM_WORLD as MPI_COMM_WORLD, SUM as MPI_SUM
-    )
+    from mpi4py.MPI import COMM_WORLD as MPI_COMM_WORLD
+    from mpi4py.MPI import DOUBLE as MPI_DOUBLE
+    from mpi4py.MPI import SUM as MPI_SUM
 
     comm = MPI_COMM_WORLD
     rank = comm.rank
@@ -24,22 +24,28 @@ except:
 
 
 from uqpce.pce._helpers import (
-    evaluate_points, solve_coeffs, evaluate_points_verbose,
-    calc_difference, calc_mean_err, warn
+    calc_difference,
+    calc_mean_err,
+    evaluate_points,
+    evaluate_points_verbose,
+    solve_coeffs,
+    warn,
 )
 from uqpce.pce.stats.statistics import (
-    calc_term_count, calc_mean_sq_err, calc_hat_matrix
+    calc_hat_matrix,
+    calc_mean_sq_err,
+    calc_term_count,
 )
 
 
 class MatrixSystem:
     """
-    Inputs: responses- the array of responses from the results file 
+    Inputs: responses- the array of responses from the results file
                        (or from the user_function)
             var_list- the lsit of variables
-    
-    The matrix system built from the responses and input values. The 
-    MatrixSystem is built and solved to acquire the matrix coefficients in 
+
+    The matrix system built from the responses and input values. The
+    MatrixSystem is built and solved to acquire the matrix coefficients in
     the systme of equations.
     """
 
@@ -73,7 +79,7 @@ class MatrixSystem:
 
     def create_model_matrix(self):
         """
-        Creates the model matrix to support an Nth order model. Supports 
+        Creates the model matrix to support an Nth order model. Supports
         creating a model matrix with variables of varying orders.
         """
         orders = np.array([var.order for var in self.var_list])
@@ -135,8 +141,8 @@ class MatrixSystem:
 
     def form_norm_sq(self, order):
         """
-        Inputs: order- the order of polynomial expansion 
-        
+        Inputs: order- the order of polynomial expansion
+
         Creates the model matrix and the corresponding norm squared matrix.
         """
         if (
@@ -184,7 +190,7 @@ class MatrixSystem:
 
     def build(self):
         """
-        Builds the symbolic 'psi' matrix that represents the interactions 
+        Builds the symbolic 'psi' matrix that represents the interactions
         of the variables.
         """
 
@@ -213,7 +219,7 @@ class MatrixSystem:
             var_basis_mat_symb = comm.allgather(var_basis_mat_symb_temp)
             var_basis_mat_symb = np.concatenate(var_basis_mat_symb, axis=1)
         else:
-            var_basis_mat_symb =var_basis_mat_symb_temp        
+            var_basis_mat_symb =var_basis_mat_symb_temp
 
         for i in range(beg, end):
             curr_vect = 1
@@ -233,16 +239,19 @@ class MatrixSystem:
         else:
             self.var_basis_vect_symb = Matrix(var_basis_vect_symb_temp)
 
+        if self.var_basis_vect_symb.shape[0] == self.min_model_size:
+            self.var_basis_vect_symb = self.var_basis_vect_symb.T
+
         self._var_basis_vect_symb = copy.copy(self.var_basis_vect_symb)
 
         return self.var_basis_vect_symb
 
     def evaluate(self, X):
         """
-        Inputs: attribute- the attribute of variables used to calculate the 
+        Inputs: attribute- the attribute of variables used to calculate the
                 responses; this is almost always std_vals
-        
-        Fills the symbolic 'psi' variable basis system with the numbers that 
+
+        Fills the symbolic 'psi' variable basis system with the numbers that
         correspond to the variables in the matrix.
         """
 
@@ -253,7 +262,7 @@ class MatrixSystem:
         self.var_basis_sys_eval = evaluate_points(
             var_basis_vect_func, X
         )
-        
+
         self._var_basis_sys_eval = np.copy(self.var_basis_sys_eval)
 
         return self.var_basis_sys_eval
@@ -275,8 +284,8 @@ class MatrixSystem:
                 var_basis- the evaluated variable basis
                 norm_sq- the norm squared
                 idx- the index of the point that will be omitted
-        
-        Creates a model for the input combination; the mean, variance, and 
+
+        Creates a model for the input combination; the mean, variance, and
         errors are calculated and returned.
         """
         incr_idx = idx + 1
@@ -352,8 +361,8 @@ class MatrixSystem:
     def update(self, combo):
         """
         Inputs: combo- the combination used to update the attributes
-        
-        Updates the MatrixSystem attributes to reflect only the model terms 
+
+        Updates the MatrixSystem attributes to reflect only the model terms
         that correcpond to `combo`.
         """
         combo = list(combo)
@@ -371,12 +380,12 @@ class MatrixSystem:
 
 class SurrogateModel:
     """
-    Inputs: responses- the array of responses from the results file 
+    Inputs: responses- the array of responses from the results file
                        (or from the user_function)
             matrix_coeffs- the matrix coefficients solved for by MatrixSystem
             verbose- if statements should be printed by methods
-    
-    Gets the sobol indices of the varibles. Performs several calculations 
+
+    Gets the sobol indices of the varibles. Performs several calculations
     and checks on the model to check if it is a good representation.
     """
 
@@ -399,7 +408,7 @@ class SurrogateModel:
     def get_sobols(self, norm_sq):
         """
         Inputs: norm_sq- the norm squared matrix
-                
+
         Solves for the sobol sensitivities.
         """
         tol = 1e-8
@@ -417,7 +426,7 @@ class SurrogateModel:
     def calc_var(self, norm_sq):
         """
         Inputs: norm_sq- the norm squared matrix
-        
+
         Calculates the mean and variance in the responses.
         """
 
@@ -442,11 +451,11 @@ class SurrogateModel:
 
     def calc_error(self, var_basis):
         """
-        Inputs: var_basis- the varibale basis matrix that consists of values 
+        Inputs: var_basis- the varibale basis matrix that consists of values
                 (not symbols)
-        
-        Solves for the calculated responses that the matrix coefficients and 
-        variable basis ('alpha' and 'psi') result in as well as the difference 
+
+        Solves for the calculated responses that the matrix coefficients and
+        variable basis ('alpha' and 'psi') result in as well as the difference
         between these values and the actual values.
         """
         prod = np.dot(var_basis, self.matrix_coeffs)
@@ -459,11 +468,11 @@ class SurrogateModel:
             self, var_basis_sys_eval, sig, graph_dir=None, sigfigs=5, plot=False
         ):
         """
-        Inputs: var_basis_sys_eval- the variable basis system (not symbolic) 
+        Inputs: var_basis_sys_eval- the variable basis system (not symbolic)
                 matrix
                 sig- the level of signif for the Shapiro-Wilks test
                 graph_dir- the directory that the graphs are put into
-        
+
         Ensures that the err follows a normal distribution.
         """
         test_stat = np.zeros(self.model_cnt)
@@ -532,10 +541,10 @@ class SurrogateModel:
                 verify_size- the size of the verification responses
                 var_list_symb- the list of the variable string representations
                 attr- the Variable attribute to be used for verification
-                beg_idx- the index at which to start using points from 
+                beg_idx- the index at which to start using points from
                 attribute `attr`
-        
-        Verifies the surrogate model by outputting the responses from 
+
+        Verifies the surrogate model by outputting the responses from
         verification input values put into the model.
         """
         var_basis_vect_func = lambdify(

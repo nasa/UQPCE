@@ -1,12 +1,15 @@
 import unittest
 
 import numpy as np
-from sympy import Matrix, symbols, Eq, N, expand, sympify
+from sympy import Eq, Matrix, N, expand, symbols, sympify
 
 from uqpce.pce.model import MatrixSystem, SurrogateModel
 from uqpce.pce.variables.continuous import (
-    UniformVariable, NormalVariable, BetaVariable, ExponentialVariable,
-    GammaVariable
+    BetaVariable,
+    ExponentialVariable,
+    GammaVariable,
+    NormalVariable,
+    UniformVariable,
 )
 
 order = 2
@@ -155,10 +158,6 @@ press_stats = matrix.get_press_stats()
 
 sig_combo = np.array([0, 1, 2, 3, 4, 5, 7, 20])
 
-var_basis_vect_symb_upd, norm_sq_upd, model_matrix_upd, min_model_size_upd, var_basis_sys_eval_upd = (
-    matrix.update(sig_combo)
-)
-
 
 class TestMatrixSystem(unittest.TestCase):
 
@@ -184,6 +183,10 @@ class TestMatrixSystem(unittest.TestCase):
         self.mean = mean
         self.var = var
         self.press_stats = press_stats
+
+        var_basis_vect_symb_upd, norm_sq_upd, model_matrix_upd, min_model_size_upd, var_basis_sys_eval_upd = (
+            matrix.update(sig_combo)
+        )
 
         self.var_basis_vect_symb_upd = var_basis_vect_symb_upd
         self.norm_sq_upd = norm_sq_upd
@@ -501,17 +504,17 @@ class TestMatrixSystem(unittest.TestCase):
         )
 
         self.assertTrue(
-            np.isclose(true_norm_sq, norm_sq_upd, rtol=0, atol=1e-6).all(),
+            np.isclose(true_norm_sq, self.norm_sq_upd, rtol=0, atol=1e-6).all(),
             msg='MatrixSystem update is not correct'
         )
 
         self.assertTrue(
-            np.isclose(true_model_matrix, model_matrix_upd, rtol=0, atol=1e-6).all(),
+            np.isclose(true_model_matrix, self.model_matrix_upd, rtol=0, atol=1e-6).all(),
             msg='MatrixSystem update is not correct'
         )
 
         self.assertEqual(
-            true_min_model_size, min_model_size_upd,
+            true_min_model_size, self.min_model_size_upd,
             msg='MatrixSystem update is not correct'
         )
 

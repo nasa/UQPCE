@@ -33,7 +33,7 @@ dependencies = [
     "numpy>=2.0",
     "PyYAML",
     "matplotlib",
-    "scipy>=1.13",
+    "scipy>=1.13, <=1.17",
     "sympy",
     "openmdao>=3.43.0",
     "jax>=0.4.30",
