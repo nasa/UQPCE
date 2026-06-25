@@ -1,12 +1,14 @@
 import unittest
-from io import StringIO
-import syslog
+
 import numpy as np
 
 from uqpce import PCE
 from uqpce.pce.variables.continuous import (
-    UniformVariable, NormalVariable, ContinuousVariable
+    ContinuousVariable,
+    NormalVariable,
+    UniformVariable,
 )
+
 
 class TestPCE(unittest.TestCase):
 
@@ -18,8 +20,8 @@ class TestPCE(unittest.TestCase):
         )
 
         self.var_dict = {
-            'Variable 0':{'distribution':'uniform', 'interval_low':6, 'interval_high':7, 'type':'aleatory'}, 
-            'Variable 1':{'distribution':'normal', 'mean':2, 'stdev':7}, 
+            'Variable 0':{'distribution':'uniform', 'interval_low':6, 'interval_high':7, 'type':'aleatory'},
+            'Variable 1':{'distribution':'normal', 'mean':2, 'stdev':7},
             'Variable 2':{'distribution':'continuous', 'pdf':'x', 'interval_low':0, 'interval_high':1}
         }
         for key, value in self.var_dict.items():
@@ -39,9 +41,9 @@ class TestPCE(unittest.TestCase):
 
         self.var_basis = np.array([
             [1, -11, 0, 2+1/3, 181, 0, -25-2/3, -1, 0, 5.7],
-            [1, -5, 0.42857143, 5+1/3, 37, -2.14285714, -26-2/3, -0.81632653, 
+            [1, -5, 0.42857143, 5+1/3, 37, -2.14285714, -26-2/3, -0.81632653,
              2.28571429, 29.1],
-            [1, 1, 0.85714286, 8+1/3, 1, 0.85714286, 8+1/3, -0.26530612, 
+            [1, 1, 0.85714286, 8+1/3, 1, 0.85714286, 8+1/3, -0.26530612,
              7.14285714, 70.5]
         ])
 
@@ -113,11 +115,11 @@ class TestPCE(unittest.TestCase):
 
         self.pce.set_samples(self.X)
         self.assertTrue(
-            (self.pce._X == self.X).all(), 
+            (self.pce._X == self.X).all(),
             msg='PCE set_samples is not correct'
         )
         self.assertTrue(
-            (self.pce._X_stand == self.X_stand).all(), 
+            (self.pce._X_stand == self.X_stand).all(),
             msg='PCE set_samples is not correct'
         )
 
@@ -126,14 +128,14 @@ class TestPCE(unittest.TestCase):
         self.pce.build_basis(order=2)
 
         self.assertTrue(
-            np.isclose(self.pce.var_basis, self.var_basis).all(), 
+            np.isclose(self.pce.var_basis, self.var_basis).all(),
             msg='PCE build_basis is not correct'
         )
 
     def test_fit(self):
         self.pce.fit(self.Xfull, self.yfull)
         self.assertTrue(
-            np.isclose(self.pce.matrix_coeffs, self.coeffs).all(), 
+            np.isclose(self.pce.matrix_coeffs, self.coeffs).all(),
             msg='PCE fit is not correct'
         )
 
@@ -149,7 +151,7 @@ class TestPCE(unittest.TestCase):
         resp_pred = self.pce.predict(Xv)
 
         self.assertTrue(
-            np.isclose(resp_pred, self.yv).all(), 
+            np.isclose(resp_pred, self.yv).all(),
             msg='PCE fit is not correct'
         )
 
@@ -158,7 +160,7 @@ class TestPCE(unittest.TestCase):
         err = self.pce.verification(self.Xfull, self.yfull)
 
         self.assertTrue(
-            (np.abs(err) < 1e-6).all(), 
+            (np.abs(err) < 1e-6).all(),
             msg='PCE verification is not correct'
         )
 
@@ -167,7 +169,7 @@ class TestPCE(unittest.TestCase):
         eval_resps = self.pce.resample_surrogate()
 
         self.assertTrue(
-            eval_resps.ravel().shape[0] == self.aleat_cnt, 
+            eval_resps.ravel().shape[0] == self.aleat_cnt,
             msg='PCE resample_surrogate is not correct'
         )
 
