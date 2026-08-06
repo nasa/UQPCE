@@ -1,32 +1,28 @@
-from typing import List
-
-import openmdao.api as om
 import numpy as np
+import openmdao.api as om
 
-from uqpce.mdao.coeffcomp import CoefficientsComp
-from uqpce.mdao.resamplecomp import ResampleComp
-from uqpce.mdao.variancecomp import VarianceComp
+from uqpce.mdao.cdf.cdfcomp import CDFComp
 from uqpce.mdao.cdf.cdfgroup import CDFGroup
+from uqpce.mdao.coeffcomp import CoefficientsComp
 from uqpce.mdao.meanplusvarcomp import MeanPlusVarComp
+from uqpce.mdao.resamplecomp import ResampleComp
 from uqpce.mdao.sobolcomp import SobolComp
+from uqpce.mdao.variancecomp import VarianceComp
+
 
 class UQPCEGroup(om.Group):
     """
     Class definition for the UQPCEGroup.
 
-    A UQPCEGroup object builds a Polynomial Chaos Expansion (PCE) model for an
-    arbitrary response. This object outputs statistics for the mean, variance,
-    and confidence interval on a given response.
+    A UQPCEGroup object builds a Polynomial Chaos Expansion (PCE) model for
+    `one` arbitrary response. This object outputs statistics for the mean,
+    variance, and confidence interval on a given response.
     """
 
     def initialize(self):
         """
         Declare any options for a UQPCEGroup.
         """
-        self.options.declare(
-            'uncert_list', allow_none=False,
-            desc='The string names of the uncertain outputs for the user\'s problem.'
-        )
         self.options.declare(
             'var_basis', allow_none=False,
             desc='The evaluated variable basis of the PCE model.'
@@ -56,14 +52,11 @@ class UQPCEGroup(om.Group):
             'epistemic_cnt', types=int, allow_none=False,
             desc='The number of epistemic samples used to resample the surrogate'
         )
-        self.options.declare('tanh_omega', types=(list, float, int), default=1e-6)
+        # Sobol parameters
         self.options.declare(
-            'sample_ref0', types=(list, None, int, float), default=None,
-            desc='Reference scale for 0 of the sample data'
-        )
-        self.options.declare(
-            'sample_ref', types=(list, None, int, float), default=None,
-            desc='Reference scale for 1 of the sample data'
+            'compute_sobols', types=bool, default=False,
+            desc='Whether to compute Sobol sensitivity indices. '
+                 'If True, model_matrix must be provided.'
         )
         self.options.declare(
             'model_matrix', types=(np.ndarray, type(None)), default=None,
@@ -71,122 +64,256 @@ class UQPCEGroup(om.Group):
                  'Shape: (n_terms, n_vars). Entry [i,j] indicates if variable j '
                  'appears in PCE term i. Required if compute_sobols=True.'
         )
+        # Activation function parameters
         self.options.declare(
-            'compute_sobols', types=bool, default=False,
-            desc='Whether to compute Sobol sensitivity indices. '
-                 'If True, model_matrix must be provided.'
+            'use_tanh_ci', types=bool, default=False,
+            desc='A flag for if the former complex-safe tanh method for '
+            'calculating the confidence interval should be used.'
         )
+        self.options.declare('tanh_omega', types=(float, int), default=1e-6)
+        self.options.declare(
+            'sample_ref0', types=(int, float), default=0,
+            desc='Reference scale for 0 of the sample data'
+        )
+        self.options.declare(
+            'sample_ref', types=(int, float), default=1,
+            desc='Reference scale for 1 of the sample data'
+        )
+        self._coeff_comp = CoefficientsComp
+
+    def _coeff_kwargs(self):
+        return {'var_basis': self.options['var_basis']}
+
+    def _coeff_inputs(self):
+        return ['responses']
+
+    def _ci_kwargs(self):
+        alpha = self.options['significance']
+        vec_size = self.options['resampled_var_basis'].shape[0]
+        oms = self.options['tanh_omega']
+        ref0 = self.options['sample_ref0']
+        ref = self.options['sample_ref']
+        use_tanh_ci = self.options['use_tanh_ci']
+        aleatory_cnt = self.options['aleatory_cnt']
+        epistemic_cnt = self.options['epistemic_cnt']
+
+        ci_kwargs = {
+            'alpha': alpha, 'aleatory_cnt': aleatory_cnt,
+            'epistemic_cnt': epistemic_cnt, 'vec_size': vec_size,
+        }
+        if use_tanh_ci:
+            ci_kwargs.update({
+                'sample_ref0': ref0, 'sample_ref': ref, 'tanh_omega': oms
+            })
+
+        return ci_kwargs
+
+    def _ci_comp(self):
+        use_tanh_ci = self.options['use_tanh_ci']
+
+        if not use_tanh_ci:
+            _ci_calc = CDFComp
+        else:
+            _ci_calc = CDFGroup
+
+        return _ci_calc
+
+    def _out_ci(self):
+        aleatory_cnt = self.options['aleatory_cnt']
+        vec_size = self.options['resampled_var_basis'].shape[0]
+        use_tanh_ci = self.options['use_tanh_ci']
+
+        if not use_tanh_ci:
+            out_ci = 'f_ci'
+        else:
+            out_ci = 'f_ci' if vec_size == aleatory_cnt else 'ci'
+
+        return out_ci
 
     def setup(self):
         """
         Setup the UQPCEGroup.
         """
-        uncert_list = self.options['uncert_list']
+        kwargs = self._coeff_kwargs()
+        coeff_inputs = self._coeff_inputs()
+
+        ci_kwargs = self._ci_kwargs()
+        ci_calc = self._ci_comp()
+        out_ci = self._out_ci()
+
         tail = self.options['tail']
+        tails = [tail] if tail != 'both' else ['lower', 'upper']
         aleatory_cnt = self.options['aleatory_cnt']
         epistemic_cnt = self.options['epistemic_cnt']
-
-        cnt = 0
-
-        alpha = self.options['significance']
         vec_size = self.options['resampled_var_basis'].shape[0]
-        if vec_size!=aleatory_cnt and vec_size!=(epistemic_cnt*aleatory_cnt):
+        norm_sq = self.options['norm_sq']
+
+        if vec_size != aleatory_cnt and vec_size != (epistemic_cnt*aleatory_cnt):
             exit(
                 'The length of your `resampled_var_basis` should equal either '
                 'the aleatory count of the aleatory count times the epistemic '
                 'count.'
             )
 
-        out_ci = 'f_ci' if vec_size==aleatory_cnt else 'ci'
-        use_ref0 = (not self.options['sample_ref0'] is None)
-        use_ref = (not self.options['sample_ref'] is None)
-        ref0 = 0.0
-        ref = 1.0
-        oms = self.options['tanh_omega']
+        # Add the system which outputs the matrix coefficients
+        self.add_subsystem(
+            'coeff_comp',
+            self._coeff_comp(**kwargs),
+            promotes_inputs=coeff_inputs,
+            promotes_outputs=['matrix_coeffs', 'mean']
+        )
+
+        # Add the system which outputs resampled responses
+        self.add_subsystem(
+            'resamp_comp',
+            ResampleComp(resampled_var_basis=self.options['resampled_var_basis']),
+            promotes_inputs=['matrix_coeffs'],
+            promotes_outputs=['resampled_responses']
+        )
+
+        # Add the system which outputs variance
+        self.add_subsystem(
+            'var_comp', VarianceComp(norm_sq=norm_sq),
+            promotes_inputs=['matrix_coeffs'], promotes_outputs=['variance']
+        )
+
+        self.add_subsystem(
+            'mean_plus_var_comp', MeanPlusVarComp(),
+            promotes_inputs=['mean', 'variance'],
+            promotes_outputs=['mean_plus_var']
+        )
+
+        # Add Sobol sensitivity component if requested
+        if self.options['compute_sobols']:
+            model_matrix = self.options['model_matrix']
+            if model_matrix is None:
+                raise ValueError(
+                    'model_matrix must be provided when compute_sobols=True'
+                )
+
+            self.add_subsystem(
+                'sobol_comp',
+                SobolComp(norm_sq=norm_sq, model_matrix=model_matrix),
+                promotes_inputs=['matrix_coeffs'],
+                promotes_outputs=['sobols', 'total_sobols']
+            )
+
+        for curr_tail in tails:
+            ci_kwargs.update({'tail': curr_tail})
+            self.add_subsystem(
+                f'{curr_tail}_cdf_group',
+                ci_calc(**ci_kwargs),
+                promotes_inputs=[('f_sampled', 'resampled_responses')],
+                promotes_outputs=[(out_ci, f'ci_{curr_tail}')]
+            )
+
+
+class MultiUQPCEGroup(UQPCEGroup):
+    """
+    Class definition for the MultiUQPCEGroup.
+
+    A MultiUQPCEGroup object builds a Polynomial Chaos Expansion (PCE) model for an
+    arbitrary response. This object outputs statistics for the mean, variance,
+    and confidence interval on a given response.
+    """
+
+    def initialize(self):
+        """
+        Declare any options for a MultiUQPCEGroup.
+        """
+        super().initialize()
+
+        self.options.declare(
+            'uncert_list', allow_none=False,
+            desc='The string names of the uncertain outputs for the user\'s problem.'
+        )
+        self.options.declare('tanh_omega', types=(list, float, int), default=1e-6)
+        self.options.declare(
+            'sample_ref0', types=(list, int, float), default=0,
+            desc='Reference scale for 0 of the sample data'
+        )
+        self.options.declare(
+            'sample_ref', types=(list, int, float), default=1,
+            desc='Reference scale for 1 of the sample data'
+        )
+        self.options.declare(
+            'use_tanh_ci', types=bool, default=False,
+            desc='A flag for if the former complex-safe tanh method for '
+            'calculating the confidence interval should be used.'
+        )
+
+    def _update_tanh_option(self, option, iter_cnt):
+        """
+        Ensures the tanh-specific options is a numpy array.
+        """
+        opt_type = type(option)
+
+        if opt_type is list and len(option) == 1:  # List of size 1
+            option = np.ones(iter_cnt, dtype=float) * option[0]
+        elif opt_type in (float, int, np.float64, np.int64):
+            option = np.ones(iter_cnt, dtype=float) * option
+        elif opt_type is list and len(option) == iter_cnt:
+            option = np.array(option, dtype=float)
+        else:
+            raise ValueError('The tanh input {option} should be reformatted.')
+
+        return option
+
+    def setup(self):
+        """
+        Setup the MultiUQPCEGroup.
+        """
+        cnt = 0
+        uncert_list = self.options['uncert_list']
+        resampled_var_basis = self.options['resampled_var_basis']
+        var_basis = self.options['var_basis']
+        norm_sq = self.options['norm_sq']
+        sig = self.options['significance']
+        epist_cnt = self.options['epistemic_cnt']
+        aleat_cnt = self.options['aleatory_cnt']
+        tail = self.options['tail']
+        compute_sobols = self.options['compute_sobols']
+        use_tanh_ci = self.options['use_tanh_ci']
+
+        iter_cnt = len(uncert_list)
+        tanh_omega = self._update_tanh_option(
+            self.options['tanh_omega'], iter_cnt)
+        sample_ref0 = self._update_tanh_option(
+            self.options['sample_ref0'], iter_cnt)
+        sample_ref = self._update_tanh_option(
+            self.options['sample_ref'], iter_cnt)
+
+        pce_outputs = ['variance', 'mean', 'resampled_responses',
+                       'matrix_coeffs', 'mean_plus_var']
+
+        if tail == 'lower' or tail == 'both':
+            pce_outputs.append('ci_lower')
+        if tail == 'upper' or tail == 'both':
+            pce_outputs.append('ci_upper')
+        if compute_sobols:
+            pce_outputs.append('sobols')
+            pce_outputs.append('total_sobols')
 
         for resp in uncert_list:
-            om = oms if ((type(oms) == list and len(oms)==1) or type(oms)==float or type(oms)==int) else oms[cnt]
 
-            if use_ref0:
-                ref = list(self.options['sample_ref0'])[cnt]
-            if use_ref:
-                ref = list(self.options['sample_ref'])[cnt]
+            resp_name = resp.replace(':', '_')
 
-            resp_subsys_name = resp.replace(':', '_')
-
-            # Add the system which outputs the matrix coefficients
-            self.add_subsystem(
-                f'{resp_subsys_name}_coeff_comp',
-                CoefficientsComp(var_basis=self.options['var_basis']),
-                promotes_inputs=[('responses', resp)],
-                promotes_outputs=[
-                    ('matrix_coeffs', f'{resp}:matrix_coeffs'),
-                    ('mean', f'{resp}:mean')
-                ]
-            )
-
-            # Add the system which outputs resampled responses
-            self.add_subsystem(
-                f'{resp_subsys_name}_resamp_comp',
-                ResampleComp(resampled_var_basis=self.options['resampled_var_basis']),
-                promotes_inputs=[('matrix_coeffs', f'{resp}:matrix_coeffs')],
-                promotes_outputs=[('resampled_responses', f'{resp}:resampled_responses')]
-            )
-
-            # Add the system which outputs variance
-            self.add_subsystem(
-                f'{resp_subsys_name}_var_comp', VarianceComp(norm_sq=self.options['norm_sq']),
-                promotes_inputs=[('matrix_coeffs', f'{resp}:matrix_coeffs')],
-                promotes_outputs=[('variance', f'{resp}:variance')]
-            )
+            outputs = []
+            for op in pce_outputs:
+                outputs.append((op, f'{resp_name}:{op}'))
 
             self.add_subsystem(
-                f'{resp_subsys_name}_mean_plus_var_comp', MeanPlusVarComp(),
-                promotes_inputs=[('mean', f'{resp}:mean'),('variance', f'{resp}:variance')],
-                promotes_outputs=[('mean_plus_var', f'{resp}:mean_plus_var')]
+                f'{resp_name}_pce',
+                UQPCEGroup(
+                    var_basis=var_basis, norm_sq=norm_sq, significance=sig,
+                    resampled_var_basis=resampled_var_basis, tail=tail,
+                    aleatory_cnt=aleat_cnt, epistemic_cnt=epist_cnt,
+                    compute_sobols=compute_sobols, sample_ref0=sample_ref0[cnt],
+                    sample_ref=sample_ref[cnt], tanh_omega=tanh_omega[cnt],
+                    use_tanh_ci=use_tanh_ci
+                ),
+                promotes_inputs=[('responses', resp)], promotes_outputs=outputs
             )
-
-            # Add Sobol sensitivity component if requested
-            if self.options['compute_sobols']:
-                model_matrix = self.options['model_matrix']
-                if model_matrix is None:
-                    raise ValueError(
-                        'model_matrix must be provided when compute_sobols=True'
-                    )
-
-                self.add_subsystem(
-                    f'{resp_subsys_name}_sobol_comp',
-                    SobolComp(norm_sq=self.options['norm_sq'], model_matrix=model_matrix),
-                    promotes_inputs=[('matrix_coeffs', f'{resp}:matrix_coeffs')],
-                    promotes_outputs=[
-                        ('sobols', f'{resp}:sobols'),
-                        ('total_sobols', f'{resp}:total_sobols')
-                    ]
-                )
-
-            if tail == 'lower' or tail == 'both':
-                self.add_subsystem(
-                    f'{resp_subsys_name}_lower_cdf_group',
-                    CDFGroup(
-                        alpha=alpha, tail='lower', aleatory_cnt=aleatory_cnt,
-                        epistemic_cnt=epistemic_cnt, vec_size=vec_size,
-                        sample_ref0=ref0, sample_ref=ref, tanh_omega=om
-                    ),
-                    promotes_inputs=[('f_sampled', f'{resp}:resampled_responses')],
-                    promotes_outputs=[(out_ci, f'{resp}:ci_lower')]
-                )
-
-            if tail == 'upper' or tail == 'both':
-                self.add_subsystem(
-                    f'{resp_subsys_name}_upper_cdf_group',
-                    CDFGroup(
-                        alpha=alpha, tail='upper', aleatory_cnt=aleatory_cnt,
-                        epistemic_cnt=epistemic_cnt, vec_size=vec_size,
-                        sample_ref0=ref0, sample_ref=ref, tanh_omega=om
-                    ),
-                    promotes_inputs=[('f_sampled', f'{resp}:resampled_responses')],
-                    promotes_outputs=[(out_ci, f'{resp}:ci_upper')]
-                )
 
             cnt += 1
 
@@ -194,8 +321,8 @@ class UQPCEGroup(om.Group):
 if __name__ == '__main__':
     from uqpce.examples.paraboloid.paraboloid import paraboloid
 
-    aleat_cnt = 10_000
-    epist_cnt = 250
+    aleat_cnt = 100_000
+    epist_cnt = 5
     total_cnt = aleat_cnt*epist_cnt
     sig = 0.05
 
@@ -223,19 +350,14 @@ if __name__ == '__main__':
     )
 
     prob.model.add_subsystem(
-        'comp',
-        UQPCEGroup(
-            uncert_list=outputs,
-            var_basis=var_basis, norm_sq=norm_sq, significance=sig,
-            resampled_var_basis=resampled_var_basis, tail='both',
-            aleatory_cnt=aleat_cnt, epistemic_cnt=epist_cnt, sample_ref0=[100],
-            sample_ref=[125]
+        'group',
+        MultiUQPCEGroup(
+            uncert_list=outputs, var_basis=var_basis, significance=sig,
+            resampled_var_basis=resampled_var_basis, tail='both', norm_sq=norm_sq,
+            aleatory_cnt=aleat_cnt, epistemic_cnt=epist_cnt, use_tanh_ci=False
         ),
         promotes_inputs=['*'], promotes_outputs=['*']
     )
-    # prob.model.add_design_var('desx', lower=0, upper=5) #unitless
-    # prob.model.add_design_var('desy', lower=0, upper=5) #unitless
-    # prob.model.add_objective('f_abxy:ci_upper')
 
     prob.setup(force_alloc_complex=True)
     prob.set_val('uncerta', np.array([1, 2, 3, 4, 5, 6]))
@@ -243,21 +365,16 @@ if __name__ == '__main__':
     prob.set_val('desx', 2)
     prob.set_val('desy', 3.1)
     prob.run_model()
-    # prob.run_driver()
-    prob.check_partials(compact_print=True, method='cs')
-    # prob.check_totals(method='fd', form='central')
+    # prob.check_partials(compact_print=True, method='cs')#, form='central')
 
     print(prob.get_val('f_abxy:variance'))
     print(prob.get_val('f_abxy:mean'))
-    print('UQPCE OM CI:     ', prob.get_val(f'f_abxy:ci_upper'))
-    print('Interpolated CI: ', np.max(np.quantile(np.reshape(prob.get_val(f'f_abxy:resampled_responses'), (-1, aleat_cnt)), 1-sig/2, axis=1)))
-    print('UQPCE All Epistemic CIs:', prob.get_val(f'comp.f_abxy_upper_cdf_group.f_ci'))
-    print('Interpolated All Epistemic CIs:', np.quantile(np.reshape(prob.get_val(f'f_abxy:resampled_responses'), (-1, aleat_cnt)), 1-sig/2, axis=1))
+    print('UQPCE OM CI:     ', prob.get_val('f_abxy:ci_upper'))
+    print('Interpolated CI: ', np.max(np.quantile(np.reshape(prob.get_val('f_abxy:resampled_responses'), (-1, aleat_cnt)), 1-sig/2, axis=1)))
+    print('Interpolated All Epistemic CIs:', np.quantile(np.reshape(prob.get_val('f_abxy:resampled_responses'), (-1, aleat_cnt)), 1-sig/2, axis=1))
 
-    print('UQPCE OM CI:     ', prob.get_val(f'f_abxy:ci_lower'))
-    print('UQPCE OM CI:     ', prob.get_val(f'comp.f_abxy_lower_cdf_group.ks.g'))
-    print('Interpolated CI: ', np.max(np.quantile(np.reshape(prob.get_val(f'f_abxy:resampled_responses'), (-1, aleat_cnt)), sig/2, axis=1)))
-    print('UQPCE All Epistemic CIs:', prob.get_val(f'comp.f_abxy_lower_cdf_group.f_ci'))
-    print('Interpolated All Epistemic CIs:', np.quantile(np.reshape(prob.get_val(f'f_abxy:resampled_responses'), (-1, aleat_cnt)), sig/2, axis=1))
+    print('\nUQPCE OM CI:     ', prob.get_val('f_abxy:ci_lower'))
+    print('Interpolated CI: ', np.min(np.quantile(np.reshape(prob.get_val('f_abxy:resampled_responses'), (-1, aleat_cnt)), sig/2, axis=1)))
+    print('Interpolated All Epistemic CIs:', np.quantile(np.reshape(prob.get_val('f_abxy:resampled_responses'), (-1, aleat_cnt)), sig/2, axis=1))
 
     # om.n2(prob)

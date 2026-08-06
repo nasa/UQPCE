@@ -1,7 +1,8 @@
 import openmdao.api as om
+
 from uqpce.examples.paraboloid.paraboloid.paraboloid import Paraboloid
-from uqpce.mdao.uqpcegroup import UQPCEGroup
 from uqpce.mdao import interface
+from uqpce.mdao.uqpcegroup import UQPCEGroup
 
 if __name__ == '__main__':
 
@@ -34,10 +35,9 @@ if __name__ == '__main__':
         UQPCEGroup(
             significance=sig, var_basis=var_basis, norm_sq=norm_sq,
             resampled_var_basis=resampled_var_basis, tail='upper',
-            epistemic_cnt=epistemic_cnt, aleatory_cnt=aleatory_cnt,
-            uncert_list=['f_abxy'], tanh_omega=5e-4
+            epistemic_cnt=epistemic_cnt, aleatory_cnt=aleatory_cnt
         ),
-        promotes_inputs=['f_abxy'], promotes_outputs=['f_abxy:ci_upper']
+        promotes_inputs=[('responses', 'f_abxy')], promotes_outputs=['ci_upper']
     )
 
     prob.driver = om.ScipyOptimizeDriver()
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     prob.model.add_design_var('desy', lower=-10, upper=10)
 
     # Add objective
-    prob.model.add_objective('f_abxy:ci_upper')
+    prob.model.add_objective('ci_upper')
 
     prob.setup()
 

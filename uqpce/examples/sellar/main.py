@@ -1,8 +1,11 @@
+import os
+
 import numpy as np
 import openmdao.api as om
-from uqpce.mdao.uqpcegroup import UQPCEGroup
+
 from uqpce.mdao import interface
-import os
+from uqpce.mdao.uqpcegroup import MultiUQPCEGroup
+
 
 class SellarDis1(om.ExplicitComponent):
     """
@@ -251,14 +254,14 @@ class SellarMDA(om.Group):
     def setup(self):
         vec_size = self.options['vec_size']
 
-        self.add_subsystem('d1', SellarDis1(vec_size=vec_size), 
+        self.add_subsystem('d1', SellarDis1(vec_size=vec_size),
                            promotes_inputs=['x', 'z', 'y2', 'a0', 'a1', 'a2'],
                            promotes_outputs=['y1'])
-        self.add_subsystem('d2', SellarDis2(vec_size=vec_size), 
+        self.add_subsystem('d2', SellarDis2(vec_size=vec_size),
                            promotes_inputs=['z', 'y1', 'a0', 'a1'],
                            promotes_outputs=['y2'])
-        
-        
+
+
         self.nonlinear_solver = om.NewtonSolver(
             maxiter=30,                           # More iterations allowed
             rtol=1e-12,                            # More reasonable tolerance
@@ -297,42 +300,42 @@ if __name__ == '__main__':
     #---------------------------------------------------------------------------
 
     (
-        var_basis, norm_sq, resampled_var_basis, 
-        aleatory_cnt, epistemic_cnt, resp_cnt, order, variables, 
+        var_basis, norm_sq, resampled_var_basis,
+        aleatory_cnt, epistemic_cnt, resp_cnt, order, variables,
         sig, run_matrix
     ) = interface.initialize(input_file, matrix_file)
-    
+
     prob = om.Problem()
 
     #---------------------------------------------------------------------------
     #                   Add Subsystems to Problem
     #---------------------------------------------------------------------------
-    
+
     prob.model.add_subsystem(
-        'MDA', 
-        SellarMDA(vec_size=resp_cnt), 
-        promotes_inputs=['z', 'x', 'a0', 'a1', 'a2'], 
+        'MDA',
+        SellarMDA(vec_size=resp_cnt),
+        promotes_inputs=['z', 'x', 'a0', 'a1', 'a2'],
         promotes_outputs=['y1', 'y2']
     )
 
     prob.model.add_subsystem(
-        'con_cmp1', 
-        SellarConst1(vec_size=resp_cnt), 
-        promotes_inputs=['y1'], 
+        'con_cmp1',
+        SellarConst1(vec_size=resp_cnt),
+        promotes_inputs=['y1'],
         promotes_outputs=['const1']
     )
 
     prob.model.add_subsystem(
-        'con_cmp2', 
-        SellarConst2(vec_size=resp_cnt), 
-        promotes_inputs=['y2'], 
+        'con_cmp2',
+        SellarConst2(vec_size=resp_cnt),
+        promotes_inputs=['y2'],
         promotes_outputs=['const2']
     )
 
     prob.model.add_subsystem(
-        'obj_func', 
-        SellarObj(vec_size=resp_cnt), 
-        promotes_inputs=['z', 'x', 'y1', 'y2', 'a0', 'a1', 'a2', 'a3'], 
+        'obj_func',
+        SellarObj(vec_size=resp_cnt),
+        promotes_inputs=['z', 'x', 'y1', 'y2', 'a0', 'a1', 'a2', 'a3'],
         promotes_outputs=['obj']
     )
 
@@ -341,22 +344,21 @@ if __name__ == '__main__':
     #---------------------------------------------------------------------------
     prob.model.add_subsystem(
         'UQPCE',
-        UQPCEGroup(
-            significance=sig, var_basis=var_basis, norm_sq=norm_sq, 
+        MultiUQPCEGroup(
+            significance=sig, var_basis=var_basis, norm_sq=norm_sq,
             resampled_var_basis=resampled_var_basis, tail='both',
             epistemic_cnt=epistemic_cnt, aleatory_cnt=aleatory_cnt,
-            uncert_list=['const1', 'const2', 'obj'], tanh_omega=1e-3,
-            sample_ref0=[1,1,0], sample_ref=[2,2,50]
+            uncert_list=['const1', 'const2', 'obj']
         ),
-        promotes_inputs=['const1', 'const2', 'obj'], 
+        promotes_inputs=['const1', 'const2', 'obj'],
         promotes_outputs=['const1:resampled_responses', 'const1:ci_lower', 'const1:ci_upper', 'const1:mean',
                           'const2:resampled_responses', 'const2:ci_lower', 'const2:ci_upper', 'const2:mean',
                           'obj:resampled_responses', 'obj:ci_lower', 'obj:ci_upper', 'obj:mean', 'obj:mean_plus_var']
-    )   
+    )
     #---------------------------------------------------------------------------
     #                   Setting up the OpenMDAO Problem
     #---------------------------------------------------------------------------
-    
+
     # Set up driver
     prob.driver = om.pyOptSparseDriver(optimizer='SNOPT')
     prob.driver.opt_settings['Major feasibility tolerance'] = 1e-8
@@ -378,14 +380,14 @@ if __name__ == '__main__':
     prob.model.add_objective(obj)
     prob.model.add_constraint(C1, lower=0, ref0=1, ref=2) #Use ref0=1 to avoid poor scaling
     prob.model.add_constraint(C2, lower=0, ref0=1, ref=2)
-    prob.model.add_constraint('y1', lower=0.01) 
+    prob.model.add_constraint('y1', lower=0.01)
 
     prob.setup(force_alloc_complex=True)
     om.n2(prob, show_browser=False)
 
     # Use the UQPCE interface to set the uncertain parameters from the run matrix
     interface.set_vals(prob, variables, run_matrix)
-    
+
     #---------------------------------------------------------------------------
     #                   Run the Problem and Print Results
     #---------------------------------------------------------------------------
