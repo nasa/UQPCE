@@ -39,8 +39,8 @@ class TestUQPCEGroup(unittest.TestCase):
             UQPCEGroup(
                 var_basis=var_basis, norm_sq=norm_sq, significance=sig,
                 resampled_var_basis=resampled_var_basis, tail='both',
-                aleatory_cnt=aleat_cnt, epistemic_cnt=epist_cnt, sample_ref0=[100],
-                sample_ref=[125], use_tanh_ci=True
+                aleatory_cnt=aleat_cnt, epistemic_cnt=epist_cnt, sample_ref0=100,
+                sample_ref=125, use_tanh_ci=True
             ),
             promotes_inputs=[('responses', 'f_abxy')], promotes_outputs=['*']
         )
