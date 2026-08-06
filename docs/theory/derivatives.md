@@ -19,7 +19,7 @@ $$
 \frac{d \sigma^2}{d y} = \frac{\partial \alpha}{\partial y} \cdot \frac{\partial \sigma^2}{\partial \alpha} = ((X^T \cdot X)^{-1} \cdot X^T) \cdot (2 \alpha \langle \Psi^2 \rangle)
 $$ (uqpce_deriv_var)
 
-Because the derivatives on the bound of uncertainty require driving a residual to zero, a framework like OpenMDAO must be used to accurately account for these derivatives. The needed derivatives for the uncertainty interval are given by the below equations
+Additional derivatives for the confidence interval are given by the below equations
 
 $$
 \frac{\partial \alpha}{\partial y} = ((X^T \cdot X)^{-1} \cdot X^T)
@@ -29,10 +29,4 @@ $$
 \frac{\partial y_{resamp}}{\partial \alpha} =  X_{resamp}
 $$ (pyresamp_palpha)
 
-$$
-\frac{\partial \mathcal{R}_{z}}{\partial y_{resamp}} = \frac{b-a}{2 n \omega \cosh^2(\frac{y_{resamp}-z}{\omega})}
-$$ (pRci_pyresamp)
-
-$$
-\frac{\partial \mathcal{R}_{z}}{\partial z} = - \sum_{i=1}^{n} \frac{b-a}{2 n \omega \cosh^2(\frac{y_{resamp_{i}} - z}{\omega})}
-$$ (pRci_pyci)
+More information on the derivatives for the confidence interval can be found [here](confidence-interval.md).
