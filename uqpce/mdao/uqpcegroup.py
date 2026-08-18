@@ -3,6 +3,8 @@ import openmdao.api as om
 
 from uqpce.mdao.cdf.cdfcomp import CDFComp
 from uqpce.mdao.cdf.cdfgroup import CDFGroup
+from uqpce.mdao.cvar.cvarcomp import CVaRComp
+from uqpce.mdao.cvar.cvargroup import CVaRGroup
 from uqpce.mdao.coeffcomp import CoefficientsComp
 from uqpce.mdao.meanplusvarcomp import MeanPlusVarComp
 from uqpce.mdao.resamplecomp import ResampleComp
@@ -79,6 +81,13 @@ class UQPCEGroup(om.Group):
             'sample_ref', types=(int, float), default=1,
             desc='Reference scale for 1 of the sample data'
         )
+        self.options.declare(
+            'compute_cvar', types=bool, default=False,
+            desc='Whether to also compute the conditional value at risk '
+            '(the mean of the tail beyond the confidence interval) for '
+            'each requested tail. Uses the tanh-smoothed form when '
+            'use_tanh_ci is True and the exact quantile form otherwise.'
+        )
         self._coeff_comp = CoefficientsComp
 
     def _coeff_kwargs(self):
@@ -129,6 +138,28 @@ class UQPCEGroup(om.Group):
             out_ci = 'f_ci' if vec_size == aleatory_cnt else 'ci'
 
         return out_ci
+
+    def _cvar_comp(self):
+        use_tanh_ci = self.options['use_tanh_ci']
+
+        if not use_tanh_ci:
+            _cvar_calc = CVaRComp
+        else:
+            _cvar_calc = CVaRGroup
+
+        return _cvar_calc
+
+    def _out_cvar(self):
+        aleatory_cnt = self.options['aleatory_cnt']
+        vec_size = self.options['resampled_var_basis'].shape[0]
+        use_tanh_ci = self.options['use_tanh_ci']
+
+        if not use_tanh_ci:
+            out_cvar = 'f_cvar'
+        else:
+            out_cvar = 'f_cvar' if vec_size == aleatory_cnt else 'cvar'
+
+        return out_cvar
 
     def setup(self):
         """
@@ -207,6 +238,20 @@ class UQPCEGroup(om.Group):
                 promotes_outputs=[(out_ci, f'ci_{curr_tail}')]
             )
 
+        if self.options['compute_cvar']:
+            cvar_calc = self._cvar_comp()
+            out_cvar = self._out_cvar()
+
+            for curr_tail in tails:
+                cvar_kwargs = dict(ci_kwargs)
+                cvar_kwargs.update({'tail': curr_tail})
+                self.add_subsystem(
+                    f'{curr_tail}_cvar_group',
+                    cvar_calc(**cvar_kwargs),
+                    promotes_inputs=[('f_sampled', 'resampled_responses')],
+                    promotes_outputs=[(out_cvar, f'cvar_{curr_tail}')]
+                )
+
 
 class MultiUQPCEGroup(UQPCEGroup):
     """
@@ -274,6 +319,7 @@ class MultiUQPCEGroup(UQPCEGroup):
         tail = self.options['tail']
         compute_sobols = self.options['compute_sobols']
         use_tanh_ci = self.options['use_tanh_ci']
+        compute_cvar = self.options['compute_cvar']
 
         iter_cnt = len(uncert_list)
         tanh_omega = self._update_tanh_option(
@@ -288,8 +334,12 @@ class MultiUQPCEGroup(UQPCEGroup):
 
         if tail == 'lower' or tail == 'both':
             pce_outputs.append('ci_lower')
+            if compute_cvar:
+                pce_outputs.append('cvar_lower')
         if tail == 'upper' or tail == 'both':
             pce_outputs.append('ci_upper')
+            if compute_cvar:
+                pce_outputs.append('cvar_upper')
         if compute_sobols:
             pce_outputs.append('sobols')
             pce_outputs.append('total_sobols')
@@ -310,7 +360,7 @@ class MultiUQPCEGroup(UQPCEGroup):
                     aleatory_cnt=aleat_cnt, epistemic_cnt=epist_cnt,
                     compute_sobols=compute_sobols, sample_ref0=sample_ref0[cnt],
                     sample_ref=sample_ref[cnt], tanh_omega=tanh_omega[cnt],
-                    use_tanh_ci=use_tanh_ci
+                    use_tanh_ci=use_tanh_ci, compute_cvar=compute_cvar
                 ),
                 promotes_inputs=[('responses', resp)], promotes_outputs=outputs
             )
