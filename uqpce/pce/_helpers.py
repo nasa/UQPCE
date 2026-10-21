@@ -291,7 +291,8 @@ def solve_coeffs(var_basis, responses):
         )
 
     if (responses == 0).all():
-        return np.zeros(var_basis.shape[1])
+        # Keep the response axes just as the ordinary linear solve does.
+        return np.zeros((var_basis.shape[1],) + responses.shape[1:])
 
     matrix_coeffs = solve(basis_transform, np.dot(var_basis_T, responses))
 
